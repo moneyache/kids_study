@@ -4,23 +4,25 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>数学 · 图形与几何 — 学习馆</title>
-<meta name="description" content="北师大版小学数学「图形与几何」互动课堂（10 课 / 27 题 / 13 个动手实验）＋ 教师版讲解大纲与掌握程度检查。">
+<meta name="description" content="北师大版小学数学「图形与几何」互动课堂（10 课 / 27 道练习 / 10 张本课小考 / 13 个动手实验）＋ 教师版掌握程度与讲解大纲。">
 <style>
   :root{
-    --bg:#f4f6fa; --panel:#fff; --panel2:#f8fafc; --text:#131820; --muted:#5a6572;
-    --line:#e4e8ef; --line2:#eef1f6; --accent:#1f6feb; --soft:#eaf1fe;
-    --warm:#e0812a; --warmbg:#fdf4e7; --ok:#0f8a5f; --okbg:#e6f6ef;
-    --shadow:0 1px 2px rgba(16,24,40,.05),0 14px 34px -22px rgba(16,24,40,.45);
+    --bg:#FFF6EC; --bgimg:radial-gradient(1100px 520px at 8% -12%, #FFE9D2 0%, rgba(255,233,210,0) 62%);
+    --panel:#fff; --panel2:#FFFBF5; --text:#3B2F2A; --muted:#8B7466;
+    --line:#F1E3D5; --line2:#F8EFE6; --accent:#E4632D; --soft:#FFEEDF;
+    --warm:#ED9A2D; --warmbg:#FFF3DC; --ok:#2E9E6B; --okbg:#E8F7EE;
+    --shadow:0 1px 2px rgba(150,90,40,.07),0 14px 34px -22px rgba(150,90,40,.42);
     --r:18px;
   }
   html[data-theme="dark"]{
-    --bg:#0c1015; --panel:#141a21; --panel2:#19202a; --text:#e7ebf1; --muted:#98a3b3;
-    --line:#252d38; --line2:#1f262f; --accent:#6aa2ff; --soft:#15233c;
-    --warm:#e5a63f; --warmbg:#2a2113; --ok:#34d399; --okbg:#102a22;
+    --bg:#221912; --bgimg:radial-gradient(1100px 520px at 8% -12%, #3A2A1C 0%, rgba(58,42,28,0) 62%);
+    --panel:#2C211A; --panel2:#34281F; --text:#F7EEE6; --muted:#C3AB9B;
+    --line:#3F3128; --line2:#382A22; --accent:#FF9264; --soft:#3D2A1F;
+    --warm:#FFC46B; --warmbg:#3B2C18; --ok:#5FD3A0; --okbg:#1F3A2C;
     --shadow:0 1px 2px rgba(0,0,0,.5),0 14px 34px -22px rgba(0,0,0,.9);
   }
   *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--text);min-height:100vh;
+  body{margin:0;background:var(--bgimg), var(--bg);color:var(--text);min-height:100vh;
     font:16px/1.7 -apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
     -webkit-font-smoothing:antialiased}
   a{color:inherit}
@@ -103,6 +105,7 @@
       <ul>
         <li>13 个可动手的小实验：滚一滚、铺方格、绕绳子、拉一拉、滚圆…</li>
         <li>27 道即时判题：答错给一句提示，不扣分，可以再试</li>
+        <li>10 张本课小考：每课学完都有一张 4—5 题的考卷，做完立刻出成绩，错题自动记下来给家长看</li>
         <li>★ 只记「第一次就答对」的题，进度存在你自己的浏览器里</li>
       </ul>
       <div class="go">开始上课 →</div>
@@ -123,8 +126,9 @@
   <h2 class="sec">掌握程度</h2>
   <p class="sub">根据这台设备上「互动课堂」的作答记录自动统计。</p>
   <div class="panel">
-    <div class="meter"><b id="m-ok">0</b><span>题已答对 ／ 共 27 题</span></div>
-    <div class="meter" style="margin:0"><b id="m-lesson">0</b><span>课已上完 ／ 共 10 课</span></div>
+    <div class="meter"><b id="m-ok">0</b><span>练习已答对 ／ 共 27 题</span></div>
+    <div class="meter"><b id="m-lesson">0</b><span>课已上完 ／ 共 10 课</span></div>
+    <div class="meter" style="margin:0"><b id="m-quiz">—</b><span>小考平均分（共 10 张考卷）</span></div>
     <div class="pbar"><i id="m-bar"></i></div>
     <div id="lessonList"></div>
     <div class="rowbtn">
@@ -154,8 +158,7 @@ function setTheme(t){ document.documentElement.dataset.theme = t; try { localSto
 $("#themeBtn").onclick = function(){ setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark"); };
 try {
   const t = localStorage.getItem("kids-theme");
-  if (t) setTheme(t);
-  else if (window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches) setTheme("dark");
+  if (t === "dark") setTheme("dark");
 } catch (e) {}
 document.addEventListener("keydown", function(e){
   if (e.target.matches("input, select, textarea")) return;
@@ -164,16 +167,16 @@ document.addEventListener("keydown", function(e){
 
 /* 与互动课堂一致的课程表（用于展示大纲和统计掌握程度） */
 const LESSONS = [
-  ["L1", "认识立体图形", "长方体 / 正方体 / 圆柱 / 球，先认识「体」", 2],
-  ["L2", "面在体上", "描一个面，得到长方形 / 正方形 / 三角形 / 圆", 2],
-  ["L3", "长度和单位", "为什么要统一单位；厘米、米，相邻 ×10", 2],
-  ["L4", "角：只看张口", "角的大小只看张口，跟边画多长无关", 2],
-  ["L5", "周长是一条线", "沿着边走一圈；长方形 2×(长+宽)", 2],
-  ["L6", "面积是一片面", "铺 1 cm² 小方格；长×宽；进率 100", 2],
-  ["L7", "形状变了，什么没变", "剪拼转化、拉一拉：周长和面积谁变了", 3],
-  ["L8", "体积是一个体", "塞 1 cm³ 小方块；底面积 × 高；进率 1000", 2],
-  ["L9", "圆：量出来的 3.14", "滚一圈量周长；周长 ÷ 直径 总是 π", 2],
-  ["L10", "闯关：整条线走一遍", "8 道混合题，从认图形到体积、圆", 8]
+  ["L1", "认识立体图形", "长方体 / 正方体 / 圆柱 / 球，先认识「体」", 2, 4],
+  ["L2", "面在体上", "描一个面，得到长方形 / 正方形 / 三角形 / 圆", 2, 4],
+  ["L3", "长度和单位", "为什么要统一单位；厘米、米，相邻 ×10", 2, 4],
+  ["L4", "角：只看张口", "角的大小只看张口，跟边画多长无关", 2, 4],
+  ["L5", "周长是一条线", "沿着边走一圈；长方形 2×(长+宽)", 2, 4],
+  ["L6", "面积是一片面", "铺 1 cm² 小方格；长×宽；进率 100", 2, 4],
+  ["L7", "形状变了，什么没变", "剪拼转化、拉一拉：周长和面积谁变了", 3, 4],
+  ["L8", "体积是一个体", "塞 1 cm³ 小方块；底面积 × 高；进率 1000", 2, 4],
+  ["L9", "圆：量出来的 3.14", "滚一圈量周长；周长 ÷ 直径 总是 π", 2, 4],
+  ["L10", "闯关：整条线走一遍", "期末考卷：从认图形到体积、圆", 8, 5]
 ];
 const TOTAL_Q = LESSONS.reduce(function(a, x){ return a + x[3]; }, 0);
 
@@ -183,35 +186,42 @@ function readProg(){
 }
 function render(){
   const p = readProg();
-  let ok = 0, done = 0;
+  let ok = 0, done = 0, qScore = 0, qTotal = 0, qLessons = 0;
   LESSONS.forEach(function(L){
     const st = p[L[0]];
     if (!st) return;
     ok += Object.keys(st.solved || {}).length;
     if (st.done) done++;
+    if (st.quiz){ qScore += st.quiz.score; qTotal += st.quiz.total; qLessons++; }
   });
+  const avg = qTotal ? Math.round(qScore / qTotal * 100) + "%" : "—";
   $("#m-ok").textContent = ok;
   $("#m-lesson").textContent = done;
+  $("#m-quiz").textContent = avg;
   $("#m-bar").style.width = (TOTAL_Q ? Math.round(ok / TOTAL_Q * 100) : 0) + "%";
   $("#cta").textContent = ok === 0 ? "开始上课 →" : (ok >= TOTAL_Q ? "再走一遍全课 →" : "继续上课 →");
   if (ok === 0) $("#hint").textContent = "还没有开始（或换了设备）。点「开始上课」从第 1 课走起。";
-  else if (ok >= TOTAL_Q) $("#hint").textContent = "27 题全部答对过了。可以点「清除本机进度」再从头走一遍，或者去看教师版的 8 个检验问题。";
+  else if (ok >= TOTAL_Q) $("#hint").textContent = "练习 27 题全部答对过了。" +
+    (qLessons ? "小考做了 " + qLessons + " 张，平均 " + avg + "。" : "建议把 10 张本课小考做一遍，看看是不是真掌握了。") +
+    "教师版里有错题清单和 8 个检验问题。";
   else $("#hint").textContent = "提示：进度只存在当前浏览器，换设备不同步；点「清除本机进度」可以让孩子从头再走一遍。";
 
   $("#lessonList").innerHTML = LESSONS.map(function(L){
     const st = p[L[0]] || {};
     const q = Object.keys(st.solved || {}).length;
     const stars = Object.keys(st.first || {}).filter(function(k){ return st.first[k]; }).length;
+    const quiz = st.quiz ? st.quiz.score + "/" + st.quiz.total : "—";
     return '<div class="lrow' + (st.done ? " done" : "") + '">' +
       '<span class="n">' + (st.done ? "✓" : L[0].slice(1)) + '</span>' +
       '<span class="t">' + L[1] + '<br><span class="q">' + L[2] + '</span></span>' +
-      '<span class="q">答对 ' + q + '/' + L[3] + '</span>' +
+      '<span class="q">练习 ' + q + '/' + L[3] + '</span>' +
+      '<span class="q">小考 ' + quiz + '</span>' +
       '<span class="s">' + (stars ? "★" + stars : "") + '</span></div>';
   }).join("");
   $("#syllabus").innerHTML = LESSONS.map(function(L, i){
     return '<div class="lrow"><span class="n">' + (i + 1) + '</span>' +
       '<span class="t">' + L[1] + '　<span class="q">' + L[2] + '</span></span>' +
-      '<span class="q">' + L[3] + ' 题</span></div>';
+      '<span class="q">练习 ' + L[3] + ' 题 · 小考 ' + L[4] + ' 题</span></div>';
   }).join("");
 }
 $("#reset").onclick = function(){

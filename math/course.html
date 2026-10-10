@@ -6,22 +6,24 @@
 <title>图形与几何 · 互动课堂（0 基础 → 会算）</title>
 <style>
   :root{
-    --bg:#f4f6fa; --panel:#fff; --panel2:#f8fafc; --text:#131820; --muted:#5a6572;
-    --line:#e4e8ef; --line2:#eef1f6; --accent:#1f6feb; --accent2:#0f8a5f;
-    --warm:#e0812a; --warmbg:#fdf4e7; --soft:#eaf1fe;
-    --ok:#0f8a5f; --okbg:#e6f6ef; --no:#d64545; --nobg:#fdeaea;
-    --shadow:0 1px 2px rgba(16,24,40,.05),0 12px 30px -20px rgba(16,24,40,.4);
+    --bg:#FFF6EC; --bgimg:radial-gradient(1100px 520px at 8% -12%, #FFE9D2 0%, rgba(255,233,210,0) 62%);
+    --panel:#fff; --panel2:#FFFBF5; --text:#3B2F2A; --muted:#8B7466;
+    --line:#F1E3D5; --line2:#F8EFE6; --accent:#E4632D; --accent2:#2E9E6B;
+    --warm:#ED9A2D; --warmbg:#FFF3DC; --soft:#FFEEDF;
+    --ok:#2E9E6B; --okbg:#E8F7EE; --no:#D9534F; --nobg:#FDEBEA;
+    --shadow:0 1px 2px rgba(150,90,40,.07),0 12px 30px -20px rgba(150,90,40,.38);
     --r:16px;
   }
   html[data-theme="dark"]{
-    --bg:#0c1015; --panel:#141a21; --panel2:#19202a; --text:#e7ebf1; --muted:#98a3b3;
-    --line:#252d38; --line2:#1f262f; --accent:#6aa2ff; --accent2:#34d399;
-    --warm:#e5a63f; --warmbg:#2a2113; --soft:#15233c;
-    --ok:#34d399; --okbg:#102a22; --no:#f87171; --nobg:#2c1717;
-    --shadow:0 1px 2px rgba(0,0,0,.5),0 12px 30px -20px rgba(0,0,0,.9);
+    --bg:#221912; --bgimg:radial-gradient(1100px 520px at 8% -12%, #3A2A1C 0%, rgba(58,42,28,0) 62%);
+    --panel:#2C211A; --panel2:#34281F; --text:#F7EEE6; --muted:#C3AB9B;
+    --line:#3F3128; --line2:#382A22; --accent:#FF9264; --accent2:#5FD3A0;
+    --warm:#FFC46B; --warmbg:#3B2C18; --soft:#3D2A1F;
+    --ok:#5FD3A0; --okbg:#1F3A2C; --no:#FF8A80; --nobg:#3B211D;
+    --shadow:0 1px 2px rgba(0,0,0,.5),0 12px 30px -20px rgba(0,0,0,.85);
   }
   *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--text);
+  body{margin:0;background:var(--bgimg), var(--bg);color:var(--text);
     font:16px/1.7 -apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
     -webkit-font-smoothing:antialiased}
   h1,h2,h3{margin:0;line-height:1.4;font-weight:700}
@@ -139,6 +141,21 @@
   .pane h4{margin:0 0 8px;font-size:14.5px}
   .pane .say{font-size:13px;color:var(--muted);margin-top:8px;min-height:20px}
   .starrow{font-size:20px;letter-spacing:3px;color:var(--warm)}
+  .ladder{display:flex;flex-direction:column}
+  .rung{display:flex;align-items:center;gap:10px;padding:8px 13px;border:1px solid var(--line2);border-bottom:none;background:var(--panel2)}
+  .rung:first-child{border-radius:12px 12px 0 0}
+  .rung:last-child{border-radius:0 0 12px 12px;border-bottom:1px solid var(--line2)}
+  .rung.hot{background:var(--soft);border-color:color-mix(in srgb,var(--accent) 30%,transparent);font-weight:700;color:var(--accent)}
+  .rung .u{flex:1}
+  .rung .v{color:var(--muted);font-variant-numeric:tabular-nums}
+  .rung.hot .v{color:var(--accent)}
+  .qbar{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+  .pill{background:var(--warmbg);color:var(--warm);font-weight:700;font-size:12.5px;padding:4px 12px;border-radius:99px}
+  .scoreBox{text-align:center;padding:10px 0 6px}
+  .scoreBox .big{font-size:46px;font-weight:800;letter-spacing:-1.5px;color:var(--accent)}
+  .stars{font-size:27px;letter-spacing:5px;color:var(--warm);margin:6px 0 10px}
+  .missItem{background:var(--nobg);border-radius:12px;padding:10px 13px;margin-top:9px;font-size:14.5px;line-height:1.75}
+  .missItem .ans{color:var(--ok);font-weight:700}
   footer{margin-top:26px;color:var(--muted);font-size:12.5px;line-height:1.9;border-top:1px solid var(--line);padding-top:14px}
   @media print{ .rail,.ico{display:none} }
 </style>
@@ -652,6 +669,44 @@ W.rollc = function(host){
   draw();
 };
 
+/* ⑭ 进率阶梯 */
+W.ladder = function(host, step){
+  const DIMS = {
+    1: { word: "长度", dim: "1 维", list: ["毫米", "厘米", "分米", "米"] },
+    2: { word: "面积", dim: "2 维", list: ["平方毫米", "平方厘米", "平方分米", "平方米"] },
+    3: { word: "体积", dim: "3 维", list: ["立方毫米", "立方厘米", "立方分米", "立方米"] }
+  };
+  let dimCur = (step && step.dim) || 2;
+  host.innerHTML =
+    '<div class="ctl"><label>在量什么</label><select id="la-dim">' +
+      '<option value="1">长度（一条线多长）</option>' +
+      '<option value="2">面积（一片面多大）</option>' +
+      '<option value="3">体积（一个体多大）</option>' +
+    '</select></div>' +
+    '<div class="ctl"><label>往上跳几级</label><input type="range" id="la-n" min="1" max="3" step="1" value="1"><output id="la-nv">1 级</output></div>' +
+    '<div class="ladder" id="la-list"></div><div class="wsum" id="la-out"></div>';
+  host.querySelector("#la-dim").value = String(dimCur);
+  function draw(){
+    dimCur = +host.querySelector("#la-dim").value;
+    const n = +host.querySelector("#la-n").value;
+    const D = DIMS[dimCur], base = Math.pow(10, dimCur), factor = Math.pow(base, n);
+    const from = D.list[0], to = D.list[n] || D.list[D.list.length - 1];
+    host.querySelector("#la-list").innerHTML = D.list.map(function(u, i){
+      return '<div class="rung' + (i === n ? " hot" : "") + '"><span class="u">1 ' + u + '</span>' +
+        '<span class="v">' + (i === 0 ? "起点" : "= " + Math.pow(base, i).toLocaleString() + " " + from) + '</span></div>';
+    }).join("");
+    host.querySelector("#la-nv").textContent = n + " 级";
+    const why = dimCur === 1 ? "一条边 ×10，所以每级 ×10"
+      : (dimCur === 2 ? "两条边一起 ×10：10 × 10，所以每级 ×100"
+      : "三条边一起 ×10：10 × 10 × 10，所以每级 ×1000");
+    host.querySelector("#la-out").innerHTML =
+      "1 " + to + " = <b>" + factor.toLocaleString() + " " + from + "</b><br>" + why +
+      (dimCur === 1 ? "" : "<br>量" + D.word + "时，边不止一条，所以进率比长度大。");
+  }
+  host.querySelector("#la-dim").onchange = draw;
+  host.querySelector("#la-n").oninput = draw;
+  draw();
+};
 /* ============================================================
    3. 课程内容
    ============================================================ */
@@ -664,6 +719,11 @@ const LESSONS = [
   { t:"ask", q:"长得像皮球的是哪个？", type:"choice", options:["长方体","正方体","圆柱","球"], answer:3,
     hint:"它往哪边推都能滚。", why:"圆圆滚滚、处处一样，就是球。" },
   { t:"end" }
+], quiz:[
+  { q:"骰子的六个面一样大，它是什么体？", type:"choice", options:["长方体","正方体","圆柱","球"], answer:1, why:"六个面一样大的、方方正正的体，叫正方体。" },
+  { q:"铅笔盒放在斜斜的桌面上，会滚下去吗？", type:"choice", options:["会滚下去","不会，它的面是平的"], answer:1, why:"长方体的面都是平的，放在哪都不会自己滚。" },
+  { q:"圆柱有几个平平的面？", type:"choice", options:["1 个","2 个","3 个"], answer:1, why:"上下两个平平的圆面，侧面是弯的。" },
+  { q:"球和圆柱都能滚，它们不一样的地方是？", type:"choice", options:["球往哪边都能滚，圆柱只能顺着一个方向滚","球其实不能滚"], answer:0, why:"球处处都是弯的，往哪边推都能滚。" }
 ]},
 { id:"L2", title:"面在体上", sub:"从「体」到「形」", steps:[
   { t:"say", title:"把面按在纸上", text:"拿一个「体」，把它的一个面按在纸上描一圈，就得到一个<b>「形」</b>。<br>形是平的，能画在纸上、能剪下来。" },
@@ -676,6 +736,11 @@ const LESSONS = [
     options:["正方体有 6 个平平的面，正方形只是一个面","它们是同一个东西，只是叫法不同"], answer:0,
     hint:"摸摸魔方，再摸摸纸上画的正方形。", why:"体是立体的、有厚度；形是平的。把「体」和「形」分开念。" },
   { t:"end" }
+], quiz:[
+  { q:"长方体的面是什么形状？", type:"choice", options:["都是长方形","都是圆","都是三角形"], answer:0, why:"长方体每个面都是长方形（有的长方体有两个面是正方形）。" },
+  { q:"想描出一个三角形，用哪个体？", type:"choice", options:["正方体","三角积木","圆柱"], answer:1, why:"三角积木的那个面就是三角形。" },
+  { q:"把圆柱立在纸上描一圈，描出来的是什么？", type:"choice", options:["长方形","圆","三角形"], answer:1, why:"圆柱上下两个面是圆，描出来就是圆。" },
+  { q:"一个正方体有几个面？", type:"choice", options:["4 个","6 个","8 个"], answer:1, why:"正方体有 6 个平平的面，都一样大。" }
 ]},
 { id:"L3", title:"长度和单位", sub:"为什么要有尺子", steps:[
   { t:"say", title:"为什么会吵架", text:"小明和小红用手量<b>同一张桌子</b>，量出来的数却不一样。<br>他们把各自的选项换一换，看看会怎样。" },
@@ -688,6 +753,11 @@ const LESSONS = [
   { t:"ask", q:"1 米 = 多少厘米？", type:"num", answer:100, unit:"厘米",
     hint:"米 → 分米 ×10，分米 → 厘米 再 ×10。", why:"10 × 10 = 100 厘米。" },
   { t:"end" }
+], quiz:[
+  { q:"从刻度 6 量到刻度 13，长几厘米？", type:"num", answer:7, unit:"厘米", why:"13 − 6 = 7 厘米。" },
+  { q:"1 分米 = 多少厘米？", type:"num", answer:10, unit:"厘米", why:"分米和厘米挨着，进率是 10。" },
+  { q:"量一本数学书的厚度，用哪个单位最合适？", type:"choice", options:["千米","厘米","米"], answer:1, why:"书很薄，用厘米最合适。" },
+  { q:"3 米 = 多少厘米？", type:"num", answer:300, unit:"厘米", why:"米 → 分米 ×10，分米 → 厘米再 ×10：3 × 10 × 10 = 300。" }
 ]},
 { id:"L4", title:"角：只看张口", sub:"角的大小由什么决定", steps:[
   { t:"say", title:"角有顶点和两条边", text:"从一个点出发画两条直直的边，就得到一个<b>角</b>。<br>那个点是它的顶点。" },
@@ -698,6 +768,11 @@ const LESSONS = [
   { t:"ask", q:"一张纸的角（没有折过）是什么角？", type:"choice", options:["锐角","直角","钝角"], answer:1,
     hint:"把纸对折一次，两边正好重合。", why:"方方正正、张口刚好的角叫直角。" },
   { t:"end" }
+], quiz:[
+  { q:"钝角是比直角大，还是比直角小？", type:"choice", options:["比直角大","比直角小"], answer:0, why:"张口比直角大的是钝角，比直角小的是锐角。" },
+  { q:"用两根小棒摆好一个角，再把两根小棒都加长，角会怎样？", type:"choice", options:["变大","不变"], answer:1, why:"角的大小只看张口，小棒再长也不影响。" },
+  { q:"三角尺上最大的那个角是什么角？", type:"choice", options:["锐角","直角","钝角"], answer:1, why:"三角尺上最大的那个角是直角。" },
+  { q:"钟表正好 3 点整，时针和分针组成的角是什么角？", type:"choice", options:["直角","锐角","钝角"], answer:0, why:"3 点整时针指 3、分针指 12，正好是直角。" }
 ]},
 { id:"L5", title:"周长是一条线", sub:"沿着边走一圈", steps:[
   { t:"say", title:"周长是什么", text:"<b>周长就是沿着边走一圈的长度。</b><br>像给相框围一圈花边，花边有多长，周长就是多少。" },
@@ -708,6 +783,11 @@ const LESSONS = [
   { t:"ask", q:"正方形边长 3 厘米，周长是多少？", type:"num", answer:12, unit:"厘米",
     hint:"正方形四条边一样长。", why:"3 × 4 = 12 厘米。" },
   { t:"end" }
+], quiz:[
+  { q:"长方形长 6 厘米、宽 3 厘米，周长是多少？", type:"num", answer:18, unit:"厘米", why:"2 × (6 + 3) = 18 厘米。" },
+  { q:"正方形边长 5 厘米，周长是多少？", type:"num", answer:20, unit:"厘米", why:"5 × 4 = 20 厘米。" },
+  { q:"一个三角形三条边分别是 3 厘米、4 厘米、5 厘米，周长是多少？", type:"num", answer:12, unit:"厘米", why:"3 + 4 + 5 = 12 厘米。" },
+  { q:"把一个长方形剪成两个小长方形，两个小长方形的周长加起来，和原来比？", type:"choice", options:["比原来大","比原来小","一样大"], answer:0, why:"剪开会多出两条边，所以周长加起来比原来大。" }
 ]},
 { id:"L6", title:"面积是一片面", sub:"里面铺了多少小方格", steps:[
   { t:"say", title:"面积是什么", text:"<b>面积就是里面铺了多少个 1 厘米 × 1 厘米的小方格。</b><br>一个小方格的大小是 1 平方厘米。", art:"unitSquare" },
@@ -716,9 +796,15 @@ const LESSONS = [
   { t:"ask", q:"长 4 厘米、宽 2 厘米的长方形，面积是多少？", type:"num", answer:8, unit:"平方厘米",
     hint:"长 × 宽。", why:"4 × 2 = 8 平方厘米。注意单位有「平方」两个字。" },
   { t:"play", title:"周长和面积，别搞混", text:"左右各点一下，看看两个数分别是怎么来的。", widget:"pavs" },
+  { t:"play", title:"长度、面积、体积，进率不一样", text:"换成不同的「量什么」，再把「跳几级」拖一拖 —— 看每级到底乘几。", widget:"ladder", dim:2 },
   { t:"ask", q:"1 平方分米 = 多少平方厘米？", type:"num", answer:100, unit:"平方厘米",
     hint:"边长从 1 厘米变成 1 分米是 ×10；面积是两条边一起变——10 × 10。", why:"等于 100 平方厘米。长度的进率是 10，面积的进率是 100，不一样！" },
   { t:"end" }
+], quiz:[
+  { q:"长 5 厘米、宽 3 厘米的长方形，面积是多少？", type:"num", answer:15, unit:"平方厘米", why:"5 × 3 = 15 平方厘米。" },
+  { q:"正方形边长 4 厘米，面积是多少？", type:"num", answer:16, unit:"平方厘米", why:"4 × 4 = 16 平方厘米。" },
+  { q:"1 平方米 = 多少平方分米？", type:"num", answer:100, unit:"平方分米", why:"面积相邻进率是 100。" },
+  { q:"一本数学书封面的面积大约是多少？", type:"choice", options:["3 平方厘米","300 平方厘米","300 平方米"], answer:1, why:"封面大约 20 厘米 × 15 厘米，约 300 平方厘米。" }
 ]},
 { id:"L7", title:"形状变了，什么没变", sub:"剪一剪、拉一拉", steps:[
   { t:"say", title:"盯住「没变」的那个量", text:"把图形剪开、搬动、拉斜，形状就变了。<br>要问的是：<b>面积变了吗？周长变了吗？</b>" },
@@ -733,6 +819,11 @@ const LESSONS = [
     options:["底 × 高","底 × 高 ÷ 2","底 × 高 × 2"], answer:1,
     hint:"一个三角形，正好是拼出来那个平行四边形的一半。", why:"底 × 高 ÷ 2。所以那个 ÷2 是「两个拼一个」记的账，不是口诀。" },
   { t:"end" }
+], quiz:[
+  { q:"两个完全一样的梯形拼成一个平行四边形，一个梯形的面积是这个平行四边形的多少？", type:"choice", options:["一半","一样大","两倍"], answer:0, why:"两个拼成一个，一个就是它的一半。" },
+  { q:"四条边都不动，把平行四边形拉成长方形，面积会？", type:"choice", options:["变大","变小","不变"], answer:0, why:"拉成长方形以后高变长了，所以面积变大；反过来长方形拉成平行四边形，面积就变小。" },
+  { q:"一个三角形的底 6 厘米、高 4 厘米，面积是多少平方厘米？", type:"num", answer:12, unit:"平方厘米", why:"6 × 4 ÷ 2 = 12 平方厘米。" },
+  { q:"把长方形沿对角线切成两个完全一样的三角形，每个三角形的面积是这个长方形的多少？", type:"choice", options:["一半","一样大"], answer:0, why:"切成两个一样的，每个就是长方形的一半。" }
 ]},
 { id:"L8", title:"体积是一个体", sub:"里面塞了多少小方块", steps:[
   { t:"say", title:"体积是什么", text:"<b>体积就是里面塞了多少个 1 厘米 × 1 厘米 × 1 厘米的小方块。</b><br>一个小方块的大小是 1 立方厘米。" },
@@ -740,9 +831,15 @@ const LESSONS = [
   { t:"say", title:"底面积 × 高", text:"一层能放几个 = 长 × 宽 = <b>底面积</b>；放了几层就是<b>高</b>。<br>所以长方体体积 = 底面积 × 高。" },
   { t:"ask", q:"长 4 厘米、宽 3 厘米、高 2 厘米的长方体，体积是多少？", type:"num", answer:24, unit:"立方厘米",
     hint:"先算一层放几个（4 × 3），再乘层数。", why:"4 × 3 × 2 = 24 立方厘米。圆柱也是用「底面积 × 高」。" },
+  { t:"play", title:"体积的进率为什么是 1000", text:"把「量什么」换成体积，再把「跳几级」拖一拖。", widget:"ladder", dim:3 },
   { t:"ask", q:"1 立方分米 = 多少立方厘米？", type:"num", answer:1000, unit:"立方厘米",
     hint:"三条边一起变成 10 倍：10 × 10 × 10。", why:"等于 1000 立方厘米（也就是 1 升）。长度进率 10、面积 100、体积 1000。" },
   { t:"end" }
+], quiz:[
+  { q:"长 5 厘米、宽 2 厘米、高 4 厘米的长方体，体积是多少？", type:"num", answer:40, unit:"立方厘米", why:"5 × 2 × 4 = 40 立方厘米。" },
+  { q:"1 立方米 = 多少立方分米？", type:"num", answer:1000, unit:"立方分米", why:"体积相邻进率是 1000。" },
+  { q:"棱长 3 厘米的正方体，体积是多少？", type:"choice", options:["9 立方厘米","18 立方厘米","27 立方厘米"], answer:2, why:"3 × 3 × 3 = 27 立方厘米。" },
+  { q:"一个长方体底面积 12 平方厘米、高 5 厘米，体积是多少？", type:"num", answer:60, unit:"立方厘米", why:"底面积 × 高 = 12 × 5 = 60 立方厘米。" }
 ]},
 { id:"L9", title:"圆：量出来的 3.14", sub:"滚一圈看看", steps:[
   { t:"say", title:"圆的边是弯的", text:"圆的边没法用直尺量，但可以让它<b>滚一圈</b>，走过的长度就是周长。", art:"circle" },
@@ -753,6 +850,11 @@ const LESSONS = [
   { t:"ask", q:"圆变得很大很大，周长 ÷ 直径 会怎样？", type:"choice", options:["变大","变小","不变"], answer:2,
     hint:"它是个固定的数，跟圆的大小没关系。", why:"不变，永远是 3.14 多一点。这正是圆周率的奇妙之处。" },
   { t:"end" }
+], quiz:[
+  { q:"直径 4 厘米的圆，周长大约是多少厘米？（π 取 3.14）", type:"num", answer:12.56, tol:0.1, unit:"厘米", why:"3.14 × 4 = 12.56 厘米。" },
+  { q:"半径 3 厘米的圆，直径是多少？", type:"choice", options:["1.5 厘米","6 厘米","9 厘米"], answer:1, why:"直径是半径的 2 倍：3 × 2 = 6 厘米。" },
+  { q:"一个大圆和一个小圆，哪个的「周长 ÷ 直径」更大？", type:"choice", options:["大圆","小圆","一样大"], answer:2, why:"都是圆周率，永远一样大。" },
+  { q:"直径 1 厘米的圆滚一圈，大约走多少厘米？（π 取 3.14）", type:"num", answer:3.14, tol:0.05, unit:"厘米", why:"3.14 × 1 = 3.14 厘米。" }
 ]},
 { id:"L10", title:"闯关：整条线走一遍", sub:"10 课里最后的 8 题", steps:[
   { t:"say", title:"准备好了吗", text:"这 8 题把整条线串一遍：从认图形，到长度、周长、面积、体积、圆。<br>答错就给提示，慢慢来。" },
@@ -773,6 +875,12 @@ const LESSONS = [
     options:["周长不变，面积变小","周长变小，面积不变","周长和面积都不变"], answer:0,
     hint:"四条边一条没短，可高变矮了。", why:"周长不变、面积变小 —— 形状变了，量不一定跟着变。" },
   { t:"end" }
+], quiz:[
+  { q:"从刻度 3 量到刻度 12，长几厘米？", type:"num", answer:9, unit:"厘米", why:"12 − 3 = 9 厘米。" },
+  { q:"长 7 厘米、宽 3 厘米的长方形，周长是多少？", type:"num", answer:20, unit:"厘米", why:"2 × (7 + 3) = 20 厘米。" },
+  { q:"同一个长方形（长 7 厘米、宽 3 厘米），面积是多少？", type:"num", answer:21, unit:"平方厘米", why:"7 × 3 = 21 平方厘米。" },
+  { q:"下面哪句话是对的？", type:"choice", options:["周长和面积的单位一模一样","周长用厘米，面积用平方厘米","面积就是周长"], answer:1, why:"周长是一条线，用厘米；面积是一片面，用平方厘米。" },
+  { q:"一个长方体，底面是边长 3 厘米的正方形，高 4 厘米，体积是多少？", type:"num", answer:36, unit:"立方厘米", why:"底面积 3 × 3 = 9，再 × 高 4 = 36 立方厘米。" }
 ]}
 ];
 
@@ -783,7 +891,7 @@ let cur = { li: 0, si: 0 };
 let prog = {};
 try { prog = JSON.parse(localStorage.getItem("geo-course-v1") || "{}") || {}; } catch (e) { prog = {}; }
 function save(){ try { localStorage.setItem("geo-course-v1", JSON.stringify(prog)); } catch (e) {} }
-function P(id){ if (!prog[id]) prog[id] = { done: false, first: {}, solved: {} }; if (!prog[id].solved) prog[id].solved = {}; return prog[id]; }
+function P(id){ if (!prog[id]) prog[id] = { done: false, first: {}, solved: {}, missQ: {} }; if (!prog[id].solved) prog[id].solved = {}; if (!prog[id].missQ) prog[id].missQ = {}; return prog[id]; }
 
 function totalQs(){ return LESSONS.reduce(function(a, L){ return a + L.steps.filter(function(s){ return s.t === "ask"; }).length; }, 0); }
 function solvedQs(){
@@ -794,7 +902,8 @@ function solvedQs(){
 }
 function updateProgress(){
   const t = totalQs(), s = solvedQs();
-  $("#prog-txt").textContent = "进度 " + s + " / " + t + " 题";
+  const qd = LESSONS.filter(function(L){ const p = prog[L.id]; return p && p.quiz; }).length;
+  $("#prog-txt").textContent = "练习 " + s + " / " + t + " 题　·　小考 " + qd + " / " + LESSONS.length + " 课";
   $("#prog-bar").style.width = (t ? (s / t * 100) : 0) + "%";
 }
 
@@ -803,13 +912,18 @@ function renderRail(){
     const p = P(L.id);
     const qn = L.steps.filter(function(s){ return s.t === "ask"; }).length;
     const ok = Object.keys(p.solved || {}).length;
+    let qi = "";
+    if (L.quiz && L.quiz.length){
+      const best = p.quiz ? Math.max(p.quiz.best || 0, p.quiz.score || 0) : 0;
+      qi = " · 小考 " + best + "/" + L.quiz.length;
+    }
     return '<button class="ls ' + (p.done ? "done" : "") + '" data-li="' + i + '" aria-current="' + (i === cur.li) + '">' +
       '<span class="no">' + (p.done ? "✓" : (i + 1)) + '</span>' +
-      '<span><span class="tt">' + L.title + '</span><br><span class="sub">' + L.sub + ' · ' + ok + '/' + qn + ' 题</span></span>' +
+      '<span><span class="tt">' + L.title + '</span><br><span class="sub">' + L.sub + ' · ' + ok + '/' + qn + ' 题' + qi + '</span></span>' +
       (p.done ? '<span class="chk">★</span>' : "") + '</button>';
   }).join("");
   $$(".ls").forEach(function(b){
-    b.onclick = function(){ cur.li = +b.dataset.li; cur.si = 0; renderStage(); };
+    b.onclick = function(){ cur.li = +b.dataset.li; cur.si = 0; qmode = false; renderStage(); };
   });
 }
 
@@ -823,6 +937,7 @@ function dotsHtml(L){
 }
 
 function renderStage(){
+  if (qmode) return renderQuiz();
   const L = LESSONS[cur.li], s = L.steps[cur.si], st = $("#stage");
   let html = dotsHtml(L) + '<div class="kicker">第 ' + (cur.li + 1) + ' 课 · ' + L.title + '　' + (cur.si + 1) + '/' + L.steps.length + '</div>';
 
@@ -849,17 +964,24 @@ function renderStage(){
     const first = Object.keys(p.first).filter(function(k){ return p.first[k]; }).length;
     p.done = true; save();
     const next = cur.li < LESSONS.length - 1 ? LESSONS[cur.li + 1].title : "全课结束";
-    html += '<h2>这一课过关了 ' + "★".repeat(Math.max(first, 0)) + '</h2>' +
-      '<p class="big">' + L.title + '：一共 ' + asks + ' 题，你第一次就答对了 <b>' + first + '</b> 题。' +
+    const hasQuiz = !!(L.quiz && L.quiz.length);
+    const best = p.quiz ? Math.max(p.quiz.best || 0, p.quiz.score || 0) : 0;
+    html += '<h2>这一课学完了 ' + "★".repeat(Math.max(first, 0)) + '</h2>' +
+      '<p class="big">' + L.title + '：一共 ' + asks + ' 道练习，你第一次就答对了 <b>' + first + '</b> 道。' +
       (first === asks ? '<br>全部一次答对，太稳了！' : '<br>答错的那些，回头再做一遍就记住了。') + '</p>' +
       '<div class="note">下一课：' + next + '</div>' +
-      '<div class="lnav"><button class="btn ghost" id="nav-prev">← 重做这一课</button>' +
-      '<button class="btn primary" id="nav-next">' + (cur.li < LESSONS.length - 1 ? "进入下一课 →" : "回到第 1 课") + '</button></div>';
+      (hasQuiz ? '<p class="big" style="margin-top:14px">📝 想知道这一课掌握了多少？做一张 <b>本课小考</b>，' + L.quiz.length + ' 道题，做完立刻出成绩。' +
+        (best ? '（上次最好成绩 <b>' + best + ' / ' + L.quiz.length + '</b>）' : '') + '</p>' : '') +
+      '<div class="lnav">' +
+      (hasQuiz ? '<button class="btn primary" id="go-quiz">开始本课小考（' + L.quiz.length + ' 题）</button>' : "") +
+      '<button class="btn" id="nav-next">' + (cur.li < LESSONS.length - 1 ? "先不考，下一课 →" : "回到第 1 课") + '</button>' +
+      '<button class="btn ghost" id="nav-prev">← 重做这一课</button>' +
+      '</div>';
   }
 
   st.innerHTML = html;
 
-  if (s.t === "play" && W[s.widget]) W[s.widget]($("#whost"));
+  if (s.t === "play" && W[s.widget]) W[s.widget]($("#whost"), s);
   if (s.t === "ask") bindAsk(s);
   const nb = $("#nav-next");
   if (nb) nb.onclick = function(){
@@ -870,11 +992,116 @@ function renderStage(){
   };
   const pb = $("#nav-prev");
   if (pb) pb.onclick = function(){ cur.si = 0; renderStage(); };
+  const gq = $("#go-quiz");
+  if (gq) gq.onclick = function(){ startQuiz(); };
 
   renderRail(); updateProgress();
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
+/* ---- 本课小考 ---- */
+let qmode = false, qi = 0, qres = [];
+function curQuiz(){ return LESSONS[cur.li].quiz || []; }
+function startQuiz(){ qmode = true; qi = 0; qres = []; renderQuiz(); }
+function quizAnswerText(s){
+  return s.type === "choice" ? s.options[s.answer] : (s.answer + " " + (s.unit || ""));
+}
+function renderQuiz(){
+  const L = LESSONS[cur.li], Q = curQuiz(), st = $("#stage");
+  if (!Q.length){ qmode = false; return renderStage(); }
+  const n = Q.length;
+  let html = '<div class="qbar"><span class="pill">📝 本课小考</span>' +
+    '<span class="kicker" style="margin:0">第 ' + (cur.li + 1) + ' 课 · ' + L.title + '</span></div>' +
+    '<div class="dots">' + Q.map(function(_, i){
+      return '<i class="' + (i < qi ? "past" : (i === qi ? "on" : "")) + '"></i>';
+    }).join("") + '</div>';
+
+  if (qi < n){
+    const s = Q[qi];
+    let body;
+    if (s.type === "choice"){
+      body = '<div class="opts">' + s.options.map(function(o, i){
+        return '<button class="opt" data-i="' + i + '"><span class="ol">' + "ABCD"[i] + '</span><span>' + o + '</span></button>';
+      }).join("") + '</div>';
+    } else {
+      body = '<div class="numrow"><input class="numin" id="ans-in" type="text" inputmode="decimal" placeholder="数字"><span class="unit">' + (s.unit || "") +
+        '</span><button class="btn primary" id="ans-go">提交</button></div>';
+    }
+    html += '<div class="kicker">第 ' + (qi + 1) + ' / ' + n + ' 题</div><h2>' + s.q + '</h2>' + body +
+      '<div class="fb" id="ans-fb"></div>' +
+      '<div class="lnav"><button class="btn primary" id="q-next" disabled>' + (qi === n - 1 ? "看成绩 →" : "下一题 →") + '</button></div>';
+  } else {
+    const score = qres.filter(function(x){ return x === "ok"; }).length;
+    const p = P(L.id);
+    const best = Math.max(p.quiz ? Math.max(p.quiz.best || 0, p.quiz.score || 0) : 0, score);
+    const wrongs = Q.map(function(s, i){ return { s: s, i: i }; }).filter(function(w){ return qres[w.i] !== "ok"; });
+    p.quiz = { score: score, total: n, best: best, when: Date.now() };
+    p.quizMiss = wrongs.map(function(w){ return w.s.q; });
+    save();
+    const verdict = score === n ? "满分！这一课是真的拿下了。" :
+      (score >= Math.ceil(n * 0.75) ? "不错，大部分都掌握了。" : "有几题还不太稳，建议把这一课再走一遍。");
+    html += '<div class="scoreBox"><div class="big">' + score +
+        ' <span style="font-size:22px;color:var(--muted);font-weight:600">/ ' + n + '</span></div>' +
+      '<div class="stars">' + "★".repeat(score) + "☆".repeat(n - score) + '</div>' +
+      '<p class="big" style="margin:0">' + verdict + '</p>' +
+      (best > score ? '<p class="big" style="margin-top:6px;color:var(--muted);font-size:15px">最好成绩：' + best + ' / ' + n + '</p>' : "") +
+      '</div>' +
+      (wrongs.length ? '<div class="wsum" style="background:var(--panel2);color:var(--text)">错的题：' +
+        wrongs.map(function(w){
+          return '<div class="missItem">' + w.s.q + '<br>正确答案：<span class="ans">' + quizAnswerText(w.s) + '</span>　' + (w.s.why || "") + '</div>';
+        }).join("") + '</div>' : '') +
+      '<div class="lnav"><button class="btn primary" id="q-again">再考一次</button>' +
+      '<button class="btn" id="q-done">' + (cur.li < LESSONS.length - 1 ? "进入下一课 →" : "回到第 1 课") + '</button>' +
+      '<button class="btn ghost" id="q-back">← 回到本课内容</button></div>';
+  }
+  st.innerHTML = html;
+
+  if (qi < n){
+    bindQuizAsk(Q[qi]);
+  } else {
+    $("#q-again").onclick = function(){ startQuiz(); };
+    $("#q-done").onclick = function(){
+      qmode = false;
+      cur.li = cur.li < LESSONS.length - 1 ? cur.li + 1 : 0;
+      cur.si = 0; renderStage();
+    };
+    $("#q-back").onclick = function(){ qmode = false; renderStage(); };
+  }
+  renderRail(); updateProgress();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+function bindQuizAsk(s){
+  const fb = $("#ans-fb"), btn = $("#q-next");
+  let answered = false;
+  function judge(got){
+    if (answered) return;
+    let ok;
+    if (s.type === "choice") ok = (+got === s.answer);
+    else { const v = parseFloat(norm(got)); ok = isFinite(v) && Math.abs(v - s.answer) <= (s.tol || 0.001); }
+    answered = true;
+    qres[qi] = ok ? "ok" : "no";
+    if (ok){
+      fb.className = "fb show ok";
+      fb.innerHTML = "<b>答对了！</b>" + (s.why || "");
+      if (s.type === "choice") $$(".opt").forEach(function(o){ if (+o.dataset.i === s.answer) o.classList.add("right"); });
+    } else {
+      fb.className = "fb show no";
+      fb.innerHTML = "<b>这题记下了。</b>正确答案是 <b>" + quizAnswerText(s) + "</b>　" + (s.why || "");
+      if (s.type === "choice") $$(".opt").forEach(function(o){ if (+o.dataset.i === +got) o.classList.add("wrong"); });
+    }
+    btn.disabled = false;
+    btn.focus();
+  }
+  if (s.type === "choice"){
+    $$(".opt").forEach(function(o){ o.onclick = function(){ judge(o.dataset.i); }; });
+  } else {
+    const inp = $("#ans-in");
+    $("#ans-go").onclick = function(){ judge(inp.value); };
+    inp.onkeydown = function(e){ if (e.key === "Enter") judge(inp.value); };
+    inp.focus();
+  }
+  btn.onclick = function(){ qi++; renderQuiz(); };
+}
 function norm(v){
   return String(v).replace(/[０-９．－]/g, function(c){
     return c === "．" ? "." : (c === "－" ? "-" : String.fromCharCode(c.charCodeAt(0) - 65248));
@@ -883,7 +1110,8 @@ function norm(v){
 function mark(s, ok){
   const p = P(LESSONS[cur.li].id);
   if (!(cur.si in p.first)) { p.first[cur.si] = !!ok; }
-  if (ok) p.solved[cur.si] = true;
+  if (ok) { p.solved[cur.si] = true; delete p.missQ[cur.si]; }
+  else { p.missQ[cur.si] = s.q || ""; }
   save();
 }
 function bindAsk(s){
@@ -923,12 +1151,11 @@ function bindAsk(s){
 }
 
 /* 主题 / 键盘 */
-function setTheme(t){ document.documentElement.dataset.theme = t; try { localStorage.setItem("geo-course-theme", t); } catch (e) {} }
+function setTheme(t){ document.documentElement.dataset.theme = t; try { localStorage.setItem("kids-theme", t); } catch (e) {} }
 $("#themeBtn").onclick = function(){ setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark"); };
 try {
-  const t = localStorage.getItem("geo-course-theme");
-  if (t) setTheme(t);
-  else if (window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches) setTheme("dark");
+  const t = localStorage.getItem("kids-theme");
+  if (t === "dark") setTheme("dark");
 } catch (e) {}
 document.addEventListener("keydown", function(e){
   if (e.target.matches("input, select, textarea")) return;

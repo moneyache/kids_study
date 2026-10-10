@@ -3,29 +3,31 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>北师大版小学数学 · 图形与几何 讲解大纲</title>
+<title>教师版 · 掌握程度与讲解大纲 — 数学 · 图形与几何</title>
 <style>
   :root{
-    --bg:#f5f6f8; --panel:#ffffff; --panel2:#fafbfc; --text:#14181f; --muted:#5c6673;
-    --line:#e2e6ec; --line2:#eef1f5; --accent:#2563eb; --accent-soft:#e9f0fe;
-    --rec:#c2771a; --rec-bg:#fdf4e5; --mea:#1272c4; --mea-bg:#e7f2fc; --mot:#7c4ddb; --mot-bg:#f2ecfd;
-    --star:#c2410c; --ok:#0f8a5f;
-    --shadow:0 1px 2px rgba(16,24,40,.05), 0 10px 26px -18px rgba(16,24,40,.35);
+    --bg:#FFF6EC; --bgimg:radial-gradient(1100px 520px at 8% -12%, #FFE9D2 0%, rgba(255,233,210,0) 62%);
+    --panel:#ffffff; --panel2:#FFFBF5; --text:#3B2F2A; --muted:#8B7466;
+    --line:#F1E3D5; --line2:#F8EFE6; --accent:#E4632D; --accent-soft:#FFEEDF;
+    --rec:#C9772A; --rec-bg:#FDF0DC; --mea:#2F8F9E; --mea-bg:#E4F3F5; --mot:#B4557F; --mot-bg:#FAEAF1;
+    --star:#D9542B; --ok:#2E9E6B;
+    --shadow:0 1px 2px rgba(150,90,40,.07), 0 10px 26px -18px rgba(150,90,40,.35);
     --r:14px; --rail:236px;
     color-scheme: light;
   }
   html[data-theme="dark"]{
-    --bg:#0d1116; --panel:#151a21; --panel2:#1a2028; --text:#e6eaf0; --muted:#98a3b3;
-    --line:#252d38; --line2:#1f262f; --accent:#6aa2ff; --accent-soft:#16233c;
-    --rec:#e5a63f; --rec-bg:#2a2113; --mea:#4ea6e8; --mea-bg:#122334; --mot:#ab8bf5; --mot-bg:#221a35;
-    --star:#fb923c; --ok:#34d399;
-    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 26px -18px rgba(0,0,0,.8);
+    --bg:#221912; --bgimg:radial-gradient(1100px 520px at 8% -12%, #3A2A1C 0%, rgba(58,42,28,0) 62%);
+    --panel:#2C211A; --panel2:#34281F; --text:#F7EEE6; --muted:#C3AB9B;
+    --line:#3F3128; --line2:#382A22; --accent:#FF9264; --accent-soft:#3D2A1F;
+    --rec:#E8B466; --rec-bg:#3A2C17; --mea:#6FC7D4; --mea-bg:#1B3034; --mot:#E19BC0; --mot-bg:#3A2331;
+    --star:#FFB27A; --ok:#5FD3A0;
+    --shadow:0 1px 2px rgba(0,0,0,.5), 0 10px 26px -18px rgba(0,0,0,.85);
     color-scheme: dark;
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0}
   body{
-    background:var(--bg); color:var(--text); min-height:100vh;
+    background:var(--bgimg), var(--bg); color:var(--text); min-height:100vh;
     font:15px/1.65 -apple-system,BlinkMacSystemFont,"SF Pro SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
     -webkit-font-smoothing:antialiased;
   }
@@ -249,13 +251,11 @@
 <body>
 
 <header class="topbar">
-  <div class="brand">图形与几何 讲解大纲 <small>北师大版小学数学 · 主线 4</small></div>
+  <div class="brand">教师版 · 掌握程度与讲解大纲 <small>北师大版小学数学 · 图形与几何</small></div>
   <nav class="tabs" role="tablist" aria-label="页面">
-    <button class="tab" role="tab" data-v="overview" aria-selected="true">总纲</button>
-    <button class="tab" role="tab" data-v="outline" aria-selected="false">逐册大纲</button>
-    <button class="tab" role="tab" data-v="lab" aria-selected="false">动手实验</button>
-    <button class="tab" role="tab" data-v="path" aria-selected="false">讲授路线</button>
+    <button class="tab" role="tab" data-v="progress" aria-selected="true">掌握程度</button>
     <button class="tab" role="tab" data-v="qa" aria-selected="false">易错与提问</button>
+    <button class="tab" role="tab" data-v="teach" aria-selected="false">教学大纲</button>
     <a class="tab" href="index.html" style="text-decoration:none;display:inline-flex;align-items:center">← 数学板块</a>
     <a class="tab" href="course.html" style="text-decoration:none;display:inline-flex;align-items:center">🎓 互动课堂（孩子版）</a>
   </nav>
@@ -265,7 +265,22 @@
 <main>
 
   <!-- ================= 总纲 ================= -->
-  <section class="view active" id="view-overview" role="tabpanel">
+  <!-- ================= 掌握程度（教师版首屏） ================= -->
+  <section class="view active" id="view-progress" role="tabpanel">
+    <h2 class="sec">孩子的掌握程度</h2>
+    <p class="lede">数据来自这台设备上「互动课堂」的作答记录 —— 孩子每做完一课的小考，这里就会更新。进度存在浏览器里，换设备不同步。</p>
+    <div class="kpis" id="pgKpis"></div>
+    <div class="tblwrap" style="margin-top:16px"><table id="pgTable"></table></div>
+    <div id="pgMiss" style="margin-top:16px"></div>
+    <div class="filterbar" style="margin-top:16px;align-items:center">
+      <a class="fbtn" href="course.html" style="text-decoration:none">打开互动课堂 →</a>
+      <button class="fbtn" id="pgReset">清除本机进度</button>
+      <span class="pageinfo" id="pgHint"></span>
+    </div>
+  </section>
+
+  <!-- ================= 教学大纲（总纲 + 逐册大纲 + 讲授路线） ================= -->
+  <section class="view" id="view-overview" role="tabpanel">
     <h2 class="sec">一句话总纲</h2>
     <p class="lede">同一个图形，先认出来，再量出来，最后动起来。翻页顺序是螺旋，知识本体是三条直线。</p>
 
@@ -359,93 +374,6 @@
   </section>
 
   <!-- ================= 动手实验 ================= -->
-  <section class="view" id="view-lab" role="tabpanel">
-    <h2 class="sec">动手实验</h2>
-    <p class="lede">五个实验，把大纲里最容易讲空的地方变成看得见的东西。滑块拖一拖，读数会跟着变。</p>
-
-    <div class="lab" id="lab1">
-      <div class="labhead">
-        <h3>① 周长 vs 面积 —— 同一张纸，量的是两件事</h3>
-        <p>对应 3上·五 周长 / 3下·五 面积。锁定周长后再拖，就能看见“周长一样，面积可以差很多”。</p>
-      </div>
-      <div class="labbody">
-        <div class="viz" id="pa-viz"></div>
-        <div class="ctrls">
-          <div class="ctl"><label for="pa-w">宽 w（cm）</label><input type="range" id="pa-w" min="1" max="9" step="1" value="6"><output id="pa-wv"></output></div>
-          <div class="ctl"><label for="pa-h">高 h（cm）</label><input type="range" id="pa-h" min="1" max="9" step="1" value="4"><output id="pa-hv"></output></div>
-          <label class="check"><input type="checkbox" id="pa-lock" checked> 锁定周长 = 20 cm（w + h = 10）</label>
-          <div class="readout" id="pa-out"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="lab" id="lab2">
-      <div class="labhead">
-        <h3>② 底面积 × 高 —— 从“面”到“体”</h3>
-        <p>对应 5下·四 体积、6上·一 圆柱。体积就是往盒子里塞 1 cm³ 的小方块，数有多少个。</p>
-      </div>
-      <div class="labbody">
-        <div class="viz" id="cb-viz"></div>
-        <div class="ctrls">
-          <div class="ctl"><label for="cb-a">长 a</label><input type="range" id="cb-a" min="1" max="6" step="1" value="4"><output id="cb-av"></output></div>
-          <div class="ctl"><label for="cb-b">宽 b</label><input type="range" id="cb-b" min="1" max="6" step="1" value="3"><output id="cb-bv"></output></div>
-          <div class="ctl"><label for="cb-h">高 h</label><input type="range" id="cb-h" min="1" max="5" step="1" value="3"><output id="cb-hv"></output></div>
-          <div class="readout" id="cb-out"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="lab" id="lab3">
-      <div class="labhead">
-        <h3>③ 圆：周长 ÷ 直径 永远是同一个数</h3>
-        <p>对应 6上·一。不要先给 3.14，先让孩子自己量。拖动直径，看比值那一列怎么都不变。</p>
-      </div>
-      <div class="labbody">
-        <div class="viz" id="ci-viz"></div>
-        <div class="ctrls">
-          <div class="ctl"><label for="ci-d">直径 d（cm）</label><input type="range" id="ci-d" min="1" max="10" step="1" value="6"><output id="ci-dv"></output></div>
-          <div class="readout" id="ci-out"></div>
-          <table class="minitable" id="ci-tbl"></table>
-        </div>
-      </div>
-    </div>
-
-    <div class="lab" id="lab4">
-      <div class="labhead">
-        <h3>④ 为什么长度 ×10、面积 ×100、体积 ×1000</h3>
-        <p>同一个“进一级”，一维放大 10 倍，二维是 10×10，三维是 10×10×10。先选维度，再选跳几级。</p>
-      </div>
-      <div class="labbody">
-        <div class="viz" style="align-items:stretch">
-          <div style="width:100%">
-            <div class="ladder" id="unit-ladder"></div>
-          </div>
-        </div>
-        <div class="ctrls">
-          <div class="ctl" style="grid-template-columns:66px 1fr"><label for="u-dim">维度</label>
-            <select id="u-dim"><option value="1">长度（1 维）</option><option value="2" selected>面积（2 维）</option><option value="3">体积（3 维）</option></select>
-          </div>
-          <div class="ctl"><label for="u-n">跳几级</label><input type="range" id="u-n" min="1" max="3" step="1" value="1"><output id="u-nv"></output></div>
-          <div class="readout" id="u-out"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="lab" id="lab5">
-      <div class="labhead">
-        <h3>⑤ 拉一拉 —— 形状变了，什么没变？</h3>
-        <p>对应 5上·四 首节「比较图形的面积」与最经典的错：长方形的框拉成平行四边形，周长不变，面积变小。</p>
-      </div>
-      <div class="labbody">
-        <div class="viz" id="sh-viz"></div>
-        <div class="ctrls">
-          <div class="ctl"><label for="sh-t">拉动角度</label><input type="range" id="sh-t" min="0" max="60" step="1" value="0"><output id="sh-tv"></output></div>
-          <div class="readout" id="sh-out"></div>
-          <p class="punch" id="sh-punch"></p>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- ================= 讲授路线 ================= -->
   <section class="view" id="view-path" role="tabpanel">
@@ -695,8 +623,14 @@ const QUESTIONS = [
 /* ============================================================
    2. 视图切换 / 主题
    ============================================================ */
+const VIEW_GROUPS = {
+  progress: ["view-progress"],
+  qa: ["view-qa"],
+  teach: ["view-overview", "view-outline", "view-path"]
+};
 function showView(v){
-  $$(".view").forEach(x => x.classList.toggle("active", x.id === "view-" + v));
+  const set = VIEW_GROUPS[v] || ["view-" + v];
+  $$(".view").forEach(x => x.classList.toggle("active", set.indexOf(x.id) >= 0));
   $$(".tab").forEach(x => x.setAttribute("aria-selected", String(x.dataset.v === v)));
   try{ localStorage.setItem("geo-view", v); }catch(e){}
   window.scrollTo({top:0, behavior:"smooth"});
@@ -705,15 +639,14 @@ $$(".tab").forEach(t => t.addEventListener("click", () => showView(t.dataset.v))
 
 function setTheme(t){
   document.documentElement.dataset.theme = t;
-  try{ localStorage.setItem("geo-theme", t); }catch(e){}
+  try{ localStorage.setItem("kids-theme", t); }catch(e){}
 }
 $("#themeBtn").addEventListener("click", () => {
   setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
 });
 try{
-  const st = localStorage.getItem("geo-theme");
-  if(st) setTheme(st);
-  else if(window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches) setTheme("dark");
+  const st = localStorage.getItem("kids-theme");
+  if(st === "dark") setTheme("dark");
 }catch(e){}
 
 /* ============================================================
@@ -803,223 +736,79 @@ $("#qList").innerHTML = QUESTIONS.map(x => `
   <details><summary>${x.q}</summary><div class="ans">${x.a}</div></details>`).join("");
 
 /* ============================================================
-   5. 动手实验
-   ============================================================ */
-const svg = (w, h, inner, label) =>
-  `<svg viewBox="0 0 ${w} ${h}" width="${Math.min(w, 460)}" role="img" aria-label="${label}">${inner}</svg>`;
-
-/* ---- ① 周长 vs 面积 ---- */
-(function(){
-  const S = 26, pad = 16;
-  const viz = $("#pa-viz"), out = $("#pa-out");
-  const wEl = $("#pa-w"), hEl = $("#pa-h"), lock = $("#pa-lock");
-
-  function sync(){
-    if(lock.checked){
-      const w = +wEl.value;
-      hEl.value = 10 - w;
-      hEl.disabled = true;
-    } else {
-      hEl.disabled = false;
-    }
-  }
-  function render(){
-    sync();
-    const w = +wEl.value, h = +hEl.value;
-    const W = w * S + pad * 2, H = h * S + pad * 2;
-    let cells = "", grid = "";
-    for(let i = 0; i < w; i++) for(let j = 0; j < h; j++)
-      cells += `<rect x="${pad + i * S}" y="${pad + j * S}" width="${S}" height="${S}" fill="var(--mea)" opacity=".13"/>`;
-    for(let i = 0; i <= w; i++) grid += `<line x1="${pad + i * S}" y1="${pad}" x2="${pad + i * S}" y2="${pad + h * S}" stroke="var(--line)" stroke-width="1"/>`;
-    for(let j = 0; j <= h; j++) grid += `<line x1="${pad}" y1="${pad + j * S}" x2="${pad + w * S}" y2="${pad + j * S}" stroke="var(--line)" stroke-width="1"/>`;
-    const frame = `<rect x="${pad}" y="${pad}" width="${w * S}" height="${h * S}" fill="none" stroke="var(--mea)" stroke-width="4"/>`;
-    viz.innerHTML = svg(W, H, cells + grid + frame, `${w} 乘 ${h} 的长方形`);
-    $("#pa-wv").textContent = w + " cm";
-    $("#pa-hv").textContent = h + " cm";
-
-    const P = 2 * (w + h), A = w * h;
-    let html = `<div class="ro mea"><span>周长（一圈线）</span><b>2 × (${w} + ${h}) = ${P} cm</b></div>
-                <div class="ro rec"><span>面积（一片面）</span><b>${w} × ${h} = ${A} cm²</b></div>`;
-    if(lock.checked){
-      const rows = [1,2,3,4,5,6,7,8,9].map(x => ({w:x, h:10-x, a:x*(10-x)}));
-      const maxA = Math.max.apply(null, rows.map(r => r.a));
-      html += `<table class="minitable"><thead><tr><th>宽 × 高</th><th>周长</th><th>面积</th></tr></thead><tbody>` +
-        rows.map((r,i) => `<tr class="${r.a === maxA ? "hot" : ""}"><td>${r.w} × ${r.h}</td><td>20 cm</td><td>${r.a} cm²</td></tr>`).join("") +
-        `</tbody></table><p class="punch">周长都是 20 cm，面积却从 9 到 25 cm² —— 周长一样，面积可以差很多。</p>`;
-    }
-    out.innerHTML = html;
-  }
-  [wEl, hEl].forEach(el => el.addEventListener("input", render));
-  lock.addEventListener("change", render);
-  render();
-})();
-
-/* ---- ② 底面积 × 高 ---- */
-(function(){
-  const s = 24, pad = 20;
-  const viz = $("#cb-viz"), out = $("#cb-out");
-  const aEl = $("#cb-a"), bEl = $("#cb-b"), hEl = $("#cb-h");
-
-  function render(){
-    const a = +aEl.value, b = +bEl.value, h = +hEl.value;
-    const dx = b * s * 0.5, dy = b * s * 0.32;
-    const fw = a * s, fh = h * s;
-    const W = fw + dx + pad * 2, H = fh + dy + pad * 2;
-    const x0 = pad, y0 = H - pad;
-    const lines = [];
-    // front face grid
-    for(let i = 1; i < a; i++) lines.push([x0 + i*s, y0, x0 + i*s, y0 - fh]);
-    for(let j = 1; j < h; j++) lines.push([x0, y0 - j*s, x0 + fw, y0 - j*s]);
-    // top face grid
-    for(let j = 1; j < b; j++){
-      const t = j / b;
-      lines.push([x0 + t*dx, y0 - fh - t*dy, x0 + fw + t*dx, y0 - fh - t*dy]);
-    }
-    for(let i = 1; i < a; i++) lines.push([x0 + i*s, y0 - fh, x0 + i*s + dx, y0 - fh - dy]);
-    // right face grid
-    for(let j = 1; j < b; j++){
-      const t = j / b;
-      lines.push([x0 + fw + t*dx, y0 - t*dy, x0 + fw + t*dx, y0 - fh - t*dy]);
-    }
-    for(let i = 1; i < h; i++) lines.push([x0 + fw, y0 - i*s, x0 + fw + dx, y0 - i*s - dy]);
-    const grid = lines.map(([x1,y1,x2,y2]) => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="var(--line)" stroke-width="1"/>`).join("");
-    const faces = `
-      <path d="M${x0} ${y0} L${x0+fw} ${y0} L${x0+fw} ${y0-fh} L${x0} ${y0-fh}Z" fill="var(--mea)" opacity=".10" stroke="var(--mea)" stroke-width="2"/>
-      <path d="M${x0} ${y0-fh} L${x0+fw} ${y0-fh} L${x0+fw+dx} ${y0-fh-dy} L${x0+dx} ${y0-fh-dy}Z" fill="var(--rec)" opacity=".12" stroke="var(--rec)" stroke-width="1.6"/>
-      <path d="M${x0+fw} ${y0} L${x0+fw+dx} ${y0-dy} L${x0+fw+dx} ${y0-fh-dy} L${x0+fw} ${y0-fh}Z" fill="var(--mot)" opacity=".10" stroke="var(--mot)" stroke-width="1.6"/>`;
-    viz.innerHTML = svg(W, H, faces + grid, `${a} 乘 ${b} 乘 ${h} 的长方体`);
-    $("#cb-av").textContent = a;
-    $("#cb-bv").textContent = b;
-    $("#cb-hv").textContent = h;
-    const base = a * b, V = base * h;
-    out.innerHTML = `
-      <div class="ro mea"><span>底面积（一层几个）</span><b>${a} × ${b} = ${base} cm²</b></div>
-      <div class="ro mot"><span>层数</span><b>${h} 层</b></div>
-      <div class="ro rec"><span>体积</span><b>${base} × ${h} = ${V} cm³</b></div>
-      <p class="punch">体积 = 底面积 × 高：每层放 ${base} 个 1 cm³ 的小方块，放 ${h} 层。</p>`;
-  }
-  [aEl, bEl, hEl].forEach(el => el.addEventListener("input", render));
-  render();
-})();
-
-/* ---- ③ 圆 ---- */
-(function(){
-  const VB = 200;
-  // 固定画布：圆大圆小一眼看得出来（1 cm 直径 ≈ 15.6 px 半径）
-  const viz = $("#ci-viz"), out = $("#ci-out"), tbl = $("#ci-tbl");
-  const dEl = $("#ci-d");
-
-  function render(){
-    const d = +dEl.value, r = d / 2;
-    const cx = VB / 2, cy = VB / 2, rpx = r * (VB * 0.78 / 10);
-    const inner = `
-      <line x1="${cx - rpx}" y1="${cy}" x2="${cx + rpx}" y2="${cy}" stroke="var(--star)" stroke-width="1.6" stroke-dasharray="4 3"/>
-      <circle cx="${cx}" cy="${cy}" r="${rpx}" fill="var(--mea)" opacity=".10" stroke="var(--mea)" stroke-width="2.5"/>
-      <circle cx="${cx}" cy="${cy}" r="3" fill="var(--mea)"/>
-      <text x="${cx}" y="${VB - 8}" text-anchor="middle" font-size="12" fill="var(--muted)">直径 d = ${d} cm</text>`;
-    viz.innerHTML = svg(VB, VB, inner, `直径 ${d} 厘米的圆`);
-    $("#ci-dv").textContent = d + " cm";
-    const C = Math.PI * d;
-    out.innerHTML = `
-      <div class="ro mea"><span>周长 C = π × d</span><b>3.14159 × ${d} = ${C.toFixed(2)} cm</b></div>
-      <div class="ro rec"><span>C ÷ d</span><b>${(C / d).toFixed(4)}</b></div>`;
-    const ds = [1,2,4,6,8,10];
-    tbl.innerHTML = `<thead><tr><th>直径 d</th><th>周长 C = πd</th><th>C ÷ d</th></tr></thead><tbody>` +
-      ds.map(x => `<tr class="${x === d ? "hot" : ""}"><td>${x} cm</td><td>${(Math.PI*x).toFixed(2)} cm</td><td>${(Math.PI).toFixed(4)}</td></tr>`).join("") +
-      `</tbody></table>`;
-  }
-  dEl.addEventListener("input", render);
-  render();
-})();
-
-/* ---- ④ 进率 ---- */
-(function(){
-  const UNITS = {
-    1: { word:"长度", prefix:"", dim:"1 维", list:["毫米","厘米","分米","米"] },
-    2: { word:"面积", prefix:"平方", dim:"2 维", list:["平方毫米","平方厘米","平方分米","平方米"] },
-    3: { word:"体积", prefix:"立方", dim:"3 维", list:["立方毫米","立方厘米","立方分米","立方米"] }
-  };
-  const ladder = $("#unit-ladder"), out = $("#u-out");
-  const dimEl = $("#u-dim"), nEl = $("#u-n");
-
-  function render(){
-    const dim = +dimEl.value, n = +nEl.value;
-    const U = UNITS[dim], base = Math.pow(10, dim);
-    const factor = Math.pow(base, n);
-    const from = U.list[0], to = U.list[n] || U.list[U.list.length - 1];
-    ladder.innerHTML = U.list.map((u, i) => `
-      <div class="rung ${(i === 0 || i === n) ? "hot" : ""}">
-        <span class="u">1 ${u}</span>
-        <span class="v">${i === 0 ? "起点" : "= " + Math.pow(base, i).toLocaleString() + " " + from}</span>
-      </div>`).join("");
-    $("#u-nv").textContent = n + " 级";
-    let why = "";
-    if(dim === 1) why = `一维只有一条边放大 10 倍：10 = <b>10</b>`;
-    if(dim === 2) why = `二维有两条边同时放大 10 倍：10 × 10 = <b>100</b>`;
-    if(dim === 3) why = `三维有三条边同时放大 10 倍：10 × 10 × 10 = <b>1000</b>`;
-    out.innerHTML = `
-      <div class="ro ${dim === 1 ? "mea" : dim === 2 ? "rec" : "mot"}">
-        <span>1 ${to} =</span><b>${factor.toLocaleString()} ${from}</b></div>
-      <div class="ro" style="display:block">${why}${n > 1 ? `<br>跳 ${n} 级 = ${base.toLocaleString()} 的 ${n} 次方 = ${factor.toLocaleString()}` : ""}</div>
-      <p class="punch">${U.word}相邻进率 = ${base.toLocaleString()}（因为${U.dim}）。${dim === 1 ? "米 → 千米是 1000，不在这个 ×10 阶梯里。" : ""}</p>`;
-  }
-  [dimEl, nEl].forEach(el => el.addEventListener("input", render));
-  dimEl.addEventListener("change", render);
-  render();
-})();
-
-/* ---- ⑤ 拉一拉 ---- */
-(function(){
-  const s = 30, pad = 22, A = 6, B = 3;
-  const viz = $("#sh-viz"), out = $("#sh-out"), punch = $("#sh-punch");
-  const tEl = $("#sh-t");
-
-  function render(){
-    const th = +tEl.value, rad = th * Math.PI / 180;
-    const dxTop = B * Math.sin(rad) * s, hpx = B * Math.cos(rad) * s;
-    const W = A * s + dxTop + pad * 2, H = B * s + pad * 2;
-    const y0 = H - pad, x0 = pad;
-    const pts = `${x0},${y0} ${x0 + A*s},${y0} ${x0 + A*s + dxTop},${y0 - hpx} ${x0 + dxTop},${y0 - hpx}`;
-    const rect = `<rect x="${x0}" y="${y0 - B*s}" width="${A*s}" height="${B*s}" fill="none" stroke="var(--line)" stroke-width="1.5" stroke-dasharray="5 4"/>`;
-    const para = `<polygon points="${pts}" fill="var(--mot)" opacity=".14" stroke="var(--mot)" stroke-width="2.5"/>`;
-    const height = `<line x1="${x0 + dxTop}" y1="${y0 - hpx}" x2="${x0 + dxTop}" y2="${y0}" stroke="var(--star)" stroke-width="2" stroke-dasharray="4 3"/>
-      <text x="${x0 + dxTop + 6}" y="${y0 - hpx/2}" font-size="12" fill="var(--star)">高</text>`;
-    viz.innerHTML = svg(W, H, rect + para + height, `拉动 ${th} 度的平行四边形`);
-    $("#sh-tv").textContent = th + "°";
-    const h = B * Math.cos(rad), area = A * h, P = 2 * (A + B);
-    out.innerHTML = `
-      <div class="ro mea"><span>周长 = 2×(6+3)</span><b>${P} cm　（一直不变）</b></div>
-      <div class="ro rec"><span>面积 = 底 6 × 高 ${h.toFixed(2)}</span><b>${area.toFixed(2)} cm²　（${area < 18 ? "变小了" : "= 18 cm²"}）</b></div>
-      <div class="ro mot"><span>形状</span><b>${th === 0 ? "长方形" : "平行四边形"}</b></div>`;
-    punch.textContent = th === 0
-      ? "还没有拉：长方形 6 × 3 = 18 cm²。拖动滑块试试。"
-      : "四条边一条没短，周长不变；可高变矮了，面积跟着变小 —— 形状变了，量不一定跟着变。";
-  }
-  tEl.addEventListener("input", render);
-  render();
-})();
-
-/* ============================================================
    6. 键盘
    ============================================================ */
 document.addEventListener("keydown", (e) => {
   if(e.target.matches("input, select, textarea")) return;
-  const active = $$(".view").findIndex(v => v.classList.contains("active"));
-  if(e.key === "ArrowRight" && active === 1){ curBook = (curBook + 1) % BOOKS.length; renderAll(); }
-  if(e.key === "ArrowLeft" && active === 1){ curBook = (curBook - 1 + BOOKS.length) % BOOKS.length; renderAll(); }
   if(e.key === "t" || e.key === "T"){ setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark"); }
-  if(e.key === "1") showView("overview");
-  if(e.key === "2") showView("outline");
-  if(e.key === "3") showView("lab");
-  if(e.key === "4") showView("path");
-  if(e.key === "5") showView("qa");
+  if(e.key === "ArrowRight"){ curBook = (curBook + 1) % BOOKS.length; renderAll(); }
+  if(e.key === "ArrowLeft"){ curBook = (curBook - 1 + BOOKS.length) % BOOKS.length; renderAll(); }
+  if(e.key === "1") showView("progress");
+  if(e.key === "2") showView("qa");
+  if(e.key === "3") showView("teach");
 });
+
+/* ============================================================
+   7. 掌握程度（读互动课堂的进度）
+   ============================================================ */
+const COURSE = [
+  ["L1", "认识立体图形", 2, 4], ["L2", "面在体上", 2, 4], ["L3", "长度和单位", 2, 4], ["L4", "角：只看张口", 2, 4],
+  ["L5", "周长是一条线", 2, 4], ["L6", "面积是一片面", 2, 4], ["L7", "形状变了，什么没变", 3, 4], ["L8", "体积是一个体", 2, 4],
+  ["L9", "圆：量出来的 3.14", 2, 4], ["L10", "闯关：整条线走一遍", 8, 5]
+];
+const TOTAL_Q = COURSE.reduce((a, c) => a + c[2], 0);
+function readCourseProg(){
+  try { return JSON.parse(localStorage.getItem("geo-course-v1") || "{}") || {}; } catch (e) { return {}; }
+}
+function renderProgress(){
+  const p = readCourseProg();
+  let doneQ = 0, doneLessons = 0, stars = 0, qScore = 0, qTotal = 0, qLessons = 0;
+  const rows = [], miss = [];
+  COURSE.forEach((c, i) => {
+    const st = p[c[0]] || {};
+    const solved = Object.keys(st.solved || {}).length;
+    const firstRight = Object.keys(st.first || {}).filter(k => st.first[k]).length;
+    const quiz = st.quiz || null;
+    doneQ += solved; stars += firstRight;
+    if (st.done) doneLessons++;
+    if (quiz){ qScore += quiz.score; qTotal += quiz.total; qLessons++; }
+    if (st.missQ) Object.keys(st.missQ).forEach(k => miss.push({ lesson: c[1], q: st.missQ[k], kind: "练习" }));
+    (st.quizMiss || []).forEach(q => miss.push({ lesson: c[1], q: q, kind: "小考" }));
+    rows.push("<tr><td>" + (i + 1) + "</td><td>" + c[1] + "</td><td>" + solved + " / " + c[2] + "</td><td>" +
+      (firstRight ? "★" + firstRight : "—") + "</td><td>" + (quiz ? quiz.score + " / " + quiz.total : "还没考") + "</td><td>" +
+      (st.done ? "学完" : "没学完") + "</td></tr>");
+  });
+  const avg = qTotal ? Math.round(qScore / qTotal * 100) + "%" : "还没考";
+  $("#pgKpis").innerHTML = [
+    ["练习答对", doneQ + " / " + TOTAL_Q],
+    ["学完的课", doneLessons + " / " + COURSE.length],
+    ["小考平均", avg],
+    ["一次就答对", stars + " 题"]
+  ].map(x => '<div class="kpi"><b>' + x[1] + '</b><span>' + x[0] + '</span></div>').join("");
+  $("#pgTable").innerHTML = "<thead><tr><th>#</th><th>课</th><th>练习答对</th><th>一次答对</th><th>小考成绩</th><th>状态</th></tr></thead><tbody>" +
+    rows.join("") + "</tbody>";
+  $("#pgMiss").innerHTML = miss.length
+    ? '<div class="card"><h3 style="font-size:15.5px">还需要再过一遍的题（' + miss.length + ' 道）</h3>' +
+      '<div class="rows" style="margin-top:10px">' + miss.map(m =>
+        '<div class="row"><span class="lbl">' + m.kind + '</span><div>' + m.q +
+        '<br><span class="pageinfo">' + m.lesson + '</span></div></div>').join("") + '</div></div>'
+    : '<div class="card" style="color:var(--muted)">暂时没有需要补的题。孩子做完练习和小考之后，答错的题会集中列在这里。</div>';
+  $("#pgHint").textContent = doneQ === 0
+    ? "还没有开始。让孩子先去互动课堂从第 1 课走起。"
+    : (miss.length ? "这些题就是下一步的复习清单。" : "到目前为止没有答错的题。");
+}
+$("#pgReset").onclick = function(){
+  if (!confirm("清除这台设备上的学习进度？之后可以从第 1 课重新走一遍。")) return;
+  try { localStorage.removeItem("geo-course-v1"); } catch (e) {}
+  renderProgress();
+};
 
 /* 初始化 */
 renderAll();
+renderProgress();
 try{
   const sv = localStorage.getItem("geo-view");
-  if(sv && document.getElementById("view-" + sv)) showView(sv);
+  if(sv && VIEW_GROUPS[sv]) showView(sv);
 }catch(e){}
 </script>
 </body>

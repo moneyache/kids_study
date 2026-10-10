@@ -7,20 +7,22 @@
 <meta name="description" content="自己动手做的儿童互动课程：能点、能玩、能做题。当前上线「数学 · 图形与几何」。">
 <style>
   :root{
-    --bg:#f4f6fa; --panel:#fff; --panel2:#f8fafc; --text:#131820; --muted:#5a6572;
-    --line:#e4e8ef; --line2:#eef1f6; --accent:#1f6feb; --soft:#eaf1fe;
-    --warm:#e0812a; --warmbg:#fdf4e7; --ok:#0f8a5f; --okbg:#e6f6ef;
-    --shadow:0 1px 2px rgba(16,24,40,.05),0 14px 34px -22px rgba(16,24,40,.45);
+    --bg:#FFF6EC; --bgimg:radial-gradient(1100px 520px at 8% -12%, #FFE9D2 0%, rgba(255,233,210,0) 62%);
+    --panel:#fff; --panel2:#FFFBF5; --text:#3B2F2A; --muted:#8B7466;
+    --line:#F1E3D5; --line2:#F8EFE6; --accent:#E4632D; --soft:#FFEEDF;
+    --warm:#ED9A2D; --warmbg:#FFF3DC; --ok:#2E9E6B; --okbg:#E8F7EE;
+    --shadow:0 1px 2px rgba(150,90,40,.07),0 14px 34px -22px rgba(150,90,40,.42);
     --r:18px;
   }
   html[data-theme="dark"]{
-    --bg:#0c1015; --panel:#141a21; --panel2:#19202a; --text:#e7ebf1; --muted:#98a3b3;
-    --line:#252d38; --line2:#1f262f; --accent:#6aa2ff; --soft:#15233c;
-    --warm:#e5a63f; --warmbg:#2a2113; --ok:#34d399; --okbg:#102a22;
+    --bg:#221912; --bgimg:radial-gradient(1100px 520px at 8% -12%, #3A2A1C 0%, rgba(58,42,28,0) 62%);
+    --panel:#2C211A; --panel2:#34281F; --text:#F7EEE6; --muted:#C3AB9B;
+    --line:#3F3128; --line2:#382A22; --accent:#FF9264; --soft:#3D2A1F;
+    --warm:#FFC46B; --warmbg:#3B2C18; --ok:#5FD3A0; --okbg:#1F3A2C;
     --shadow:0 1px 2px rgba(0,0,0,.5),0 14px 34px -22px rgba(0,0,0,.9);
   }
   *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--text);min-height:100vh;
+  body{margin:0;background:var(--bgimg), var(--bg);color:var(--text);min-height:100vh;
     font:16px/1.7 -apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
     -webkit-font-smoothing:antialiased}
   a{color:inherit}
@@ -117,8 +119,7 @@ document.getElementById("themeBtn").onclick = function(){
 };
 try {
   const t = localStorage.getItem("kids-theme");
-  if (t) setTheme(t);
-  else if (window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches) setTheme("dark");
+  if (t === "dark") setTheme("dark");
 } catch (e) {}
 document.addEventListener("keydown", function(e){
   if (e.target.matches("input, select, textarea")) return;
