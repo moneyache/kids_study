@@ -18,7 +18,7 @@
     font:16px/1.7 -apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
     -webkit-font-smoothing:antialiased}
   a{color:inherit}
-  .wrap{max-width:980px;margin:0 auto;padding:20px 18px 64px}
+  .wrap{max-width:1180px;margin:0 auto;padding:22px 20px 64px}
   .crumb{display:flex;align-items:center;gap:10px;margin-bottom:22px;font-size:14px}
   .crumb a{text-decoration:none;color:var(--muted);border:1px solid var(--line);background:var(--panel);
     padding:6px 12px;border-radius:99px}

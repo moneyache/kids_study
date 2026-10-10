@@ -73,6 +73,30 @@ function artHtml(key){
   const fn = (S.art && S.art[key]) || (window.KIDS.ART && window.KIDS.ART[key]);
   return fn ? fn() : "";
 }
+/* 情境插图（KIDS.pic 里预置的场景）与自定义场景 HTML */
+function picHtml(key){
+  const fn = key && window.KIDS.pic && window.KIDS.pic[key];
+  return fn ? '<div class="viz">' + fn() + '</div>' : "";
+}
+function sceneHtml(s){
+  return (s.art ? artHtml(s.art) : "") + picHtml(s.pic) + (s.html ? '<div class="viz">' + s.html + '</div>' : "");
+}
+/* 分步演示里模拟"点一下/拖一下"部件上的控件 */
+function runAct(a){
+  if (!a) return;
+  const host = $("#whost") || document;
+  if (typeof a === "string"){
+    const el = host.querySelector(a) || document.querySelector(a);
+    if (el) el.click();
+  } else if (a.sel){
+    const el = host.querySelector(a.sel) || document.querySelector(a.sel);
+    if (!el) return;
+    if (a.value !== undefined) el.value = a.value;
+    if (a.click) el.click();
+    el.dispatchEvent(new Event("input", { bubbles: true }));
+    el.dispatchEvent(new Event("change", { bubbles: true }));
+  }
+}
 function norm(v){
   return String(v).replace(/[０-９．－]/g, function(c){
     return c === "．" ? "." : (c === "－" ? "-" : String.fromCharCode(c.charCodeAt(0) - 65248));
@@ -101,10 +125,21 @@ function renderStage(){
   let html = dotsHtml(L) + '<div class="kicker">第 ' + (cur.li + 1) + ' 课 · ' + L.title + '　' + (cur.si + 1) + '/' + L.steps.length + '</div>';
 
   if (s.t === "say"){
-    html += '<h2>' + (s.title || "") + '</h2><p class="big">' + s.text + '</p>' + artHtml(s.art) + navBtn("看明白了，继续 →");
+    html += '<h2>' + (s.title || "") + '</h2><p class="big">' + s.text + '</p>' + sceneHtml(s) + navBtn("看明白了，继续 →");
   } else if (s.t === "play"){
     html += '<h2>' + (s.title || "动手试试") + '</h2>' + (s.text ? '<p class="big">' + s.text + '</p>' : "") +
       '<div class="widget" id="whost"></div>' + navBtn("我试过了，继续 →");
+  } else if (s.t === "demo"){
+    const dc = s.script || [];
+    html += '<h2>' + (s.title || "看一看") + '</h2>' + (s.text ? '<p class="big">' + s.text + '</p>' : "") +
+      sceneHtml(s) +
+      '<div class="widget" id="whost"></div>' +
+      '<div class="demo">' +
+        (dc.length ? '<div class="dots" id="d-dots">' + dc.map(function(_, i){ return '<i class="' + (i === 0 ? "on" : "") + '"></i>'; }).join("") + '</div>' +
+          '<p class="narration" id="d-say"><span class="nico">🔎</span><span>' + dc[0] + '</span></p>' : "") +
+        '<div class="lnav">' + (dc.length > 1 ? '<button class="btn" id="d-next">下一步 →</button>' : "") + '</div>' +
+      '</div>' + navBtn("继续 →", dc.length > 1);
+
   } else if (s.t === "ask"){
     const qn = L.steps.slice(0, cur.si + 1).filter(function(x){ return x.t === "ask"; }).length;
     let body;
@@ -117,6 +152,9 @@ function renderStage(){
         '</span><button class="btn primary" id="ans-go">提交</button></div>';
     }
     html += '<div class="kicker">第 ' + qn + ' 题</div><h2>' + s.q + '</h2>' + body + '<div class="fb" id="ans-fb"></div>' + navBtn("继续 →", true);
+  } else if (s.t === "note"){
+    html += sceneHtml(s) + '<div class="notecard"><span class="nico">' + (s.icon || "💡") + '</span><div>' + s.text +
+      (s.small ? '<small>' + s.small + '</small>' : "") + '</div></div>' + navBtn("记住了，继续 →");
   } else {
     const p = P(L.id);
     const first = Object.keys(p.first).filter(function(k){ return p.first[k]; }).length;
@@ -138,7 +176,20 @@ function renderStage(){
   }
   st.innerHTML = html;
 
-  if (s.t === "play" && window.KIDS.W[s.widget]) window.KIDS.W[s.widget]($("#whost"), s);
+  if ((s.t === "play" || s.t === "demo") && window.KIDS.W[s.widget]) window.KIDS.W[s.widget]($("#whost"), s);
+  if (s.t === "demo" && (s.script || []).length > 1){
+    const dc = s.script, acts = s.acts || [], nbx = $("#nav-next");
+    if (nbx) nbx.disabled = true;
+    let di = 0;
+    $("#d-next").onclick = function(){
+      di++;
+      const say = $("#d-say");
+      if (say) say.innerHTML = '<span class="nico">🔎</span><span>' + (dc[di] || "") + '</span>';
+      $$("#d-dots i").forEach(function(d, i){ d.className = (i === di ? "on" : (i < di ? "past" : "")); });
+      runAct(acts[di - 1]);
+      if (di >= dc.length - 1){ this.disabled = true; if (nbx) nbx.disabled = false; }
+    };
+  }
   if (s.t === "ask") bindAsk(s);
   const nb = $("#nav-next");
   if (nb) nb.onclick = function(){

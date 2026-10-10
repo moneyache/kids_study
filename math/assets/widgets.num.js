@@ -19,7 +19,7 @@ window.KIDS = window.KIDS || { W: {}, ART: {} };
 const $ = s => document.querySelector(s);
 const $$ = s => Array.from(document.querySelectorAll(s));
 const B = (w, h, inner, label, maxw) =>
-  '<svg viewBox="0 0 ' + w + ' ' + h + '" style="width:100%;max-width:' + (maxw || w) + 'px;height:auto" role="img" aria-label="' + label + '">' + inner + '</svg>';
+  '<svg viewBox="0 0 ' + w + ' ' + h + '" style="width:100%;max-height:' + Math.min(560, Math.round(h * 2.6)) + 'px;height:auto" role="img" aria-label="' + label + '">' + inner + '</svg>';
 const CN = ["","一","二","三","四","五","六","七","八","九"];
 function cn(n){
   if (n <= 10) return n === 10 ? "十" : CN[n];

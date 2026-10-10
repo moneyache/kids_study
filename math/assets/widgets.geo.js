@@ -4,7 +4,7 @@ const $ = s => document.querySelector(s);
 const $$ = s => Array.from(document.querySelectorAll(s));
 const S = 44;
 const box = (w, h, inner, label, maxw) =>
-  '<svg viewBox="0 0 ' + w + ' ' + h + '" style="width:100%;max-width:' + (maxw || w) + 'px;height:auto" role="img" aria-label="' + label + '">' + inner + '</svg>';
+  '<svg viewBox="0 0 ' + w + ' ' + h + '" style="width:100%;max-height:' + Math.min(560, Math.round(h * 2.6)) + 'px;height:auto" role="img" aria-label="' + label + '">' + inner + '</svg>';
 
 /* ============================================================
    1. 小插图

@@ -151,3 +151,38 @@
   .missItem .ans{color:var(--ok);font-weight:700}
   footer{margin-top:26px;color:var(--muted);font-size:12.5px;line-height:1.9;border-top:1px solid var(--line);padding-top:14px}
   @media print{ .rail,.ico{display:none} }
+
+/* ============================================================
+   改版 · 大画布 + 分步演示
+   —— 教学屏做成"大屏"：画布放大、讲解文字加大、进度按钮吸底；
+      并给「分步演示」(demo) 与「重点句」(note) 两种步骤配样式
+   ============================================================ */
+main{max-width:1360px;padding:22px 22px 90px;grid-template-columns:196px minmax(0,1fr)}
+@media (max-width:1080px){ main{grid-template-columns:1fr} .rail{position:static} }
+.stage{padding:28px 32px 22px;border-radius:22px}
+.stage h2{font-size:26px;margin-bottom:14px}
+.big{font-size:19px;line-height:1.9;margin:0 0 12px}
+.viz{min-height:300px;padding:22px 24px;border-radius:20px;margin:16px 0;
+  background:linear-gradient(180deg, color-mix(in srgb, var(--panel) 75%, var(--panel2)) 0%, var(--panel2) 100%)}
+.viz svg{max-width:100%;height:auto;display:block;margin:0 auto}
+.demo{margin-top:16px}
+.narration{display:flex;gap:14px;align-items:flex-start;background:var(--soft);border-radius:18px;
+  padding:16px 20px;font-size:19px;line-height:1.85;color:var(--text);min-height:104px}
+.narration .nico{font-size:30px;line-height:1.25;flex:none}
+.narration b{color:var(--accent)}
+#d-dots i{width:30px;height:7px}
+.notecard{display:flex;gap:18px;align-items:flex-start;border:2px dashed var(--accent);background:var(--soft);
+  border-radius:22px;padding:26px 30px;margin:18px 0;font-size:23px;line-height:1.7;font-weight:700;color:var(--accent)}
+.notecard .nico{font-size:40px;line-height:1.1;flex:none}
+.notecard small{display:block;font-size:15.5px;font-weight:500;color:var(--muted);margin-top:12px}
+.btn{font-size:16.5px;padding:13px 22px;min-height:52px;border-radius:14px}
+.lnav{position:sticky;bottom:10px;z-index:5;margin-top:22px;gap:12px;
+  background:color-mix(in srgb, var(--bg) 86%, transparent);backdrop-filter:blur(10px);padding:10px 2px;border-radius:16px}
+.opt{font-size:17.5px;padding:16px 18px}
+.opts{gap:12px;margin:20px 0 6px}
+.numin{font-size:23px;width:150px}
+.fb{font-size:16.5px}
+.railbox{padding:8px}
+.ls{padding:7px 8px}
+.ls .tt{font-size:13px}
+@media print{ .lnav{position:static} }
