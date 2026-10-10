@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>教师版 · 图形与几何 — 学习馆</title>
+<link rel="stylesheet" href="../assets/teacher.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand" id="brand"></div>
+  <nav class="tabs" role="tablist" aria-label="页面" id="tabs"></nav>
+  <button class="iconbtn" id="themeBtn" title="切换深浅色 (T)" aria-label="切换主题">◐</button>
+</header>
+<main>
+  <section class="view active" id="view-progress" role="tabpanel"></section>
+  <section class="view" id="view-qa" role="tabpanel"></section>
+  <section class="view" id="view-teach" role="tabpanel"></section>
+</main>
+<footer id="pagefoot" style="max-width:1180px;margin:0 auto;padding:0 18px 40px"></footer>
+<script src="../assets/teacher.js"></script>
+<script src="teacher-data.js"></script>
+<script>KIDS_TEACHER.boot(window.TEACHER_DATA);</script>
+</body>
+</html>
