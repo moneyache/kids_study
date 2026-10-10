@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>北师大版小学数学 · 图形与几何 讲解大纲</title>
+<style>
+  :root{
+    --bg:#f5f6f8; --panel:#ffffff; --panel2:#fafbfc; --text:#14181f; --muted:#5c6673;
+    --line:#e2e6ec; --line2:#eef1f5; --accent:#2563eb; --accent-soft:#e9f0fe;
+    --rec:#c2771a; --rec-bg:#fdf4e5; --mea:#1272c4; --mea-bg:#e7f2fc; --mot:#7c4ddb; --mot-bg:#f2ecfd;
+    --star:#c2410c; --ok:#0f8a5f;
+    --shadow:0 1px 2px rgba(16,24,40,.05), 0 10px 26px -18px rgba(16,24,40,.35);
+    --r:14px; --rail:236px;
+    color-scheme: light;
+  }
+  html[data-theme="dark"]{
+    --bg:#0d1116; --panel:#151a21; --panel2:#1a2028; --text:#e6eaf0; --muted:#98a3b3;
+    --line:#252d38; --line2:#1f262f; --accent:#6aa2ff; --accent-soft:#16233c;
+    --rec:#e5a63f; --rec-bg:#2a2113; --mea:#4ea6e8; --mea-bg:#122334; --mot:#ab8bf5; --mot-bg:#221a35;
+    --star:#fb923c; --ok:#34d399;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 26px -18px rgba(0,0,0,.8);
+    color-scheme: dark;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--text); min-height:100vh;
+    font:15px/1.65 -apple-system,BlinkMacSystemFont,"SF Pro SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{margin:0;line-height:1.35;font-weight:650}
+  p{margin:0}
+  ul{margin:0;padding-left:1.15em}
+  li{margin:.22em 0}
+  code{background:var(--line2);padding:.08em .38em;border-radius:5px;font-size:.9em}
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:30; background:var(--panel);
+    border-bottom:1px solid var(--line); padding:10px 18px;
+    display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  }
+  .brand{display:flex; align-items:baseline; gap:9px; font-weight:700; letter-spacing:.2px}
+  .brand small{font-weight:500; color:var(--muted); font-size:12px}
+  .tabs{display:flex; gap:4px; margin-left:auto; flex-wrap:wrap}
+  .tab{
+    border:1px solid transparent; background:transparent; color:var(--muted); cursor:pointer;
+    padding:6px 12px; border-radius:999px; font:inherit; font-size:13.5px;
+  }
+  .tab:hover{background:var(--line2); color:var(--text)}
+  .tab[aria-selected="true"]{background:var(--accent-soft); color:var(--accent); font-weight:600}
+  .iconbtn{
+    border:1px solid var(--line); background:var(--panel); color:var(--text); cursor:pointer;
+    width:34px; height:34px; border-radius:9px; font-size:15px; display:grid; place-items:center;
+  }
+  .iconbtn:hover{background:var(--line2)}
+
+  /* ---------- layout ---------- */
+  main{max-width:1180px; margin:0 auto; padding:22px 18px 70px}
+  .view{display:none; animation:fade .22s ease}
+  .view.active{display:block}
+  @keyframes fade{from{opacity:0; transform:translateY(4px)} to{opacity:1; transform:none}}
+  .card{
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--r);
+    padding:18px 20px; box-shadow:var(--shadow);
+  }
+  .card + .card{margin-top:16px}
+  h2.sec{font-size:20px; margin:6px 0 4px}
+  .lede{color:var(--muted); margin:2px 0 16px; font-size:14px}
+  .hl{background:linear-gradient(transparent 62%, var(--accent-soft) 62%); padding:0 2px}
+
+  /* ---------- overview ---------- */
+  .thesis{
+    font-size:17px; line-height:1.75; padding:16px 18px; border-radius:var(--r);
+    background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--accent);
+    box-shadow:var(--shadow);
+  }
+  .thesis b{color:var(--accent)}
+  .strandgrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; margin-top:16px}
+  .strand{border:1px solid var(--line); border-radius:var(--r); padding:14px 16px; background:var(--panel); box-shadow:var(--shadow)}
+  .strand h3{font-size:15.5px; display:flex; align-items:center; gap:8px}
+  .dot{width:10px; height:10px; border-radius:50%; display:inline-block; flex:none}
+  .dot.rec{background:var(--rec)} .dot.mea{background:var(--mea)} .dot.mot{background:var(--mot)}
+  .strand p{color:var(--muted); font-size:13.5px; margin-top:7px}
+  .strand .chain{font-size:13px; margin-top:9px; color:var(--text)}
+  table{width:100%; border-collapse:collapse; font-size:13.5px}
+  th,td{text-align:left; padding:9px 10px; border-bottom:1px solid var(--line2); vertical-align:top}
+  th{font-weight:650; color:var(--muted); font-size:12.5px; letter-spacing:.3px; background:var(--panel2)}
+  tr:last-child td{border-bottom:none}
+  .tblwrap{overflow-x:auto; border:1px solid var(--line); border-radius:var(--r); background:var(--panel)}
+  .chainline{
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:13px;
+    background:var(--panel2); border:1px dashed var(--line); border-radius:10px; padding:12px 14px;
+    overflow-x:auto; white-space:nowrap; color:var(--text);
+  }
+  .kpis{display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; margin-top:16px}
+  .kpi{background:var(--panel); border:1px solid var(--line); border-radius:var(--r); padding:13px 15px}
+  .kpi b{display:block; font-size:23px; letter-spacing:-.5px}
+  .kpi span{color:var(--muted); font-size:12.5px}
+
+  /* ---------- outline view ---------- */
+  .split{display:grid; grid-template-columns:var(--rail) minmax(0,1fr); gap:18px; align-items:start}
+  @media (max-width:900px){ .split{grid-template-columns:1fr} }
+  .rail{position:sticky; top:74px}
+  .railbox{background:var(--panel); border:1px solid var(--line); border-radius:var(--r); padding:10px; box-shadow:var(--shadow)}
+  .railhead{font-size:12px; color:var(--muted); padding:2px 6px 8px; letter-spacing:.4px}
+  .stage{font-size:11.5px; color:var(--muted); padding:9px 6px 4px; letter-spacing:.5px; border-top:1px solid var(--line2); margin-top:6px}
+  .stage:first-of-type{border-top:none; margin-top:0}
+  .bk{
+    width:100%; display:flex; align-items:center; gap:9px; padding:7px 9px; border-radius:9px;
+    border:1px solid transparent; background:transparent; color:var(--text); cursor:pointer; font:inherit; text-align:left;
+  }
+  .bk:hover{background:var(--line2)}
+  .bk[aria-pressed="true"]{background:var(--accent-soft); border-color:color-mix(in srgb, var(--accent) 30%, transparent)}
+  .bkname{font-weight:600; font-size:13.5px; width:52px; flex:none}
+  .bkdots{display:flex; gap:3px; flex:1}
+  .bkdots i{width:7px;height:7px;border-radius:2px;display:block;background:var(--line)}
+  .bkdots i.on.rec{background:var(--rec)} .bkdots i.on.mea{background:var(--mea)} .bkdots i.on.mot{background:var(--mot)}
+  .bkmeta{font-size:11.5px; color:var(--muted)}
+  .filterbar{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px}
+  .fbtn{
+    border:1px solid var(--line); background:var(--panel); color:var(--muted); cursor:pointer;
+    padding:5px 12px; border-radius:999px; font:inherit; font-size:13px;
+  }
+  .fbtn:hover{color:var(--text)}
+  .fbtn[aria-pressed="true"]{font-weight:600}
+  .fbtn[data-s="all"][aria-pressed="true"]{background:var(--accent-soft); color:var(--accent); border-color:color-mix(in srgb,var(--accent) 35%,transparent)}
+  .fbtn[data-s="rec"][aria-pressed="true"]{background:var(--rec-bg); color:var(--rec); border-color:color-mix(in srgb,var(--rec) 40%,transparent)}
+  .fbtn[data-s="mea"][aria-pressed="true"]{background:var(--mea-bg); color:var(--mea); border-color:color-mix(in srgb,var(--mea) 40%,transparent)}
+  .fbtn[data-s="mot"][aria-pressed="true"]{background:var(--mot-bg); color:var(--mot); border-color:color-mix(in srgb,var(--mot) 40%,transparent)}
+  .detailhead{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:4px}
+  .detailhead h2{font-size:21px}
+  .pageinfo{color:var(--muted); font-size:12.5px}
+  .unit{
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--r);
+    padding:15px 17px; margin-top:13px; box-shadow:var(--shadow); position:relative; overflow:hidden;
+  }
+  .unit::before{content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--line)}
+  .unit[data-s="rec"]::before{background:var(--rec)}
+  .unit[data-s="mea"]::before{background:var(--mea)}
+  .unit[data-s="mot"]::before{background:var(--mot)}
+  .unit.dim{opacity:.32; filter:saturate(.2)}
+  .uhead{display:flex; align-items:center; gap:9px; flex-wrap:wrap}
+  .uhead h3{font-size:16.5px}
+  .chip{font-size:11.5px; padding:2px 9px; border-radius:999px; font-weight:600; letter-spacing:.3px}
+  .chip.rec{background:var(--rec-bg); color:var(--rec)}
+  .chip.mea{background:var(--mea-bg); color:var(--mea)}
+  .chip.mot{background:var(--mot-bg); color:var(--mot)}
+  .chip.ghost{background:var(--line2); color:var(--muted); font-weight:500}
+  .what{margin-top:9px; font-size:14.5px}
+  .rows{margin-top:10px; display:grid; gap:9px}
+  .row{display:grid; grid-template-columns:66px minmax(0,1fr); gap:10px; font-size:13.5px}
+  .row .lbl{color:var(--muted); font-size:12px; padding-top:2px; letter-spacing:.3px}
+  .anchor{
+    margin-top:11px; padding:9px 12px; border-radius:10px; font-size:13.5px;
+    background:var(--accent-soft); color:var(--accent); font-weight:600;
+  }
+  .verified{
+    margin-top:10px; font-size:12.5px; color:var(--muted); border-left:2px solid var(--ok);
+    padding:2px 0 2px 10px;
+  }
+  .verified b{color:var(--ok)}
+
+  /* ---------- lab ---------- */
+  .lab{background:var(--panel); border:1px solid var(--line); border-radius:var(--r); box-shadow:var(--shadow); margin-top:16px; overflow:hidden}
+  .labhead{padding:15px 18px 6px}
+  .labhead h3{font-size:16.5px}
+  .labhead p{color:var(--muted); font-size:13px; margin-top:3px}
+  .labbody{display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr); gap:18px; padding:10px 18px 18px}
+  @media (max-width:820px){ .labbody{grid-template-columns:1fr} }
+  .viz{display:flex; align-items:center; justify-content:center; min-height:180px; background:var(--panel2); border:1px solid var(--line2); border-radius:12px; padding:10px}
+  .viz svg{max-width:100%; height:auto}
+  .ctrls{display:flex; flex-direction:column; gap:11px}
+  .ctl{display:grid; grid-template-columns:96px minmax(0,1fr) 62px; align-items:center; gap:9px; font-size:13.5px}
+  .ctl label{color:var(--muted); font-size:12.5px}
+  .ctl output{font-variant-numeric:tabular-nums; font-weight:600; text-align:right}
+  input[type=range]{width:100%; accent-color:var(--accent)}
+  select{
+    font:inherit; font-size:13.5px; padding:5px 8px; border-radius:8px; border:1px solid var(--line);
+    background:var(--panel); color:var(--text);
+  }
+  .check{display:flex; align-items:center; gap:8px; font-size:13.5px; color:var(--text)}
+  .readout{margin-top:4px; display:grid; gap:7px}
+  .ro{
+    display:flex; align-items:baseline; gap:8px; font-size:13.5px;
+    background:var(--panel2); border:1px solid var(--line2); border-radius:9px; padding:8px 11px;
+  }
+  .ro b{font-variant-numeric:tabular-nums}
+  .ro.mea{background:var(--mea-bg); border-color:transparent}
+  .ro.rec{background:var(--rec-bg); border-color:transparent}
+  .ro.mot{background:var(--mot-bg); border-color:transparent}
+  .punch{font-size:13.5px; color:var(--star); font-weight:600; margin-top:4px}
+  .minitable{font-size:12.5px; margin-top:4px}
+  .minitable td,.minitable th{padding:5px 8px}
+  .minitable tr.hot td{background:var(--accent-soft); font-weight:600}
+  .ladder{display:flex; flex-direction:column; gap:0; font-size:13.5px}
+  .rung{
+    display:flex; align-items:center; gap:10px; padding:8px 12px; border:1px solid var(--line2);
+    border-bottom:none; background:var(--panel2);
+  }
+  .rung:first-child{border-radius:10px 10px 0 0}
+  .rung:last-child{border-radius:0 0 10px 10px; border-bottom:1px solid var(--line2)}
+  .rung.hot{background:var(--accent-soft); border-color:color-mix(in srgb,var(--accent) 25%,transparent); font-weight:600}
+  .rung .u{flex:1}
+  .rung .v{color:var(--muted); font-variant-numeric:tabular-nums}
+  .rung.hot .v{color:var(--accent)}
+
+  /* ---------- path & errors ---------- */
+  .mods{display:grid; gap:12px}
+  .mod{
+    display:grid; grid-template-columns:44px minmax(0,1fr); gap:14px; align-items:start;
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--r); padding:14px 16px; box-shadow:var(--shadow);
+  }
+  .mod .no{
+    width:44px; height:44px; border-radius:12px; display:grid; place-items:center; font-weight:700; font-size:17px;
+    background:var(--accent-soft); color:var(--accent);
+  }
+  .mod.star .no{background:var(--rec-bg); color:var(--rec)}
+  .mod h3{font-size:15.5px; display:flex; gap:8px; align-items:center; flex-wrap:wrap}
+  .mod .compose{font-family:ui-monospace,Menlo,monospace; font-size:12.5px; color:var(--muted); margin-top:5px}
+  .mod p{margin-top:6px; font-size:13.5px}
+  .errgrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:12px}
+  .err{background:var(--panel); border:1px solid var(--line); border-radius:var(--r); padding:13px 15px; box-shadow:var(--shadow)}
+  .err .bad{color:var(--muted); font-size:13px; text-decoration:line-through; text-decoration-color:color-mix(in srgb,var(--star) 60%,transparent)}
+  .err .fix{margin-top:7px; font-size:14px; font-weight:600; color:var(--text)}
+  details{
+    background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:11px 15px; box-shadow:var(--shadow);
+  }
+  details + details{margin-top:10px}
+  summary{cursor:pointer; font-weight:600; font-size:14.5px; list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"？"; display:inline-grid; place-items:center; width:19px; height:19px; margin-right:9px;
+    border-radius:6px; background:var(--accent-soft); color:var(--accent); font-size:12px; vertical-align:-3px}
+  details[open] summary::before{content:"！"; background:var(--mea-bg); color:var(--mea)}
+  details .ans{margin-top:9px; padding-top:9px; border-top:1px dashed var(--line); color:var(--muted); font-size:13.5px}
+  details .ans b{color:var(--text)}
+  footer{margin-top:26px; color:var(--muted); font-size:12.5px; line-height:1.8; border-top:1px solid var(--line); padding-top:14px}
+  kbd{
+    background:var(--panel); border:1px solid var(--line); border-bottom-width:2px; border-radius:6px;
+    padding:1px 6px; font-size:11.5px; font-family:inherit; color:var(--muted);
+  }
+  @media print{
+    .topbar,.rail,.filterbar,.ctrls,.iconbtn{display:none !important}
+    .view{display:block !important} .card,.lab,.unit{break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">图形与几何 讲解大纲 <small>北师大版小学数学 · 主线 4</small></div>
+  <nav class="tabs" role="tablist" aria-label="页面">
+    <button class="tab" role="tab" data-v="overview" aria-selected="true">总纲</button>
+    <button class="tab" role="tab" data-v="outline" aria-selected="false">逐册大纲</button>
+    <button class="tab" role="tab" data-v="lab" aria-selected="false">动手实验</button>
+    <button class="tab" role="tab" data-v="path" aria-selected="false">讲授路线</button>
+    <button class="tab" role="tab" data-v="qa" aria-selected="false">易错与提问</button>
+    <a class="tab" href="index.html" style="text-decoration:none;display:inline-flex;align-items:center">← 数学板块</a>
+    <a class="tab" href="course.html" style="text-decoration:none;display:inline-flex;align-items:center">🎓 互动课堂（孩子版）</a>
+  </nav>
+  <button class="iconbtn" id="themeBtn" title="切换深色/浅色 (T)" aria-label="切换主题">◐</button>
+</header>
+
+<main>
+
+  <!-- ================= 总纲 ================= -->
+  <section class="view active" id="view-overview" role="tabpanel">
+    <h2 class="sec">一句话总纲</h2>
+    <p class="lede">同一个图形，先认出来，再量出来，最后动起来。翻页顺序是螺旋，知识本体是三条直线。</p>
+
+    <div class="thesis">
+      12 册里「图形」出现过十几次，其实只有三件事各走了三遍：<b>认识</b>（它是什么样）、
+      <b>度量</b>（它有多大）、<b>运动</b>（它怎么变）。
+      三条线的关系是：<span class="hl">认识给对象，度量给数，运动给关系</span>。
+    </div>
+
+    <div class="strandgrid">
+      <div class="strand">
+        <h3><i class="dot rec"></i>认识 · 它是什么样</h3>
+        <p>升级的是「特征越来越准、分类越来越严」，不是换新东西。</p>
+        <div class="chain">实物（1上）→ 平面图形（1下）→ 角（2下）→ 三角形四边形（4下）→ 圆（6上）→ 圆柱圆锥（6下）</div>
+      </div>
+      <div class="strand">
+        <h3><i class="dot mea"></i>度量 · 它有多大</h3>
+        <p>升级的是「量什么 / 用什么单位 / 为什么是这个单位」。</p>
+        <div class="chain">长度（2上·2下）→ 角（4上）→ 周长（3上）→ 面积（3下）→ 多边形面积（5上）→ 体积（5下）→ 圆的度量（6上）</div>
+      </div>
+      <div class="strand">
+        <h3><i class="dot mot"></i>运动 · 它怎么变</h3>
+        <p>升级的是「从看形状变了，到看什么没变」。</p>
+        <div class="chain">图形的变化（2上）→ 图形的运动（3下）→ 轴对称和平移（5上）→ 旋转（6下）</div>
+      </div>
+    </div>
+
+    <div class="kpis" style="margin-bottom:16px">
+      <div class="kpi"><b>12</b><span>册教材，1—6 年级</span></div>
+      <div class="kpi"><b>10</b><span>属于本线的单元</span></div>
+      <div class="kpi"><b>4</b><span>次「观察物体」</span></div>
+      <div class="kpi"><b>3</b><span>次关键对比</span></div>
+      <div class="kpi"><b>8</b><span>个检验问题</span></div>
+    </div>
+
+    <h2 class="sec">三条螺旋升层表</h2>
+    <p class="lede">同一个主题，隔一两册升一层，而不是“换一个世界”。</p>
+    <div class="tblwrap">
+      <table>
+        <thead><tr><th style="width:92px">主题</th><th>第一层（1—2 年级）</th><th>第二层（3—4 年级）</th><th>第三层（5—6 年级）</th></tr></thead>
+        <tbody>
+          <tr><td><i class="dot rec"></i> 认识</td><td>立体 / 平面的命名<br><span class="pageinfo">1上·六 · 1下·四</span></td><td>角、三角形四边形的特征与分类<br><span class="pageinfo">2下·六 · 4下·二</span></td><td>圆的特征、圆柱圆锥<br><span class="pageinfo">6上·一 · 6下·一</span></td></tr>
+          <tr><td><i class="dot mea"></i> 度量</td><td>长度单位：厘米米 → 分米毫米千米<br><span class="pageinfo">2上·六 · 2下·四</span></td><td>角、周长、面积<br><span class="pageinfo">4上·二 · 3上·五 · 3下·五</span></td><td>多边形面积、体积、圆的度量<br><span class="pageinfo">5上·四 · 5下·四 · 6上·一</span></td></tr>
+          <tr><td><i class="dot mot"></i> 运动</td><td>图形的变化<br><span class="pageinfo">2上·四</span></td><td>图形的运动、轴对称和平移<br><span class="pageinfo">3下·二 · 5上·二</span></td><td>旋转<br><span class="pageinfo">6下·三</span></td></tr>
+          <tr><td><span class="pageinfo">贯穿</span></td><td>观察物体<br><span class="pageinfo">1下·二</span></td><td>观察物体<br><span class="pageinfo">3上·二 · 4下·四</span></td><td>观察物体<br><span class="pageinfo">6上·三</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="sec" style="margin-top:22px">度量链：本线主轴</h2>
+    <p class="lede">长度 → 面积 → 体积 是<b>同一个动作</b>重复三遍：用单位去铺，只是铺在线上、面上、体里。</p>
+    <div class="chainline">长度 → 角 → 周长(一条线) → 面积(一片面) → 多边形面积(转化) → 体积(一个体) → 圆(量出来的 π) → 柱锥(底面积×高)</div>
+    <div class="card" style="margin-top:14px">
+      <div class="rows">
+        <div class="row"><span class="lbl">第 1 句话</span><div>长度、面积、体积不是三件事，是同一个动作在一维、二维、三维各做一遍。</div></div>
+        <div class="row"><span class="lbl">第 2 句话</span><div>进率随维度变：长度相邻 <b>×10</b>，面积相邻 <b>×100</b>，体积相邻 <b>×1000</b> —— 因为面积有两条边同时放大 10 倍，体积有三条边。</div></div>
+        <div class="row"><span class="lbl">第 3 句话</span><div>公式不是背的，是“数单位个数”数出来的：面积和体积公式都能从长方形出发推出来。</div></div>
+      </div>
+    </div>
+
+    <h2 class="sec" style="margin-top:22px">★ 三次关键对比</h2>
+    <p class="lede">全大纲最值得停下来的三个地方，每个都配了一个可动手的实验。</p>
+    <div class="strandgrid">
+      <div class="strand"><h3>① 线 vs 面</h3><p><b>3上·五 周长</b> ↔ <b>3下·五 面积</b>。同一张纸，「框」是一圈线，「铺满」是一片面。</p><p style="color:var(--accent)">→ 动手实验 ①</p></div>
+      <div class="strand"><h3>② 面 vs 体</h3><p><b>5下·二 表面积</b> ↔ <b>5下·四 体积</b>。同一个盒子，「展开」是面，「塞满」是体。</p><p style="color:var(--accent)">→ 动手实验 ②</p></div>
+      <div class="strand"><h3>③ 形变 vs 量变</h3><p><b>5上·四 首节「分割移补」</b> + 长方形拉成平行四边形：形状变了，<b>什么没变</b>？</p><p style="color:var(--accent)">→ 动手实验 ⑤</p></div>
+    </div>
+  </section>
+
+  <!-- ================= 逐册大纲 ================= -->
+  <section class="view" id="view-outline" role="tabpanel">
+    <h2 class="sec">逐册大纲</h2>
+    <p class="lede">只列属于「图形与几何」这条线的单元。左侧点册，右侧看讲什么 / 怎么讲 / 易错 / 前后串联。页码为印刷页，可点「PDF」标记查看核对情况。<span class="pageinfo">快捷键：<kbd>←</kbd><kbd>→</kbd> 翻册，<kbd>1</kbd>—<kbd>4</kbd> 切换三条线。</span></p>
+    <div class="split">
+      <aside class="rail">
+        <div class="railbox">
+          <div class="railhead">12 册 · 点选查看</div>
+          <div id="railList"></div>
+        </div>
+      </aside>
+      <div>
+        <div class="filterbar" role="group" aria-label="按线筛选">
+          <button class="fbtn" data-s="all" aria-pressed="true">全部</button>
+          <button class="fbtn" data-s="rec" aria-pressed="false"><i class="dot rec"></i> 认识</button>
+          <button class="fbtn" data-s="mea" aria-pressed="false"><i class="dot mea"></i> 度量</button>
+          <button class="fbtn" data-s="mot" aria-pressed="false"><i class="dot mot"></i> 运动</button>
+        </div>
+        <div id="detail"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 动手实验 ================= -->
+  <section class="view" id="view-lab" role="tabpanel">
+    <h2 class="sec">动手实验</h2>
+    <p class="lede">五个实验，把大纲里最容易讲空的地方变成看得见的东西。滑块拖一拖，读数会跟着变。</p>
+
+    <div class="lab" id="lab1">
+      <div class="labhead">
+        <h3>① 周长 vs 面积 —— 同一张纸，量的是两件事</h3>
+        <p>对应 3上·五 周长 / 3下·五 面积。锁定周长后再拖，就能看见“周长一样，面积可以差很多”。</p>
+      </div>
+      <div class="labbody">
+        <div class="viz" id="pa-viz"></div>
+        <div class="ctrls">
+          <div class="ctl"><label for="pa-w">宽 w（cm）</label><input type="range" id="pa-w" min="1" max="9" step="1" value="6"><output id="pa-wv"></output></div>
+          <div class="ctl"><label for="pa-h">高 h（cm）</label><input type="range" id="pa-h" min="1" max="9" step="1" value="4"><output id="pa-hv"></output></div>
+          <label class="check"><input type="checkbox" id="pa-lock" checked> 锁定周长 = 20 cm（w + h = 10）</label>
+          <div class="readout" id="pa-out"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lab" id="lab2">
+      <div class="labhead">
+        <h3>② 底面积 × 高 —— 从“面”到“体”</h3>
+        <p>对应 5下·四 体积、6上·一 圆柱。体积就是往盒子里塞 1 cm³ 的小方块，数有多少个。</p>
+      </div>
+      <div class="labbody">
+        <div class="viz" id="cb-viz"></div>
+        <div class="ctrls">
+          <div class="ctl"><label for="cb-a">长 a</label><input type="range" id="cb-a" min="1" max="6" step="1" value="4"><output id="cb-av"></output></div>
+          <div class="ctl"><label for="cb-b">宽 b</label><input type="range" id="cb-b" min="1" max="6" step="1" value="3"><output id="cb-bv"></output></div>
+          <div class="ctl"><label for="cb-h">高 h</label><input type="range" id="cb-h" min="1" max="5" step="1" value="3"><output id="cb-hv"></output></div>
+          <div class="readout" id="cb-out"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lab" id="lab3">
+      <div class="labhead">
+        <h3>③ 圆：周长 ÷ 直径 永远是同一个数</h3>
+        <p>对应 6上·一。不要先给 3.14，先让孩子自己量。拖动直径，看比值那一列怎么都不变。</p>
+      </div>
+      <div class="labbody">
+        <div class="viz" id="ci-viz"></div>
+        <div class="ctrls">
+          <div class="ctl"><label for="ci-d">直径 d（cm）</label><input type="range" id="ci-d" min="1" max="10" step="1" value="6"><output id="ci-dv"></output></div>
+          <div class="readout" id="ci-out"></div>
+          <table class="minitable" id="ci-tbl"></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="lab" id="lab4">
+      <div class="labhead">
+        <h3>④ 为什么长度 ×10、面积 ×100、体积 ×1000</h3>
+        <p>同一个“进一级”，一维放大 10 倍，二维是 10×10，三维是 10×10×10。先选维度，再选跳几级。</p>
+      </div>
+      <div class="labbody">
+        <div class="viz" style="align-items:stretch">
+          <div style="width:100%">
+            <div class="ladder" id="unit-ladder"></div>
+          </div>
+        </div>
+        <div class="ctrls">
+          <div class="ctl" style="grid-template-columns:66px 1fr"><label for="u-dim">维度</label>
+            <select id="u-dim"><option value="1">长度（1 维）</option><option value="2" selected>面积（2 维）</option><option value="3">体积（3 维）</option></select>
+          </div>
+          <div class="ctl"><label for="u-n">跳几级</label><input type="range" id="u-n" min="1" max="3" step="1" value="1"><output id="u-nv"></output></div>
+          <div class="readout" id="u-out"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lab" id="lab5">
+      <div class="labhead">
+        <h3>⑤ 拉一拉 —— 形状变了，什么没变？</h3>
+        <p>对应 5上·四 首节「比较图形的面积」与最经典的错：长方形的框拉成平行四边形，周长不变，面积变小。</p>
+      </div>
+      <div class="labbody">
+        <div class="viz" id="sh-viz"></div>
+        <div class="ctrls">
+          <div class="ctl"><label for="sh-t">拉动角度</label><input type="range" id="sh-t" min="0" max="60" step="1" value="0"><output id="sh-tv"></output></div>
+          <div class="readout" id="sh-out"></div>
+          <p class="punch" id="sh-punch"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 讲授路线 ================= -->
+  <section class="view" id="view-path" role="tabpanel">
+    <h2 class="sec">跨册讲授路线</h2>
+    <p class="lede">把螺旋重排成连续模块：同一个模块里的内容，本来就是一个整体，跨册连讲比按册讲顺得多。★ 是三次关键对比。</p>
+    <div class="mods" id="modList"></div>
+    <div class="card" style="margin-top:16px">
+      <h3 style="font-size:15.5px">两条并行的贯穿线</h3>
+      <div class="rows" style="margin-top:10px">
+        <div class="row"><span class="lbl">运动线</span><div>2上·四 → 3下·二 → 5上·二 → 6下·三。每个年级都问同一句：<b>变的是形状，不变的是什么？</b></div></div>
+        <div class="row"><span class="lbl">观察物体</span><div>1下·二 → 3上·二 → 4下·四 → 6上·三。<b>用同一组积木</b>贯穿四个年级，只升级“看的角度”与“看到的范围”。</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 易错与提问 ================= -->
+  <section class="view" id="view-qa" role="tabpanel">
+    <h2 class="sec">易错清单</h2>
+    <p class="lede">左列是孩子常说错的，右列是可以直接说出口的一句纠正。</p>
+    <div class="errgrid" id="errList"></div>
+
+    <h2 class="sec" style="margin-top:24px">可以问孩子的问题</h2>
+    <p class="lede">检验理解，不考记忆。点开看期望回答，以及对应哪个实验。</p>
+    <div id="qList"></div>
+  </section>
+
+  <footer>
+    <div>主线取自 <code>child-study/北师大版小学数学-内容地图与串联.md</code> 的主线 4「图形：认识 → 度量 → 运动」，并把其中的「周长 → 面积 → 体积」度量链做成主轴。</div>
+    <div>教材事实来自同目录 <code>北师大版数学PDF/</code> 12 册扫描版（无文字层）。标注「已核对」的条目为逐页 OCR 确认：5上 印刷 49 → PDF 53（比较图形的面积 · 分割移补）、5下 PDF 15（长方体的认识）、6上 PDF 6（圆的认识 · d=2r）、6下 PDF 18（展开图表面积 / 粮仓容积）、3下 PDF 60（1 平方分米 = 100 平方厘米）。</div>
+    <div>册页数：一上 109 · 一下 99 · 二上 119 · 二下 109 · 三上 111 · 三下 113 · 四上 115 · 四下 117 · 五上 125 · 五下 111 · 六上 117 · 六下 119。印刷页 → PDF 页 ≈ +4。</div>
+    <div>教材版权属北京师范大学出版社，仅供个人学习使用。本页为单文件离线页面，无外部依赖。</div>
+  </footer>
+</main>
+
+<script>
+"use strict";
+const $ = (s) => document.querySelector(s);
+const $$ = (s) => Array.from(document.querySelectorAll(s));
+
+/* ============================================================
+   1. 数据
+   ============================================================ */
+const STRANDS = {
+  rec: { name: "认识", cls: "rec" },
+  mea: { name: "度量", cls: "mea" },
+  mot: { name: "运动", cls: "mot" }
+};
+
+const BOOKS = [
+  { id:"1s", grade:"一年级", term:"上册", short:"一上", stage:"低年级 1—2 年级", pages:109, units:[
+    { no:"六", name:"认识图形", s:"rec", tag:"起点",
+      what:"只做一件事：摸与认。长方体、正方体、圆柱、球，全是「体」。",
+      how:["鞋盒、魔方、易拉罐、皮球各来一个，滚一滚、推一推、摞一摞，按「能不能滚、有几个平平的面」分类。","不要求说定义，只要求叫得出、分得开。"],
+      traps:["把「正方体」叫成「正方形」、把「球」叫成「圆」。从这一课起就把「体 / 形」两个字分开念。"],
+      links:["1下·四 有趣的图形（面在体上）"],
+      anchor:"这样的是「体」。" },
+    { no:"五", name:"位置与顺序", s:"rec", tag:"铺垫",
+      what:"上下、前后、左右。为 1下「观察物体」预备方位语感。",
+      how:["站在教室中间说清“谁在谁的前面”，不必当图形课讲。"],
+      traps:[], links:["1下·二 观察物体"], anchor:"" }
+  ]},
+  { id:"1x", grade:"一年级", term:"下册", short:"一下", stage:"低年级 1—2 年级", pages:99, units:[
+    { no:"二", name:"观察物体", s:"rec", tag:"第 1 遍",
+      what:"从不同方向看同一个物体，看到的样子不同。",
+      how:["同一组积木，四个年级反复用：这里只要求“看到的不一样”。","单元名 OCR 未清，按教材常规单元名。"],
+      traps:[], links:["3上·二 · 4下·四 · 6上·三"], anchor:"换个位置看，样子就变了。" },
+    { no:"四", name:"有趣的图形", s:"rec", tag:"",
+      what:"平面图形：长方形、正方形、三角形、圆。",
+      how:["由立体「印」出平面：印一印、描一描。第一句话就是「面在体上」。","把 1上·六 的积木拿来，用它的面印出图形，孩子自己发现“原来这个面是这个形”。"],
+      traps:["仍要守住「形」与「体」的区别。"],
+      links:["1上·六 认识图形（立体）→ 本单元（平面），一次课连讲"], anchor:"面在体上。" }
+  ]},
+  { id:"2s", grade:"二年级", term:"上册", short:"二上", stage:"低年级 1—2 年级", pages:119, units:[
+    { no:"六", name:"测量", s:"mea", tag:"度量线的起点",
+      what:"厘米、米。",
+      how:["先制造困境：用铅笔量、用手量，为什么会吵架？逼出“要有一根人人一样长的尺子”。","再给厘米尺，让孩子量自己的课桌、铅笔。"],
+      traps:["不从刻度 0 起量。","断尺量法：从刻度 3 量到 8，是 5 厘米，不是 8 厘米。"],
+      links:["2下·四 测量（分米、毫米、千米）"], anchor:"量长度，要先有「单位」。" },
+    { no:"四", name:"图形的变化", s:"mot", tag:"内容待核",
+      what:"观察图形的变化（目录仅给出单元名，具体内容以教材为准）。",
+      how:["作为运动线的起点，只要求“看出来变了”。"],
+      traps:[], links:["3下·二 图形的运动"], anchor:"变了吗？哪里变了？" }
+  ]},
+  { id:"2x", grade:"二年级", term:"下册", short:"二下", stage:"低年级 1—2 年级", pages:109, units:[
+    { no:"四", name:"测量", s:"mea", tag:"",
+      what:"分米、毫米、千米。长度单位家族成形。",
+      how:["毫米 < 厘米 < 分米 < 米 < 千米，相邻进率 10（米 → 千米为 1000）。","用“身体尺”（一拃、一步）估一估，再用尺核实。"],
+      traps:["单位换算只记 10，忘了米与千米之间是 1000。"],
+      links:["2上·六 → 本单元 → 3上·五 周长"], anchor:"长度单位相邻 ×10。" },
+    { no:"六", name:"认识图形", s:"rec", tag:"",
+      what:"认识角：直角、锐角、钝角。",
+      how:["做活动角：两根硬纸条钉在一起，张一张、合一合。","角的大小用张口比，不用边比。"],
+      traps:["角的大小与边画的长短无关 —— 全小学最顽固的一个错，必须用活动角反复演示。"],
+      links:["4上·二 线与角（角的度量）"], anchor:"角的大小只看张口。" }
+  ]},
+  { id:"3s", grade:"三年级", term:"上册", short:"三上", stage:"中年级 3—4 年级", pages:111, units:[
+    { no:"二", name:"观察物体", s:"rec", tag:"第 2 遍",
+      what:"从不同方向看物体，看到的形状不同（第二遍）。",
+      how:["同一组积木，这次要求“画出看到的形状”。"],
+      traps:[], links:["1下·二 · 4下·四"], anchor:"" },
+    { no:"五", name:"周长", s:"mea", tag:"★关键对比一",
+      what:"一条线：封闭图形一周的长度。长方形 C = 2(a+b)，正方形 C = 4a。",
+      how:["用绳子沿边绕一圈，再拉直去量。","把“一圈线”这个词说够，别急着上公式。"],
+      traps:["与面积混用。","拼合后周长会变：两个正方形拼成长方形，少了 2 条边。"],
+      links:["3下·五 面积（★对讲）","2上·六 / 2下·四 长度单位"], anchor:"周长是一条线。" }
+  ]},
+  { id:"3x", grade:"三年级", term:"下册", short:"三下", stage:"中年级 3—4 年级", pages:113, units:[
+    { no:"五", name:"面积", s:"mea", tag:"★关键对比一",
+      what:"一个面：物体表面或封闭图形的大小。面积单位 cm²、m²；长方形 S = ab，正方形 S = a²。",
+      how:["与周长对讲：同一张纸，“框”是周长，“铺满”是面积。","用 1 cm² 小方格铺满再数，公式是数出来的。"],
+      traps:["面积相邻单位进率是 100，不是 10（与长度不同，必须专门强调）。","周长与面积的单位混用（cm 与 cm²）。"],
+      links:["3上·五 周长（★对讲）","5上·四 多边形的面积"],
+      anchor:"周长是一条线，面积是一片面。",
+      verified:"教材用 1 平方厘米小纸片铺 1 平方分米大正方形，得出 1 平方分米 = 100 平方厘米、1 平方米 = 100 平方分米（PDF 第 60 页）。" },
+    { no:"四", name:"千克、克、吨", s:"mea", tag:"旁置",
+      what:"结构上同属「度量」：我们量过线、量过面，现在量“重量”。",
+      how:["顺带讲清“量什么用什么单位”。"],
+      traps:["把质量单位与长度、面积单位混着估。"], links:[], anchor:"量什么，用什么单位。" },
+    { no:"二", name:"图形的运动", s:"mot", tag:"第 2 遍",
+      what:"图形的运动（第二遍）。",
+      how:["与 5上·二 轴对称和平移对看。"],
+      traps:[], links:["5上·二 轴对称和平移"], anchor:"" }
+  ]},
+  { id:"4s", grade:"四年级", term:"上册", short:"四上", stage:"中年级 3—4 年级", pages:115, units:[
+    { no:"二", name:"线与角", s:"mea", tag:"度量 + 认识",
+      what:"直线 / 射线 / 线段；角的度量（度）与量角器；锐角、直角、钝角、平角、周角。",
+      how:["角还可以“量”：给它一个数，就从“认角”升到“量角”。","量角器对齐：中心对顶点、零线对一边。"],
+      traps:["量角器有两圈刻度，读错极其常见。","再次强调角的大小与边长无关。"],
+      links:["2下·六 认识角"], anchor:"角也有大小，可以用「度」说出来。" }
+  ]},
+  { id:"4x", grade:"四年级", term:"下册", short:"四下", stage:"中年级 3—4 年级", pages:117, units:[
+    { no:"二", name:"认识三角形和四边形", s:"rec", tag:"",
+      what:"三角形按角 / 按边分类；内角和 180°；三边关系；平行四边形与梯形的特征与高。",
+      how:["把三个角撕下来拼成一个平角，验证内角和。","画高：从顶点向对边作垂线。"],
+      traps:["底与高必须互相垂直。","平行四边形有两组底和高。"],
+      links:["5上·四 多边形的面积（前置）"], anchor:"三角形内角和 180°。" },
+    { no:"四", name:"观察物体", s:"rec", tag:"第 3 遍",
+      what:"观察物体（第三遍），开始涉及“看到的范围”。",
+      how:["同一组积木，这次问“挡住什么、看到多大范围”。"],
+      traps:[], links:["1下·二 · 3上·二 · 6上·三"], anchor:"" }
+  ]},
+  { id:"5s", grade:"五年级", term:"上册", short:"五上", stage:"高年级 5—6 年级", pages:125, units:[
+    { no:"四", name:"多边形的面积", s:"mea", tag:"转化核心",
+      what:"平行四边形、三角形、梯形面积公式，但真正要讲的是「转化」。",
+      how:["所有公式都从长方形推出来：平行四边形 → 剪拼成长方形；三角形 → 两个拼成平行四边形；梯形 → 两个拼成平行四边形。","抓住“转化”，三个公式不用背。"],
+      traps:["底与高不对应。","三角形与梯形公式里的 ÷2 是“两个拼一个”的记账，别当口诀背。"],
+      links:["3下·五 面积 → 本单元 → 5下·四 体积"],
+      anchor:"形状变了，面积没变 —— 所以能转化。",
+      verified:"单元首节就是「比较图形的面积」，用分割、移补说明“图形变了、面积没变”，这是全单元的钥匙（5上 印刷 49 → PDF 第 53 页）。" },
+    { no:"六", name:"组合图形的面积", s:"mea", tag:"",
+      what:"分割法 / 添补法求组合图形面积。",
+      how:["对“转化”的第二次练习：把不会算的图形，切成会算的图形。"],
+      traps:["切错导致重复计算或漏算。"], links:["5上·四 多边形的面积"], anchor:"切成会算的。" },
+    { no:"二", name:"轴对称和平移", s:"mot", tag:"",
+      what:"轴对称、平移，运动线的中段。",
+      how:["与 3下·二 连看：从“看出来”到“画出来”。"],
+      traps:["轴对称图形与“画对称轴”混。"], links:["3下·二 · 6下·三 旋转"], anchor:"动的是位置，不是形状。" }
+  ]},
+  { id:"5x", grade:"五年级", term:"下册", short:"五下", stage:"高年级 5—6 年级", pages:111, units:[
+    { no:"二", name:"长方体（一）", s:"mea", tag:"★关键对比二",
+      what:"面 / 棱 / 顶点；展开图；表面积。",
+      how:["表面积 = 把立体“展开成一张纸”求面积。","拿真盒子剪开，孩子自己数出六个面。"],
+      traps:["展开图找不准，六个面配对待错。"],
+      links:["本册·四 长方体（二）体积（★对讲）"], anchor:"展开，就变成了一个面积问题。",
+      verified:"首节「长方体的认识」，面 / 棱 / 顶点，并明确讨论「正方体是特殊的长方体吗」（PDF 第 15 页）。" },
+    { no:"四", name:"长方体（二）", s:"mea", tag:"★关键对比二",
+      what:"体积与容积：cm³ / dm³ / m³，长 × 宽 × 高，1 dm³ = 1 L。",
+      how:["体积 = 往里面塞 1 cm³ 小方块，数有多少个。","与表面积并排对比“面”与“体”。"],
+      traps:["cm² 与 cm³ 混。","容积与体积的差别（容器壁厚）。","体积相邻进率 1000。"],
+      links:["6上·一 圆 → 6下·一 圆柱体积（底面积×高）"], anchor:"塞满它，数方块。" }
+  ]},
+  { id:"6s", grade:"六年级", term:"上册", short:"六上", stage:"高年级 5—6 年级", pages:117, units:[
+    { no:"一", name:"圆", s:"mea", tag:"认识 + 度量",
+      what:"圆心、半径、直径；周长 C = πd = 2πr；面积 S = πr²（化圆为方，剪拼成近似长方形）。",
+      how:["让孩子自己用绳子量“周长 ÷ 直径”≈ 3.14 —— 把圆周率做成一次发现，而不是给一个公式。","面积用剪拼：把圆平均分成若干份，拼成近似长方形，长是半周长、宽是半径。"],
+      traps:["周长与面积公式混（2πr 与 πr²）。","半圆周长还要加直径。"],
+      links:["6下·一 圆柱与圆锥"], anchor:"圆大圆小，周长 ÷ 直径都是同一个数。",
+      verified:"首节「圆的认识（一）」从「套圈游戏公不公平」引入，得到圆心、半径、直径与 d = 2r（PDF 第 6 页）。" },
+    { no:"三", name:"观察物体", s:"rec", tag:"第 4 遍",
+      what:"观察物体（第四遍），含根据平面图形还原立体。",
+      how:["同上，最高阶的一遍。"],
+      traps:[], links:["1下·二 · 3上·二 · 4下·四"], anchor:"" }
+  ]},
+  { id:"6x", grade:"六年级", term:"下册", short:"六下", stage:"高年级 5—6 年级", pages:119, units:[
+    { no:"一", name:"圆柱与圆锥", s:"mea", tag:"收官",
+      what:"圆柱表面积 = 两个底面圆 + 侧面展开成长方形；圆柱体积 = 底面积 × 高；圆锥体积 = 等底等高圆柱的 1/3。",
+      how:["圆柱体积就是 5下“底面积 × 高”的直接推广 —— 所有直柱体统一。","圆锥的 1/3 用等底等高倒水实验验证：倒三次才灌满圆柱。"],
+      traps:["圆锥体积忘 ÷3。","侧面积与表面积混（题目要不要加两个底面）。"],
+      links:["6上·一 圆 → 本单元，两册开头连讲最顺"], anchor:"底面积 × 高，管所有直柱体。",
+      verified:"本章练习就是立体图形展开图求表面积、圆柱形钢柱、粮仓容积等实际问题（PDF 第 18 页）—— 6下开篇就在复用 6上的圆。" },
+    { no:"三", name:"图形的运动", s:"mot", tag:"第 3 遍",
+      what:"图形的运动（第三遍），加入旋转。",
+      how:["旋转三要素：中心、方向、角度。"],
+      traps:["顺时针 / 逆时针说反。"], links:["5上·二 轴对称和平移"], anchor:"转的是方向，不是形状。" }
+  ]}
+];
+
+const MODULES = [
+  { no:"A", star:false, title:"体与形分家", compose:"1上·六 认识图形 + 1下·四 有趣的图形 + 1下·二 观察物体（+ 1上·五 位置与顺序 铺垫）",
+    goal:"把「体」和「形」两个字分开，并且是「面在体上」地分开 —— 从立体的面上印出平面图形。" },
+  { no:"B", star:false, title:"给长度定规矩", compose:"2上·六 测量 + 2下·四 测量",
+    goal:"单位是怎么来的（因为不统一就会吵架），以及长度相邻进率 10。" },
+  { no:"C", star:false, title:"线的长度与面的角", compose:"2下·六 认识图形 + 4上·二 线与角",
+    goal:"角可以比张口，也可以量成度数；始终守住「角的大小与边长无关」。" },
+  { no:"D", star:true, title:"★ 线 vs 面", compose:"3上·五 周长 + 3下·五 面积（+ 3下·四 千克克吨 顺带）",
+    goal:"「框」与「铺满」的对讲；面积进率 100 与长度进率 10 的对比。本大纲第一次必须停下来的地方。" },
+  { no:"E", star:false, title:"转化", compose:"5上·四 多边形的面积 + 5上·六 组合图形的面积（前置 4下·二 三角形四边形）",
+    goal:"三个面积公式都由长方形推出来；抓住转化，就不用背公式。" },
+  { no:"F", star:true, title:"★ 面 vs 体", compose:"5下·二 长方体（一）+ 5下·四 长方体（二）",
+    goal:"展开是面，塞满是体；进率 1000 与面积 100 的对比。同一册里天然并列，正好对比。" },
+  { no:"G", star:true, title:"★ 圆与柱锥", compose:"6上·一 圆 + 6下·一 圆柱与圆锥",
+    goal:"圆周率是量出来的；底面积 × 高统一所有直柱体。两册开头连讲最顺 —— 6下开篇练习就在用 6上的圆。" }
+];
+
+const ERRORS = [
+  ["周长、面积不分", "周长是一条线，面积是一片面。"],
+  ["把长度单位当面积单位", "面积单位 = 长度单位前加「平方」：厘米 → 平方厘米。"],
+  ["进率混用，全都记成 10", "长度相邻 ×10，面积 ×100，体积 ×1000 —— 面有两条边、体有三条边同时放大。"],
+  ["看边长判断角的大小", "角的大小只看张口，与边画多长无关。"],
+  ["底和高不对应", "高必须垂直于所画的底；平行四边形有两组底和高。"],
+  ["三角形、梯形面积忘 ÷2", "÷2 是「两个拼一个」的记账，不是口诀。"],
+  ["圆锥体积忘 ÷3", "等底等高的圆锥，倒三次水才灌满圆柱。"],
+  ["半圆周长漏了直径", "半圆周长 = πr + 2r，不是 πr。"],
+  ["以为拉一拉面积不变", "长方形拉成平行四边形：周长不变，面积变小（高变小）。"],
+  ["把正方体叫正方形", "一年级起就把「体」和「形」分开念。"]
+];
+
+const QUESTIONS = [
+  { q:"用同样长的绳子围长方形，面积能一样吗？",
+    a:"周长相同（例如 20 cm）时，1×9 的面积只有 9 cm²，5×5 却有 25 cm²。<b>周长一样，面积可以差很多</b>；正方形是其中最大的。→ 动手实验 ①" },
+  { q:"两个正方形拼成一个长方形，周长变了吗？面积变了吗？",
+    a:"面积不变（还是那两个正方形），<b>周长变小</b>：拼在一起的两条边被“藏”进去了，少了 2 条边长。" },
+  { q:"把长方形框拉成平行四边形，周长和面积谁变？",
+    a:"<b>周长不变，面积变小</b>。因为四条边的长度没变，但高变小了（高 = 斜边 × cosθ）。→ 动手实验 ⑤" },
+  { q:"圆柱的体积公式和长方体有什么关系？",
+    a:"都是<b>底面积 × 高</b>。长方体 V = abh（底面 a×b），圆柱 V = πr²h（底面 πr²）。所有直柱体都统一在这个式子里。→ 动手实验 ②" },
+  { q:"面积单位为什么是 100 的进率，长度却是 10？",
+    a:"边长从 1 cm 变成 1 dm 是 ×10；面积是两条边相乘，所以是 10×10 = <b>100</b>。体积再多一条边，就是 10×10×10 = <b>1000</b>。→ 动手实验 ④" },
+  { q:"1 平方米等于多少平方厘米？",
+    a:"100 × 100 = <b>10000</b> 平方厘米。" },
+  { q:"三角形的面积为什么要除以 2？",
+    a:"两个<b>完全一样</b>的三角形能拼成一个平行四边形，这个平行四边形的面积是「底 × 高」，一个三角形正好是它的一半。→ 动手实验 ⑤ 同款“拼一拼”思路" },
+  { q:"圆周率 3.14 是背下来的，还是一个固定的事实？",
+    a:"是固定的事实：<b>不管圆多大，周长 ÷ 直径总是同一个数</b>，约 3.14159…。应该让孩子用绳子量出来，而不是背。→ 动手实验 ③" }
+];
+
+/* ============================================================
+   2. 视图切换 / 主题
+   ============================================================ */
+function showView(v){
+  $$(".view").forEach(x => x.classList.toggle("active", x.id === "view-" + v));
+  $$(".tab").forEach(x => x.setAttribute("aria-selected", String(x.dataset.v === v)));
+  try{ localStorage.setItem("geo-view", v); }catch(e){}
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+$$(".tab").forEach(t => t.addEventListener("click", () => showView(t.dataset.v)));
+
+function setTheme(t){
+  document.documentElement.dataset.theme = t;
+  try{ localStorage.setItem("geo-theme", t); }catch(e){}
+}
+$("#themeBtn").addEventListener("click", () => {
+  setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
+});
+try{
+  const st = localStorage.getItem("geo-theme");
+  if(st) setTheme(st);
+  else if(window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches) setTheme("dark");
+}catch(e){}
+
+/* ============================================================
+   3. 逐册大纲
+   ============================================================ */
+let curBook = 0, curFilter = "all";
+
+function renderRail(){
+  const host = $("#railList");
+  let html = "", lastStage = "";
+  BOOKS.forEach((b, i) => {
+    if(b.stage !== lastStage){
+      html += `<div class="stage">${b.stage}</div>`;
+      lastStage = b.stage;
+    }
+    const kinds = ["rec","mea","mot"];
+    const dots = kinds.map(k => {
+      const on = b.units.some(u => u.s === k);
+      return `<i class="${on ? "on " + k : ""}"></i>`;
+    }).join("");
+    html += `<button class="bk" data-i="${i}" aria-pressed="${i === curBook}">
+        <span class="bkname">${b.short}</span>
+        <span class="bkdots">${dots}</span>
+        <span class="bkmeta">${b.units.length} 单元</span>
+      </button>`;
+  });
+  host.innerHTML = html;
+  host.querySelectorAll(".bk").forEach(el => {
+    el.addEventListener("click", () => { curBook = +el.dataset.i; renderAll(); });
+  });
+}
+
+function renderDetail(){
+  const b = BOOKS[curBook];
+  const shown = b.units.filter(u => curFilter === "all" || u.s === curFilter);
+  const head = `<div class="detailhead">
+      <h2>${b.grade}${b.term} · ${b.short}</h2>
+      <span class="pageinfo">共 ${b.pages} 页 PDF ｜ 本线 ${b.units.length} 个单元${curFilter === "all" ? "" : "（当前筛选 " + STRANDS[curFilter].name + "）"}</span>
+    </div>`;
+  if(!shown.length){
+    $("#detail").innerHTML = head + `<div class="card" style="margin-top:12px; color:var(--muted)">这一册没有属于「${STRANDS[curFilter].name}」线的单元。</div>`;
+    return;
+  }
+  $("#detail").innerHTML = head + shown.map(u => `
+    <article class="unit" data-s="${u.s}">
+      <div class="uhead">
+        <h3>${u.no} ${u.name}</h3>
+        <span class="chip ${u.s}">${STRANDS[u.s].name}</span>
+        ${u.tag ? `<span class="chip ghost">${u.tag}</span>` : ""}
+      </div>
+      <p class="what">${u.what}</p>
+      <div class="rows">
+        ${u.how.length ? `<div class="row"><span class="lbl">怎么讲</span><div><ul>${u.how.map(x => `<li>${x}</li>`).join("")}</ul></div></div>` : ""}
+        ${u.traps.length ? `<div class="row"><span class="lbl">易错</span><div><ul>${u.traps.map(x => `<li>${x}</li>`).join("")}</ul></div></div>` : ""}
+        ${u.links.length ? `<div class="row"><span class="lbl">前连后接</span><div>${u.links.join(" · ")}</div></div>` : ""}
+      </div>
+      ${u.anchor ? `<div class="anchor">一句话锚点：「${u.anchor}」</div>` : ""}
+      ${u.verified ? `<div class="verified"><b>已核对</b>：${u.verified}</div>` : ""}
+    </article>`).join("");
+}
+
+function renderAll(){ renderRail(); renderDetail(); }
+
+$$(".fbtn").forEach(b => b.addEventListener("click", () => {
+  curFilter = b.dataset.s;
+  $$(".fbtn").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+  renderDetail();
+}));
+
+/* ============================================================
+   4. 讲授路线 / 易错 / 提问
+   ============================================================ */
+$("#modList").innerHTML = MODULES.map(m => `
+  <div class="mod ${m.star ? "star" : ""}">
+    <div class="no">${m.no}</div>
+    <div>
+      <h3>${m.title}${m.star ? '<span class="chip rec">关键对比</span>' : ""}</h3>
+      <div class="compose">${m.compose}</div>
+      <p>${m.goal}</p>
+    </div>
+  </div>`).join("");
+
+$("#errList").innerHTML = ERRORS.map(([bad, fix]) => `
+  <div class="err"><div class="bad">${bad}</div><div class="fix">${fix}</div></div>`).join("");
+
+$("#qList").innerHTML = QUESTIONS.map(x => `
+  <details><summary>${x.q}</summary><div class="ans">${x.a}</div></details>`).join("");
+
+/* ============================================================
+   5. 动手实验
+   ============================================================ */
+const svg = (w, h, inner, label) =>
+  `<svg viewBox="0 0 ${w} ${h}" width="${Math.min(w, 460)}" role="img" aria-label="${label}">${inner}</svg>`;
+
+/* ---- ① 周长 vs 面积 ---- */
+(function(){
+  const S = 26, pad = 16;
+  const viz = $("#pa-viz"), out = $("#pa-out");
+  const wEl = $("#pa-w"), hEl = $("#pa-h"), lock = $("#pa-lock");
+
+  function sync(){
+    if(lock.checked){
+      const w = +wEl.value;
+      hEl.value = 10 - w;
+      hEl.disabled = true;
+    } else {
+      hEl.disabled = false;
+    }
+  }
+  function render(){
+    sync();
+    const w = +wEl.value, h = +hEl.value;
+    const W = w * S + pad * 2, H = h * S + pad * 2;
+    let cells = "", grid = "";
+    for(let i = 0; i < w; i++) for(let j = 0; j < h; j++)
+      cells += `<rect x="${pad + i * S}" y="${pad + j * S}" width="${S}" height="${S}" fill="var(--mea)" opacity=".13"/>`;
+    for(let i = 0; i <= w; i++) grid += `<line x1="${pad + i * S}" y1="${pad}" x2="${pad + i * S}" y2="${pad + h * S}" stroke="var(--line)" stroke-width="1"/>`;
+    for(let j = 0; j <= h; j++) grid += `<line x1="${pad}" y1="${pad + j * S}" x2="${pad + w * S}" y2="${pad + j * S}" stroke="var(--line)" stroke-width="1"/>`;
+    const frame = `<rect x="${pad}" y="${pad}" width="${w * S}" height="${h * S}" fill="none" stroke="var(--mea)" stroke-width="4"/>`;
+    viz.innerHTML = svg(W, H, cells + grid + frame, `${w} 乘 ${h} 的长方形`);
+    $("#pa-wv").textContent = w + " cm";
+    $("#pa-hv").textContent = h + " cm";
+
+    const P = 2 * (w + h), A = w * h;
+    let html = `<div class="ro mea"><span>周长（一圈线）</span><b>2 × (${w} + ${h}) = ${P} cm</b></div>
+                <div class="ro rec"><span>面积（一片面）</span><b>${w} × ${h} = ${A} cm²</b></div>`;
+    if(lock.checked){
+      const rows = [1,2,3,4,5,6,7,8,9].map(x => ({w:x, h:10-x, a:x*(10-x)}));
+      const maxA = Math.max.apply(null, rows.map(r => r.a));
+      html += `<table class="minitable"><thead><tr><th>宽 × 高</th><th>周长</th><th>面积</th></tr></thead><tbody>` +
+        rows.map((r,i) => `<tr class="${r.a === maxA ? "hot" : ""}"><td>${r.w} × ${r.h}</td><td>20 cm</td><td>${r.a} cm²</td></tr>`).join("") +
+        `</tbody></table><p class="punch">周长都是 20 cm，面积却从 9 到 25 cm² —— 周长一样，面积可以差很多。</p>`;
+    }
+    out.innerHTML = html;
+  }
+  [wEl, hEl].forEach(el => el.addEventListener("input", render));
+  lock.addEventListener("change", render);
+  render();
+})();
+
+/* ---- ② 底面积 × 高 ---- */
+(function(){
+  const s = 24, pad = 20;
+  const viz = $("#cb-viz"), out = $("#cb-out");
+  const aEl = $("#cb-a"), bEl = $("#cb-b"), hEl = $("#cb-h");
+
+  function render(){
+    const a = +aEl.value, b = +bEl.value, h = +hEl.value;
+    const dx = b * s * 0.5, dy = b * s * 0.32;
+    const fw = a * s, fh = h * s;
+    const W = fw + dx + pad * 2, H = fh + dy + pad * 2;
+    const x0 = pad, y0 = H - pad;
+    const lines = [];
+    // front face grid
+    for(let i = 1; i < a; i++) lines.push([x0 + i*s, y0, x0 + i*s, y0 - fh]);
+    for(let j = 1; j < h; j++) lines.push([x0, y0 - j*s, x0 + fw, y0 - j*s]);
+    // top face grid
+    for(let j = 1; j < b; j++){
+      const t = j / b;
+      lines.push([x0 + t*dx, y0 - fh - t*dy, x0 + fw + t*dx, y0 - fh - t*dy]);
+    }
+    for(let i = 1; i < a; i++) lines.push([x0 + i*s, y0 - fh, x0 + i*s + dx, y0 - fh - dy]);
+    // right face grid
+    for(let j = 1; j < b; j++){
+      const t = j / b;
+      lines.push([x0 + fw + t*dx, y0 - t*dy, x0 + fw + t*dx, y0 - fh - t*dy]);
+    }
+    for(let i = 1; i < h; i++) lines.push([x0 + fw, y0 - i*s, x0 + fw + dx, y0 - i*s - dy]);
+    const grid = lines.map(([x1,y1,x2,y2]) => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="var(--line)" stroke-width="1"/>`).join("");
+    const faces = `
+      <path d="M${x0} ${y0} L${x0+fw} ${y0} L${x0+fw} ${y0-fh} L${x0} ${y0-fh}Z" fill="var(--mea)" opacity=".10" stroke="var(--mea)" stroke-width="2"/>
+      <path d="M${x0} ${y0-fh} L${x0+fw} ${y0-fh} L${x0+fw+dx} ${y0-fh-dy} L${x0+dx} ${y0-fh-dy}Z" fill="var(--rec)" opacity=".12" stroke="var(--rec)" stroke-width="1.6"/>
+      <path d="M${x0+fw} ${y0} L${x0+fw+dx} ${y0-dy} L${x0+fw+dx} ${y0-fh-dy} L${x0+fw} ${y0-fh}Z" fill="var(--mot)" opacity=".10" stroke="var(--mot)" stroke-width="1.6"/>`;
+    viz.innerHTML = svg(W, H, faces + grid, `${a} 乘 ${b} 乘 ${h} 的长方体`);
+    $("#cb-av").textContent = a;
+    $("#cb-bv").textContent = b;
+    $("#cb-hv").textContent = h;
+    const base = a * b, V = base * h;
+    out.innerHTML = `
+      <div class="ro mea"><span>底面积（一层几个）</span><b>${a} × ${b} = ${base} cm²</b></div>
+      <div class="ro mot"><span>层数</span><b>${h} 层</b></div>
+      <div class="ro rec"><span>体积</span><b>${base} × ${h} = ${V} cm³</b></div>
+      <p class="punch">体积 = 底面积 × 高：每层放 ${base} 个 1 cm³ 的小方块，放 ${h} 层。</p>`;
+  }
+  [aEl, bEl, hEl].forEach(el => el.addEventListener("input", render));
+  render();
+})();
+
+/* ---- ③ 圆 ---- */
+(function(){
+  const VB = 200;
+  // 固定画布：圆大圆小一眼看得出来（1 cm 直径 ≈ 15.6 px 半径）
+  const viz = $("#ci-viz"), out = $("#ci-out"), tbl = $("#ci-tbl");
+  const dEl = $("#ci-d");
+
+  function render(){
+    const d = +dEl.value, r = d / 2;
+    const cx = VB / 2, cy = VB / 2, rpx = r * (VB * 0.78 / 10);
+    const inner = `
+      <line x1="${cx - rpx}" y1="${cy}" x2="${cx + rpx}" y2="${cy}" stroke="var(--star)" stroke-width="1.6" stroke-dasharray="4 3"/>
+      <circle cx="${cx}" cy="${cy}" r="${rpx}" fill="var(--mea)" opacity=".10" stroke="var(--mea)" stroke-width="2.5"/>
+      <circle cx="${cx}" cy="${cy}" r="3" fill="var(--mea)"/>
+      <text x="${cx}" y="${VB - 8}" text-anchor="middle" font-size="12" fill="var(--muted)">直径 d = ${d} cm</text>`;
+    viz.innerHTML = svg(VB, VB, inner, `直径 ${d} 厘米的圆`);
+    $("#ci-dv").textContent = d + " cm";
+    const C = Math.PI * d;
+    out.innerHTML = `
+      <div class="ro mea"><span>周长 C = π × d</span><b>3.14159 × ${d} = ${C.toFixed(2)} cm</b></div>
+      <div class="ro rec"><span>C ÷ d</span><b>${(C / d).toFixed(4)}</b></div>`;
+    const ds = [1,2,4,6,8,10];
+    tbl.innerHTML = `<thead><tr><th>直径 d</th><th>周长 C = πd</th><th>C ÷ d</th></tr></thead><tbody>` +
+      ds.map(x => `<tr class="${x === d ? "hot" : ""}"><td>${x} cm</td><td>${(Math.PI*x).toFixed(2)} cm</td><td>${(Math.PI).toFixed(4)}</td></tr>`).join("") +
+      `</tbody></table>`;
+  }
+  dEl.addEventListener("input", render);
+  render();
+})();
+
+/* ---- ④ 进率 ---- */
+(function(){
+  const UNITS = {
+    1: { word:"长度", prefix:"", dim:"1 维", list:["毫米","厘米","分米","米"] },
+    2: { word:"面积", prefix:"平方", dim:"2 维", list:["平方毫米","平方厘米","平方分米","平方米"] },
+    3: { word:"体积", prefix:"立方", dim:"3 维", list:["立方毫米","立方厘米","立方分米","立方米"] }
+  };
+  const ladder = $("#unit-ladder"), out = $("#u-out");
+  const dimEl = $("#u-dim"), nEl = $("#u-n");
+
+  function render(){
+    const dim = +dimEl.value, n = +nEl.value;
+    const U = UNITS[dim], base = Math.pow(10, dim);
+    const factor = Math.pow(base, n);
+    const from = U.list[0], to = U.list[n] || U.list[U.list.length - 1];
+    ladder.innerHTML = U.list.map((u, i) => `
+      <div class="rung ${(i === 0 || i === n) ? "hot" : ""}">
+        <span class="u">1 ${u}</span>
+        <span class="v">${i === 0 ? "起点" : "= " + Math.pow(base, i).toLocaleString() + " " + from}</span>
+      </div>`).join("");
+    $("#u-nv").textContent = n + " 级";
+    let why = "";
+    if(dim === 1) why = `一维只有一条边放大 10 倍：10 = <b>10</b>`;
+    if(dim === 2) why = `二维有两条边同时放大 10 倍：10 × 10 = <b>100</b>`;
+    if(dim === 3) why = `三维有三条边同时放大 10 倍：10 × 10 × 10 = <b>1000</b>`;
+    out.innerHTML = `
+      <div class="ro ${dim === 1 ? "mea" : dim === 2 ? "rec" : "mot"}">
+        <span>1 ${to} =</span><b>${factor.toLocaleString()} ${from}</b></div>
+      <div class="ro" style="display:block">${why}${n > 1 ? `<br>跳 ${n} 级 = ${base.toLocaleString()} 的 ${n} 次方 = ${factor.toLocaleString()}` : ""}</div>
+      <p class="punch">${U.word}相邻进率 = ${base.toLocaleString()}（因为${U.dim}）。${dim === 1 ? "米 → 千米是 1000，不在这个 ×10 阶梯里。" : ""}</p>`;
+  }
+  [dimEl, nEl].forEach(el => el.addEventListener("input", render));
+  dimEl.addEventListener("change", render);
+  render();
+})();
+
+/* ---- ⑤ 拉一拉 ---- */
+(function(){
+  const s = 30, pad = 22, A = 6, B = 3;
+  const viz = $("#sh-viz"), out = $("#sh-out"), punch = $("#sh-punch");
+  const tEl = $("#sh-t");
+
+  function render(){
+    const th = +tEl.value, rad = th * Math.PI / 180;
+    const dxTop = B * Math.sin(rad) * s, hpx = B * Math.cos(rad) * s;
+    const W = A * s + dxTop + pad * 2, H = B * s + pad * 2;
+    const y0 = H - pad, x0 = pad;
+    const pts = `${x0},${y0} ${x0 + A*s},${y0} ${x0 + A*s + dxTop},${y0 - hpx} ${x0 + dxTop},${y0 - hpx}`;
+    const rect = `<rect x="${x0}" y="${y0 - B*s}" width="${A*s}" height="${B*s}" fill="none" stroke="var(--line)" stroke-width="1.5" stroke-dasharray="5 4"/>`;
+    const para = `<polygon points="${pts}" fill="var(--mot)" opacity=".14" stroke="var(--mot)" stroke-width="2.5"/>`;
+    const height = `<line x1="${x0 + dxTop}" y1="${y0 - hpx}" x2="${x0 + dxTop}" y2="${y0}" stroke="var(--star)" stroke-width="2" stroke-dasharray="4 3"/>
+      <text x="${x0 + dxTop + 6}" y="${y0 - hpx/2}" font-size="12" fill="var(--star)">高</text>`;
+    viz.innerHTML = svg(W, H, rect + para + height, `拉动 ${th} 度的平行四边形`);
+    $("#sh-tv").textContent = th + "°";
+    const h = B * Math.cos(rad), area = A * h, P = 2 * (A + B);
+    out.innerHTML = `
+      <div class="ro mea"><span>周长 = 2×(6+3)</span><b>${P} cm　（一直不变）</b></div>
+      <div class="ro rec"><span>面积 = 底 6 × 高 ${h.toFixed(2)}</span><b>${area.toFixed(2)} cm²　（${area < 18 ? "变小了" : "= 18 cm²"}）</b></div>
+      <div class="ro mot"><span>形状</span><b>${th === 0 ? "长方形" : "平行四边形"}</b></div>`;
+    punch.textContent = th === 0
+      ? "还没有拉：长方形 6 × 3 = 18 cm²。拖动滑块试试。"
+      : "四条边一条没短，周长不变；可高变矮了，面积跟着变小 —— 形状变了，量不一定跟着变。";
+  }
+  tEl.addEventListener("input", render);
+  render();
+})();
+
+/* ============================================================
+   6. 键盘
+   ============================================================ */
+document.addEventListener("keydown", (e) => {
+  if(e.target.matches("input, select, textarea")) return;
+  const active = $$(".view").findIndex(v => v.classList.contains("active"));
+  if(e.key === "ArrowRight" && active === 1){ curBook = (curBook + 1) % BOOKS.length; renderAll(); }
+  if(e.key === "ArrowLeft" && active === 1){ curBook = (curBook - 1 + BOOKS.length) % BOOKS.length; renderAll(); }
+  if(e.key === "t" || e.key === "T"){ setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark"); }
+  if(e.key === "1") showView("overview");
+  if(e.key === "2") showView("outline");
+  if(e.key === "3") showView("lab");
+  if(e.key === "4") showView("path");
+  if(e.key === "5") showView("qa");
+});
+
+/* 初始化 */
+renderAll();
+try{
+  const sv = localStorage.getItem("geo-view");
+  if(sv && document.getElementById("view-" + sv)) showView(sv);
+}catch(e){}
+</script>
+</body>
+</html>

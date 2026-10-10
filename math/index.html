@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>数学 · 图形与几何 — 学习馆</title>
+<meta name="description" content="北师大版小学数学「图形与几何」互动课堂（10 课 / 27 题 / 13 个动手实验）＋ 教师版讲解大纲与掌握程度检查。">
+<style>
+  :root{
+    --bg:#f4f6fa; --panel:#fff; --panel2:#f8fafc; --text:#131820; --muted:#5a6572;
+    --line:#e4e8ef; --line2:#eef1f6; --accent:#1f6feb; --soft:#eaf1fe;
+    --warm:#e0812a; --warmbg:#fdf4e7; --ok:#0f8a5f; --okbg:#e6f6ef;
+    --shadow:0 1px 2px rgba(16,24,40,.05),0 14px 34px -22px rgba(16,24,40,.45);
+    --r:18px;
+  }
+  html[data-theme="dark"]{
+    --bg:#0c1015; --panel:#141a21; --panel2:#19202a; --text:#e7ebf1; --muted:#98a3b3;
+    --line:#252d38; --line2:#1f262f; --accent:#6aa2ff; --soft:#15233c;
+    --warm:#e5a63f; --warmbg:#2a2113; --ok:#34d399; --okbg:#102a22;
+    --shadow:0 1px 2px rgba(0,0,0,.5),0 14px 34px -22px rgba(0,0,0,.9);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);min-height:100vh;
+    font:16px/1.7 -apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:980px;margin:0 auto;padding:20px 18px 64px}
+  .crumb{display:flex;align-items:center;gap:10px;margin-bottom:22px;font-size:14px}
+  .crumb a{text-decoration:none;color:var(--muted);border:1px solid var(--line);background:var(--panel);
+    padding:6px 12px;border-radius:99px}
+  .crumb a:hover{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 40%,transparent)}
+  .crumb .sp{margin-left:auto}
+  .ico{width:36px;height:36px;border:1px solid var(--line);background:var(--panel);color:var(--text);
+    border-radius:11px;cursor:pointer;display:grid;place-items:center;font-size:15px}
+  .ico:hover{background:var(--line2)}
+  .hero .kicker{color:var(--accent);font-weight:700;font-size:13.5px;letter-spacing:1.2px}
+  h1{font-size:clamp(25px,4vw,34px);line-height:1.3;margin:6px 0 10px;letter-spacing:-.4px}
+  .lead{font-size:16.5px;color:var(--muted);max-width:46em;margin:0}
+  h2.sec{font-size:19px;margin:34px 0 6px}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 16px}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media (max-width:760px){ .grid2{grid-template-columns:1fr} }
+  a.card{display:block;text-decoration:none;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
+    padding:20px;box-shadow:var(--shadow);transition:transform .16s,border-color .16s}
+  a.card:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--accent) 45%,transparent)}
+  a.card h3{margin:0 0 8px;font-size:19px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  a.card p{margin:0;color:var(--muted);font-size:14.5px}
+  a.card ul{margin:12px 0 0;padding-left:1.1em;color:var(--muted);font-size:14px}
+  a.card li{margin:3px 0}
+  a.card .go{margin-top:14px;color:var(--accent);font-weight:700;font-size:14.5px}
+  .tag{font-size:12px;padding:3px 10px;border-radius:99px;background:var(--soft);color:var(--accent);font-weight:600}
+  .tag.ok{background:var(--okbg);color:var(--ok)}
+
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;box-shadow:var(--shadow)}
+  .meter{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+  .meter b{font-size:26px;letter-spacing:-.5px}
+  .meter span{color:var(--muted);font-size:14px}
+  .pbar{height:9px;border-radius:99px;background:var(--line2);overflow:hidden;margin:12px 0 16px}
+  .pbar i{display:block;height:100%;width:0;background:var(--accent);transition:width .4s}
+  .lrow{display:flex;align-items:center;gap:10px;padding:7px 0;border-top:1px solid var(--line2);font-size:14.5px}
+  .lrow:first-of-type{border-top:none}
+  .lrow .n{width:24px;height:24px;flex:none;border-radius:8px;display:grid;place-items:center;
+    background:var(--line2);color:var(--muted);font-size:12.5px;font-weight:700}
+  .lrow.done .n{background:var(--okbg);color:var(--ok)}
+  .lrow .t{flex:1;min-width:0}
+  .lrow .s{color:var(--ok);font-size:12.5px;white-space:nowrap}
+  .lrow .q{color:var(--muted);font-size:12.5px;white-space:nowrap}
+  .rowbtn{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+  .btn{display:inline-block;text-decoration:none;border:1px solid var(--line);background:var(--panel);color:var(--text);
+    border-radius:12px;padding:11px 18px;font-weight:600;min-height:46px;cursor:pointer;font:inherit;line-height:1.5}
+  .btn:hover{background:var(--line2)}
+  .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+  .btn.primary:hover{filter:brightness(1.06)}
+  .hint{color:var(--muted);font-size:13px;margin-top:10px}
+  footer{margin-top:34px;color:var(--muted);font-size:12.5px;line-height:1.95;border-top:1px solid var(--line);padding-top:16px}
+  footer a{color:var(--accent);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="crumb">
+    <a href="../index.html">← 学习馆</a>
+    <span style="color:var(--muted)">数学 · 图形与几何</span>
+    <span class="sp"></span>
+    <button class="ico" id="themeBtn" title="切换深浅色 (T)">◐</button>
+  </div>
+
+  <header class="hero">
+    <div class="kicker">MATH · GEOMETRY</div>
+    <h1>数学 · 图形与几何<small style="display:block;font-size:15px;font-weight:500;color:var(--muted);margin-top:8px">
+      同一个图形，先认出来，再量出来，最后动起来 —— 从「体」和「形」分家，一路走到周长、面积、体积和圆。
+    </small></h1>
+  </header>
+
+  <h2 class="sec">两个入口</h2>
+  <p class="sub">孩子用左边，老师 / 家长用右边。</p>
+  <div class="grid2">
+    <a class="card" href="course.html">
+      <h3>🎓 互动课堂 <span class="tag">孩子用</span></h3>
+      <p>10 课、一步一步点，边玩边学。每道题立刻判对错。</p>
+      <ul>
+        <li>13 个可动手的小实验：滚一滚、铺方格、绕绳子、拉一拉、滚圆…</li>
+        <li>27 道即时判题：答错给一句提示，不扣分，可以再试</li>
+        <li>★ 只记「第一次就答对」的题，进度存在你自己的浏览器里</li>
+      </ul>
+      <div class="go">开始上课 →</div>
+    </a>
+
+    <a class="card" href="outline.html">
+      <h3>📋 教师版 <span class="tag">老师 / 家长用</span></h3>
+      <p>看孩子掌没掌握，以及每个知识点到底该怎么讲。</p>
+      <ul>
+        <li>逐册讲解大纲：讲什么 / 怎么讲 / 易错 / 一句话锚点</li>
+        <li>三条螺旋升层表 + 跨册串联 + 7 个讲授模块</li>
+        <li>10 条易错清单 + 8 个检验理解的问题（点击看答案）</li>
+      </ul>
+      <div class="go">打开教师版 →</div>
+    </a>
+  </div>
+
+  <h2 class="sec">掌握程度</h2>
+  <p class="sub">根据这台设备上「互动课堂」的作答记录自动统计。</p>
+  <div class="panel">
+    <div class="meter"><b id="m-ok">0</b><span>题已答对 ／ 共 27 题</span></div>
+    <div class="meter" style="margin:0"><b id="m-lesson">0</b><span>课已上完 ／ 共 10 课</span></div>
+    <div class="pbar"><i id="m-bar"></i></div>
+    <div id="lessonList"></div>
+    <div class="rowbtn">
+      <a class="btn primary" href="course.html" id="cta">开始上课 →</a>
+      <button class="btn" id="reset">清除本机进度</button>
+    </div>
+    <p class="hint" id="hint">
+      提示：进度只存在当前浏览器，换设备不同步；点「清除本机进度」可以让孩子从头再走一遍。
+    </p>
+  </div>
+
+  <h2 class="sec">这 10 课讲什么</h2>
+  <p class="sub">顺序按「认识 → 度量（长度·角·周长·面积·体积·圆）」排，与教材的螺旋顺序对齐但更适合连续讲。</p>
+  <div class="panel" id="syllabus"></div>
+
+  <footer>
+    <div>内容按北京师范大学出版社《义务教育教科书·数学》1—6 年级的编排顺序整理；文字、图示、练习均为原创制作，本站不收录教材原文或扫描件。</div>
+    <div>教材版权属北京师范大学出版社。本站仅作个人学习用途。</div>
+    <div>源码仓库：<a href="https://github.com/moneyache/kids_study">github.com/moneyache/kids_study</a></div>
+  </footer>
+</div>
+
+<script>
+"use strict";
+function $(s){ return document.querySelector(s); }
+function setTheme(t){ document.documentElement.dataset.theme = t; try { localStorage.setItem("kids-theme", t); } catch (e) {} }
+$("#themeBtn").onclick = function(){ setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark"); };
+try {
+  const t = localStorage.getItem("kids-theme");
+  if (t) setTheme(t);
+  else if (window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches) setTheme("dark");
+} catch (e) {}
+document.addEventListener("keydown", function(e){
+  if (e.target.matches("input, select, textarea")) return;
+  if (e.key === "t" || e.key === "T") setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
+});
+
+/* 与互动课堂一致的课程表（用于展示大纲和统计掌握程度） */
+const LESSONS = [
+  ["L1", "认识立体图形", "长方体 / 正方体 / 圆柱 / 球，先认识「体」", 2],
+  ["L2", "面在体上", "描一个面，得到长方形 / 正方形 / 三角形 / 圆", 2],
+  ["L3", "长度和单位", "为什么要统一单位；厘米、米，相邻 ×10", 2],
+  ["L4", "角：只看张口", "角的大小只看张口，跟边画多长无关", 2],
+  ["L5", "周长是一条线", "沿着边走一圈；长方形 2×(长+宽)", 2],
+  ["L6", "面积是一片面", "铺 1 cm² 小方格；长×宽；进率 100", 2],
+  ["L7", "形状变了，什么没变", "剪拼转化、拉一拉：周长和面积谁变了", 3],
+  ["L8", "体积是一个体", "塞 1 cm³ 小方块；底面积 × 高；进率 1000", 2],
+  ["L9", "圆：量出来的 3.14", "滚一圈量周长；周长 ÷ 直径 总是 π", 2],
+  ["L10", "闯关：整条线走一遍", "8 道混合题，从认图形到体积、圆", 8]
+];
+const TOTAL_Q = LESSONS.reduce(function(a, x){ return a + x[3]; }, 0);
+
+function readProg(){
+  try { return JSON.parse(localStorage.getItem("geo-course-v1") || "{}") || {}; }
+  catch (e) { return {}; }
+}
+function render(){
+  const p = readProg();
+  let ok = 0, done = 0;
+  LESSONS.forEach(function(L){
+    const st = p[L[0]];
+    if (!st) return;
+    ok += Object.keys(st.solved || {}).length;
+    if (st.done) done++;
+  });
+  $("#m-ok").textContent = ok;
+  $("#m-lesson").textContent = done;
+  $("#m-bar").style.width = (TOTAL_Q ? Math.round(ok / TOTAL_Q * 100) : 0) + "%";
+  $("#cta").textContent = ok === 0 ? "开始上课 →" : (ok >= TOTAL_Q ? "再走一遍全课 →" : "继续上课 →");
+  if (ok === 0) $("#hint").textContent = "还没有开始（或换了设备）。点「开始上课」从第 1 课走起。";
+  else if (ok >= TOTAL_Q) $("#hint").textContent = "27 题全部答对过了。可以点「清除本机进度」再从头走一遍，或者去看教师版的 8 个检验问题。";
+  else $("#hint").textContent = "提示：进度只存在当前浏览器，换设备不同步；点「清除本机进度」可以让孩子从头再走一遍。";
+
+  $("#lessonList").innerHTML = LESSONS.map(function(L){
+    const st = p[L[0]] || {};
+    const q = Object.keys(st.solved || {}).length;
+    const stars = Object.keys(st.first || {}).filter(function(k){ return st.first[k]; }).length;
+    return '<div class="lrow' + (st.done ? " done" : "") + '">' +
+      '<span class="n">' + (st.done ? "✓" : L[0].slice(1)) + '</span>' +
+      '<span class="t">' + L[1] + '<br><span class="q">' + L[2] + '</span></span>' +
+      '<span class="q">答对 ' + q + '/' + L[3] + '</span>' +
+      '<span class="s">' + (stars ? "★" + stars : "") + '</span></div>';
+  }).join("");
+  $("#syllabus").innerHTML = LESSONS.map(function(L, i){
+    return '<div class="lrow"><span class="n">' + (i + 1) + '</span>' +
+      '<span class="t">' + L[1] + '　<span class="q">' + L[2] + '</span></span>' +
+      '<span class="q">' + L[3] + ' 题</span></div>';
+  }).join("");
+}
+$("#reset").onclick = function(){
+  if (!confirm("清除本机学习进度？之后可以从第 1 课重新走一遍。")) return;
+  try { localStorage.removeItem("geo-course-v1"); } catch (e) {}
+  render();
+};
+render();
+</script>
+</body>
+</html>
