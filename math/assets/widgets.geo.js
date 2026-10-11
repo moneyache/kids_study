@@ -489,14 +489,14 @@ KIDS.W.ladder = function(host, step){
     const from = D.list[0], to = D.list[n] || D.list[D.list.length - 1];
     host.querySelector("#la-list").innerHTML = D.list.map(function(u, i){
       return '<div class="rung' + (i === n ? " hot" : "") + '"><span class="u">1 ' + u + '</span>' +
-        '<span class="v">' + (i === 0 ? "起点" : "= " + Math.pow(base, i).toLocaleString() + " " + from) + '</span></div>';
+        '<span class="v">' + (i === 0 ? "起点" : "= " + Math.pow(base, i) + " " + from) + '</span></div>';
     }).join("");
     host.querySelector("#la-nv").textContent = n + " 级";
     const why = dimCur === 1 ? "一条边 ×10，所以每级 ×10"
       : (dimCur === 2 ? "两条边一起 ×10：10 × 10，所以每级 ×100"
       : "三条边一起 ×10：10 × 10 × 10，所以每级 ×1000");
     host.querySelector("#la-out").innerHTML =
-      "1 " + to + " = <b>" + factor.toLocaleString() + " " + from + "</b><br>" + why +
+      "1 " + to + " = <b>" + factor + " " + from + "</b><br>" + why +
       (dimCur === 1 ? "" : "<br>量" + D.word + "时，边不止一条，所以进率比长度大。");
   }
   host.querySelector("#la-dim").onchange = draw;

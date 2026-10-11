@@ -3,14 +3,14 @@ window.TEACHER_DATA = {
   key: "num-course-v1",
   title: "数与数感",
   curriculum: [
-    { id: "N1", title: "数一数：1—10", practice: 2, quiz: 4 },
-    { id: "N2", title: "11—20：一捆和几根", practice: 2, quiz: 4 },
-    { id: "N3", title: "100 以内：满十进一", practice: 3, quiz: 4 },
-    { id: "N4", title: "千以内：一百一百地数", practice: 2, quiz: 4 },
-    { id: "N5", title: "万、亿：看数位说话", practice: 3, quiz: 4 },
-    { id: "N6", title: "比大小：先比位数", practice: 2, quiz: 4 },
-    { id: "N7", title: "数轴与负数", practice: 2, quiz: 4 },
-    { id: "N8", title: "数感闯关", practice: 2, quiz: 6 }
+    { id: "N1", title: "数一数：1—10", practice: 4, quiz: 4 },
+    { id: "N2", title: "11—20：一捆和几根", practice: 3, quiz: 4 },
+    { id: "N3", title: "100 以内：满十进一", practice: 4, quiz: 4 },
+    { id: "N4", title: "千以内：一百一百地数", practice: 3, quiz: 4 },
+    { id: "N5", title: "万、亿：看数位说话", practice: 4, quiz: 4 },
+    { id: "N6", title: "比大小：先比位数", practice: 4, quiz: 4 },
+    { id: "N7", title: "数轴与负数", practice: 4, quiz: 4 },
+    { id: "N8", title: "数感闯关", practice: 4, quiz: 6 }
   ],
   errors: [
     ["把「第 3 个」当成「一共 3 个」", "「一共几个」问总数，「第几个」问位置，两句话要分开说。"],

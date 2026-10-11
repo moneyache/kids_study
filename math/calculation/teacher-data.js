@@ -3,13 +3,13 @@ window.TEACHER_DATA = {
   key: "calc-course-v1",
   title: "数与运算",
   curriculum: [
-    { id: "C1", title: "10 以内加减", practice: 3, quiz: 4 },
-    { id: "C2", title: "20 以内进位加", practice: 3, quiz: 4 },
-    { id: "C3", title: "20 以内退位减", practice: 3, quiz: 4 },
-    { id: "C4", title: "100 以内加减", practice: 3, quiz: 4 },
-    { id: "C5", title: "乘法的意义", practice: 3, quiz: 4 },
-    { id: "C6", title: "乘法口诀", practice: 3, quiz: 4 },
-    { id: "C7", title: "除法：平均分", practice: 3, quiz: 4 },
+    { id: "C1", title: "10 以内加减", practice: 4, quiz: 4 },
+    { id: "C2", title: "20 以内进位加", practice: 4, quiz: 4 },
+    { id: "C3", title: "20 以内退位减", practice: 4, quiz: 4 },
+    { id: "C4", title: "100 以内加减", practice: 4, quiz: 4 },
+    { id: "C5", title: "乘法的意义", practice: 4, quiz: 4 },
+    { id: "C6", title: "乘法口诀", practice: 4, quiz: 4 },
+    { id: "C7", title: "除法：平均分", practice: 4, quiz: 4 },
     { id: "C8", title: "运算律闯关", practice: 4, quiz: 6 }
   ],
   errors: [

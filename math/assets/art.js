@@ -22,6 +22,12 @@
      cny10      元角分的换算（1元 = 10角）
      frame      相框与花边（周长情境）
      walk       小蚂蚁沿着边走一圈（周长）
+     span       用手量课桌（一拃不一样长）
+     meter      米尺：1 米 = 100 厘米
+     units      长度单位家族（×10 / ×1000）
+     est        估一估：比 1 米长还是短
+     line       画一条 6 厘米的线段
+     km         操场跑道：2 圈半 = 1 千米
    ============================================================ */
 window.KIDS = window.KIDS || { W: {}, ART: {}, pic: {} };
 (function(){
@@ -322,6 +328,94 @@ PIC.walk = () => {
     T(470, 166, "走过的长度 = 周长", 20, "var(--accent)", "middle", "700")
   );
 };
+
+/* 用手量课桌（一拃长度不一样） */
+PIC.span = () => S(
+  GROUND(238) +
+  '<rect x="150" y="150" width="360" height="16" rx="4" fill="var(--soft)" stroke="var(--line)" stroke-width="2"/>' +
+  '<rect x="170" y="166" width="14" height="72" fill="var(--line2)" stroke="var(--line)" stroke-width="2"/>' +
+  '<rect x="476" y="166" width="14" height="72" fill="var(--line2)" stroke="var(--line)" stroke-width="2"/>' +
+  [0, 1, 2, 3, 4].map(function(i){
+    return '<path d="M' + (176 + i * 62) + ' 150 q18 -24 36 0" fill="none" stroke="var(--warm)" stroke-width="4.5" stroke-linecap="round"/>';
+  }).join("") +
+  T(330, 58, "小明用手量课桌：6 拃", 18, "var(--text)", "middle", "600") +
+  T(330, 92, "小红也用手量：只有 4 拃", 18, "var(--accent)", "middle", "700") +
+  T(330, 212, "同一张桌子，为什么数不一样？", 16, "var(--muted)", "middle")
+);
+
+/* 1 米有多长（米尺） */
+PIC.meter = () => S(
+  T(330, 62, "1 米 = 100 厘米", 21, "var(--accent)", "middle", "700") +
+  '<rect x="70" y="120" width="520" height="30" rx="6" fill="var(--warmbg)" stroke="var(--warm)" stroke-width="2.5"/>' +
+  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(function(i){
+    const x = 70 + i * 52;
+    return '<line x1="' + x + '" y1="120" x2="' + x + '" y2="' + (i % 5 === 0 ? 100 : 110) + '" stroke="var(--warm)" stroke-width="2"/>' +
+      (i % 5 === 0 ? T(x, 92, String(i * 10), 12.5, "var(--warm)", "middle", "600") : "");
+  }).join("") +
+  T(330, 190, "米尺上一共 100 个小格，每一小格就是 1 厘米", 16, "var(--muted)", "middle") +
+  T(330, 220, "1 米大约比课桌高一点，差不多是你张开双臂那么宽", 15, "var(--muted)", "middle")
+);
+
+/* 长度单位家族（一路 ×10，只有米到千米 ×1000） */
+PIC.units = () => {
+  const names = ["毫米", "厘米", "分米", "米", "千米"];
+  const factors = ["×10", "×10", "×10", "×1000"];
+  let out = "";
+  names.forEach(function(n, i){
+    const x = 30 + i * 124, y = 96;
+    out += '<rect x="' + x + '" y="' + y + '" width="92" height="46" rx="10" fill="' + (i >= 4 ? "var(--warmbg)" : "var(--soft)") +
+      '" stroke="' + (i >= 4 ? "var(--warm)" : "var(--accent)") + '" stroke-width="2.2"/>' +
+      T(x + 46, y + 30, n, 18, "var(--text)", "middle", "700");
+    if (i < 4){
+      out += T(x + 108, y + 8, factors[i], 13.5, "var(--warm)", "middle", "700") +
+        '<line x1="' + (x + 96) + '" y1="' + (y + 23) + '" x2="' + (x + 122) + '" y2="' + (y + 23) + '" stroke="var(--warm)" stroke-width="2"/>' +
+        '<polygon points="' + (x + 124) + ',' + (y + 23) + ' ' + (x + 116) + ',' + (y + 19) + ' ' + (x + 116) + ',' + (y + 27) + '" fill="var(--warm)"/>';
+    }
+  });
+  return S(out +
+    T(330, 52, "长度单位家族：一路 ×10，只有米到千米是 ×1000", 19, "var(--text)", "middle", "600") +
+    T(330, 190, "1 千米 = 1000 米", 19, "var(--accent)", "middle", "700") +
+    T(330, 222, "1 米 = 10 分米 = 100 厘米 = 1000 毫米", 16, "var(--muted)", "middle"), 660, 250);
+};
+
+/* 估一估：哪些比 1 米长 */
+PIC.est = () => S(
+  T(330, 44, "先想：1 米有多长？", 19, "var(--text)", "middle", "700") +
+  ["橡皮", "铅笔", "课桌高", "教室门", "黑板"].map(function(nm, i){
+    const x = 44 + i * 118;
+    return '<rect x="' + x + '" y="90" width="96" height="76" rx="12" fill="var(--soft)" stroke="var(--accent)" stroke-width="2"/>' +
+      T(x + 48, 136, nm, 16, "var(--text)", "middle", "700");
+  }).join("") +
+  T(330, 196, "哪些比 1 米长？哪些比 1 米短？", 17, "var(--accent)", "middle", "700") +
+  T(330, 226, "1 米 ≈ 你张开双臂的宽度", 15, "var(--muted)", "middle"), 660, 250);
+
+/* 画一条线段 */
+PIC.line = () => {
+  const pad = 70, s = 48, n = 10;
+  let t = '<rect x="' + (pad - 6) + '" y="140" width="' + (n * s + 12) + '" height="28" rx="5" fill="var(--panel2)" stroke="var(--line)" stroke-width="1.6"/>';
+  for (let i = 0; i <= n; i++){
+    const x = pad + i * s;
+    t += '<line x1="' + x + '" y1="168" x2="' + x + '" y2="' + (i % 5 === 0 ? 148 : 156) + '" stroke="var(--muted)" stroke-width="' + (i % 5 === 0 ? 2.2 : 1.5) + '"/>' +
+      (i % 5 === 0 ? T(x, 188, String(i), 12.5, "var(--muted)", "middle", "600") : "");
+  }
+  return S(
+    t +
+    '<line x1="' + pad + '" y1="106" x2="' + (pad + 6 * s) + '" y2="106" stroke="var(--accent)" stroke-width="7" stroke-linecap="round"/>' +
+    '<circle cx="' + pad + '" cy="106" r="6" fill="var(--accent)"/>' +
+    '<circle cx="' + (pad + 6 * s) + '" cy="106" r="6" fill="var(--accent)"/>' +
+    T(pad + 3 * s, 88, "6 厘米", 16, "var(--accent)", "middle", "700") +
+    T(330, 44, "画一条 6 厘米长的线段", 19, "var(--text)", "middle", "700") +
+    T(330, 226, "笔尖从刻度 0 出发，画到刻度 6 —— 两头都点上小圆点", 15, "var(--muted)", "middle"), 660, 250);
+};
+
+/* 操场跑道：2 圈半 = 1 千米 */
+PIC.km = () => S(
+  '<ellipse cx="300" cy="140" rx="230" ry="86" fill="none" stroke="var(--line)" stroke-width="24"/>' +
+  '<ellipse cx="300" cy="140" rx="230" ry="86" fill="none" stroke="var(--soft)" stroke-width="15"/>' +
+  '<circle cx="300" cy="54" r="13" fill="var(--accent)"/>' +
+  T(300, 28, "跑道一圈 400 米", 15, "var(--accent)", "middle", "700") +
+  T(300, 132, "400 + 400 + 200 = 1000 米", 18, "var(--text)", "middle", "700") +
+  T(300, 166, "2 圈半 = 1 千米", 21, "var(--accent)", "middle", "700"), 660, 270);
 
 window.KIDS.pic = PIC;
 })();

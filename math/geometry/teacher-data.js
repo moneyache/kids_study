@@ -7,55 +7,55 @@ window.TEACHER_DATA = {
   {
    "id": "L1",
    "title": "认识立体图形",
-   "practice": 2,
+   "practice": 4,
    "quiz": 4
   },
   {
    "id": "L2",
    "title": "面在体上",
-   "practice": 2,
+   "practice": 3,
    "quiz": 4
   },
   {
    "id": "L3",
    "title": "长度和单位",
-   "practice": 2,
+   "practice": 4,
    "quiz": 4
   },
   {
    "id": "L4",
    "title": "角：只看张口",
-   "practice": 2,
+   "practice": 3,
    "quiz": 4
   },
   {
    "id": "L5",
    "title": "周长是一条线",
-   "practice": 2,
+   "practice": 4,
    "quiz": 4
   },
   {
    "id": "L6",
    "title": "面积是一片面",
-   "practice": 2,
+   "practice": 4,
    "quiz": 4
   },
   {
    "id": "L7",
    "title": "形状变了，什么没变",
-   "practice": 3,
+   "practice": 4,
    "quiz": 4
   },
   {
    "id": "L8",
    "title": "体积是一个体",
-   "practice": 2,
+   "practice": 4,
    "quiz": 4
   },
   {
    "id": "L9",
    "title": "圆：量出来的 3.14",
-   "practice": 2,
+   "practice": 4,
    "quiz": 4
   },
   {

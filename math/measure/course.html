@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>互动课堂 · 测量 — 学习馆</title>
+<link rel="stylesheet" href="../assets/course.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand" id="brand"></div>
+  <div class="bar" id="topbar"></div>
+</header>
+<main>
+  <aside class="rail">
+    <div class="railbox">
+      <div class="railhd">课程表 · 点一下进入</div>
+      <div id="railList"></div>
+    </div>
+  </aside>
+  <div>
+    <section class="stage" id="stage" aria-live="polite"></section>
+    <section class="stage" style="margin-top:16px" id="helpcard"></section>
+  </div>
+</main>
+<footer id="pagefoot" style="max-width:1080px;margin:0 auto;padding:0 16px 40px"></footer>
+<script src="../assets/course.js"></script>
+<script src="../assets/widgets.geo.js"></script>
+<script src="../assets/widgets.meas.js"></script>
+<script src="../assets/art.js"></script>
+<script src="data.js"></script>
+<script>KIDS.boot(window.COURSE_DATA);</script>
+</body>
+</html>
