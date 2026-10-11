@@ -1,7 +1,7 @@
 /* 教师数据 · 数与数感（跟北师大版课本走；依据见 numbers/TEXTBOOK-NOTES.md） */
 window.TEACHER_DATA = {
   key: "num-course-v1",
-  v: "textbook-1",
+  v: "textbook-2",
   title: "数与数感",
   curriculum: [
     { id: "N1", title: "生活中的数：数一数", practice: 5, quiz: 5 },

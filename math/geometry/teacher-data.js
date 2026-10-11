@@ -3,7 +3,7 @@
    3上·五、3下·五、5上·四、5下·二/四、6上·一），逐页依据见同目录 TEXTBOOK-NOTES.md。 */
 window.TEACHER_DATA = {
   key: "geo-course-v1",
-  v: "textbook-1",
+  v: "textbook-2",
   title: "图形与几何",
   theme: "geometry",
   curriculum: [

@@ -12,6 +12,7 @@
      dotarray   点子阵列（乘/除）   step {rows:4,cols:3,mode:"mul"|"div"}
      timestable 乘法口诀表         step {}
      oprule     运算律            step {mode:"swap"|"group"|"dist"}
+     abacus     算盘（上珠 5 / 下珠 1） step {places,target}
    ============================================================ */
 window.KIDS = window.KIDS || { W: {}, ART: {} };
 (function(){
@@ -412,6 +413,67 @@ KIDS.W.oprule = function(host, step){
   host.querySelectorAll("[data-m]").forEach(function(b){
     b.onclick = function(){ mode = b.dataset.m; draw(); };
   });
+  draw();
+};
+
+/* ⑪ 算盘（2下·24 认一认，拨一拨：1 颗下珠表示一，1 颗上珠表示五） */
+KIDS.W.abacus = function(host, step){
+  const places = step.places || ["千", "百", "十", "个"];
+  const target = step.target || 0;
+  const st = places.map(function(){ return { up: 0, low: 0 }; });
+  const gap = 70, x0 = 46, mid = 120, top = 46, bot = 226;
+  const Wd = x0 * 2 + gap * (places.length - 1), H = 262;
+  host.innerHTML = '<div class="viz" id="ab-viz"></div>' +
+    '<div class="wrow">' +
+      '<button class="wbtn" id="ab-rs" style="background:transparent;color:var(--muted);border-color:var(--line)">清空</button>' +
+      (target ? '<button class="wbtn" id="ab-go">检查</button>' : '') +
+    '</div><div class="wsum" id="ab-out"></div>';
+  const value = function(){
+    let v = 0;
+    st.forEach(function(c, i){ v += (c.up * 5 + c.low) * Math.pow(10, places.length - 1 - i); });
+    return v;
+  };
+  function draw(){
+    let inner = '<rect x="14" y="20" width="' + (Wd - 28) + '" height="' + (H - 40) + '" rx="10" fill="var(--panel)" stroke="var(--line)" stroke-width="1.6"/>';
+    inner += '<rect x="18" y="' + (mid - 4) + '" width="' + (Wd - 36) + '" height="9" rx="4" fill="var(--accent)" opacity=".55"/>';
+    st.forEach(function(c, i){
+      const x = x0 + i * gap;
+      inner += '<line x1="' + x + '" y1="26" x2="' + x + '" y2="' + (H - 26) + '" stroke="var(--line)" stroke-width="2"/>';
+      inner += '<text x="' + x + '" y="' + (H - 8) + '" text-anchor="middle" font-size="13" font-weight="700" fill="var(--muted)">' + places[i] + '位</text>';
+      const uy = c.up ? mid - 20 : top;
+      inner += '<ellipse class="ab-bead" data-p="' + i + '" data-u="1" cx="' + x + '" cy="' + uy + '" rx="21" ry="11.5" fill="' +
+        (c.up ? "var(--warm)" : "var(--soft)") + '" stroke="var(--accent)" stroke-width="1.8" style="cursor:pointer"/>';
+      for (let j = 0; j < 4; j++){
+        const ly = j < c.low ? mid + 16 + j * 24 : bot - (3 - j) * 24;
+        inner += '<ellipse class="ab-bead" data-p="' + i + '" data-j="' + j + '" cx="' + x + '" cy="' + ly + '" rx="21" ry="11.5" fill="' +
+          (j < c.low ? "var(--accent)" : "var(--soft)") + '" stroke="var(--accent)" stroke-width="1.8" style="cursor:pointer"/>';
+      }
+    });
+    host.querySelector("#ab-viz").innerHTML = B(Wd, H, inner, "算盘", 430);
+    host.querySelectorAll(".ab-bead").forEach(function(el){
+      el.onclick = function(){
+        const p = +el.dataset.p;
+        if (el.dataset.u === "1") st[p].up = st[p].up ? 0 : 1;
+        else {
+          const j = +el.dataset.j;
+          st[p].low = (st[p].low === j + 1) ? j : j + 1;
+        }
+        draw();
+      };
+    });
+    const v = value();
+    const detail = places.map(function(nm, i){ return nm + "位 " + (st[i].up * 5 + st[i].low); }).join("　");
+    host.querySelector("#ab-out").innerHTML = "算盘上现在是 <b>" + v + "</b>。<br>" + detail +
+      "<br>规矩：<b>1 颗下珠表示一，1 颗上珠表示五</b>；个位上满十，就往左边一位进 1。" +
+      (target ? "<br>目标：" + (v === target ? "拨出 <b>" + target + "</b> —— 现在正好是它 ✓" : "拨出 <b>" + target + "</b>，拨好后点「检查」。") : "");
+  }
+  host.querySelector("#ab-rs").onclick = function(){ st.forEach(function(c){ c.up = 0; c.low = 0; }); draw(); };
+  if (target) host.querySelector("#ab-go").onclick = function(){
+    const v = value();
+    host.querySelector("#ab-out").innerHTML = v === target
+      ? "对了！<b>" + target + "</b> 拨出来了。百位上的 9 就是「1 颗上珠 + 4 颗下珠」—— 一个档正好能拨到 9。"
+      : "现在拨的是 <b>" + v + "</b>，要拨 <b>" + target + "</b>。一位一位对：千位是几、百位是几、十位是几、个位是几。";
+  };
   draw();
 };
 })();

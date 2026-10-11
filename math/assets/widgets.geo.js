@@ -1,4 +1,4 @@
-/* 共享部件 · 图形与几何（从原 course.html 抽出，含插图与 14 个部件） */
+/* 共享部件 · 图形与几何（从原 course.html 抽出，含插图与 16 个部件） */
 (function(){
 const $ = s => document.querySelector(s);
 const $$ = s => Array.from(document.querySelectorAll(s));
@@ -504,5 +504,99 @@ KIDS.W.ladder = function(host, step){
   draw();
 };
 
+
+/* ⑮ 数角（2下·64 练一练 4：数一数，下面图形中各有几个角） */
+KIDS.W.countAngles = function(host, step){
+  const list = step.shapes || [3, 4, 5];
+  const marks = list.map(function(){ return {}; });
+  const NAME = { 3: "三角形", 4: "四边形", 5: "五边形" };
+  host.innerHTML = '<div class="viz" id="ca-viz" style="display:flex;gap:12px;flex-wrap:wrap"></div>' +
+    '<div class="wrow"><button class="wbtn" id="ca-rs" style="background:transparent;color:var(--muted);border-color:var(--line)">重来</button></div>' +
+    '<div class="wsum" id="ca-out"></div>';
+  function verts(n, cx, cy, r){
+    const out = [];
+    for (let i = 0; i < n; i++){
+      const a = -Math.PI / 2 + i * 2 * Math.PI / n;
+      out.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r]);
+    }
+    return out;
+  }
+  function draw(){
+    host.querySelector("#ca-viz").innerHTML = list.map(function(n, si){
+      const Wd = 158, H = 152, pts = verts(n, Wd / 2, H / 2 - 2, 52);
+      let inner = '<polygon points="' + pts.map(function(p){ return p[0].toFixed(1) + "," + p[1].toFixed(1); }).join(" ") +
+        '" fill="var(--soft)" stroke="var(--accent)" stroke-width="2.4"/>';
+      pts.forEach(function(p, i){
+        const on = !!marks[si][i];
+        inner += '<circle class="ca-dot" data-s="' + si + '" data-i="' + i + '" cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) +
+          '" r="' + (on ? 10 : 7.5) + '" fill="' + (on ? "var(--warm)" : "#fff") + '" stroke="var(--accent)" stroke-width="2" style="cursor:pointer"/>';
+      });
+      inner += '<text x="' + (Wd / 2) + '" y="' + (H - 10) + '" text-anchor="middle" font-size="13" font-weight="700" fill="var(--muted)">' +
+        (NAME[n] || n + " 边形") + '</text>';
+      return '<svg viewBox="0 0 ' + Wd + " " + H + '" style="width:100%;max-width:176px;height:auto" role="img" aria-label="数一数有几个角">' + inner + "</svg>";
+    }).join("");
+    host.querySelectorAll(".ca-dot").forEach(function(d){
+      d.onclick = function(){
+        const s = +d.dataset.s, i = +d.dataset.i;
+        if (marks[s][i]) delete marks[s][i]; else marks[s][i] = true;
+        draw();
+      };
+    });
+    const total = list.reduce(function(a, n){ return a + n; }, 0);
+    const found = marks.reduce(function(a, m){ return a + Object.keys(m).length; }, 0);
+    const line = list.map(function(n, si){ return (NAME[n] || n + " 边形") + "：" + Object.keys(marks[si]).length + " / " + n; }).join("　·　");
+    host.querySelector("#ca-out").innerHTML = "已经数出 <b>" + found + "</b> 个角（一共 " + total + " 个）。<br>" + line +
+      (found === total
+        ? "<br>全部数完 —— 每个顶点上就是一个角，<b>几个顶点就有几个角</b>。"
+        : "<br>点图形上的小圆点，把一个一个角标出来：<b>几个顶点就有几个角</b>。");
+  }
+  host.querySelector("#ca-rs").onclick = function(){ list.forEach(function(_, si){ marks[si] = {}; }); draw(); };
+  draw();
+};
+
+/* ⑯ 方格纸（3下·49 在方格中画面积等于 7 个方格的图形；3下·50 数一数图案的面积等于多少个方格） */
+KIDS.W.gridDraw = function(host, step){
+  const cols = step.cols || 9, rows = step.rows || 5, target = step.target || 7, cs = 34;
+  const on = {};
+  host.innerHTML = '<div class="viz" id="gd-viz"></div>' +
+    '<div class="wrow">' +
+      '<button class="wbtn" id="gd-one">帮我画一个长方形</button>' +
+      '<button class="wbtn" id="gd-rs" style="background:transparent;color:var(--muted);border-color:var(--line)">清空</button>' +
+    '</div><div class="wsum" id="gd-out"></div>';
+  const key = function(r, c){ return r + "-" + c; };
+  const clear = function(){ Object.keys(on).forEach(function(k){ delete on[k]; }); };
+  function draw(){
+    const Wd = cols * cs + 20, H = rows * cs + 20;
+    let inner = "";
+    for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++){
+      const lit = !!on[key(r, c)];
+      inner += '<rect class="gd-c" data-r="' + r + '" data-c="' + c + '" x="' + (10 + c * cs) + '" y="' + (10 + r * cs) +
+        '" width="' + cs + '" height="' + cs + '" fill="' + (lit ? "var(--accent)" : "var(--panel)") +
+        '" fill-opacity="' + (lit ? "0.85" : "1") + '" stroke="var(--line)" stroke-width="1" style="cursor:pointer"/>';
+    }
+    host.querySelector("#gd-viz").innerHTML = box(Wd, H, inner, "方格纸，每格 1 个方格", 520);
+    host.querySelectorAll(".gd-c").forEach(function(el){
+      el.onclick = function(){
+        const k = key(el.dataset.r, el.dataset.c);
+        if (on[k]) delete on[k]; else on[k] = true;
+        draw();
+      };
+    });
+    const n = Object.keys(on).length;
+    const msg = n === target
+      ? "正好 <b>" + n + "</b> 个方格 —— 这个图形的面积就是 " + target + " 个方格。换个形状再画一个，面积一样大。"
+      : (n < target ? "现在涂了 <b>" + n + "</b> 个方格，还差 " + (target - n) + " 个。"
+                    : "现在涂了 <b>" + n + "</b> 个方格，多了 " + (n - target) + " 个。");
+    host.querySelector("#gd-out").innerHTML = "目标：面积等于 <b>" + target + "</b> 个方格。<br>" + msg +
+      "<br>点格子涂上，再点一下擦掉；形状随便换，<b>面积只看涂了几格</b>。";
+  }
+  host.querySelector("#gd-one").onclick = function(){
+    clear();
+    for (let c = 0; c < target && c < cols; c++) on[key(0, c)] = true;
+    draw();
+  };
+  host.querySelector("#gd-rs").onclick = function(){ clear(); draw(); };
+  draw();
+};
 KIDS.box = box; KIDS.solid = solid; KIDS.plane = plane; KIDS.ART = ART;
 })();
