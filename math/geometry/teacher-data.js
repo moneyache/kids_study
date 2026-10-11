@@ -1,145 +1,47 @@
-/* 教师数据 · 图形与几何 */
+/* 教师数据 · 图形与几何
+   课表与题目都按北师大版课本编排（1上·六、1下·四、2上·四/六、2下·四/六、
+   3上·五、3下·五、5上·四、5下·二/四、6上·一），逐页依据见同目录 TEXTBOOK-NOTES.md。 */
 window.TEACHER_DATA = {
- "key": "geo-course-v1",
- "title": "图形与几何",
- "theme": "geometry",
- "curriculum": [
-  {
-   "id": "L1",
-   "title": "认识立体图形",
-   "practice": 4,
-   "quiz": 4
-  },
-  {
-   "id": "L2",
-   "title": "面在体上",
-   "practice": 3,
-   "quiz": 4
-  },
-  {
-   "id": "L3",
-   "title": "长度和单位",
-   "practice": 4,
-   "quiz": 4
-  },
-  {
-   "id": "L4",
-   "title": "角：只看张口",
-   "practice": 3,
-   "quiz": 4
-  },
-  {
-   "id": "L5",
-   "title": "周长是一条线",
-   "practice": 4,
-   "quiz": 4
-  },
-  {
-   "id": "L6",
-   "title": "面积是一片面",
-   "practice": 4,
-   "quiz": 4
-  },
-  {
-   "id": "L7",
-   "title": "形状变了，什么没变",
-   "practice": 4,
-   "quiz": 4
-  },
-  {
-   "id": "L8",
-   "title": "体积是一个体",
-   "practice": 4,
-   "quiz": 4
-  },
-  {
-   "id": "L9",
-   "title": "圆：量出来的 3.14",
-   "practice": 4,
-   "quiz": 4
-  },
-  {
-   "id": "L10",
-   "title": "闯关：整条线走一遍",
-   "practice": 8,
-   "quiz": 5
-  }
- ],
- "errors": [
-  [
-   "周长、面积不分",
-   "周长是一条线，面积是一片面。"
+  key: "geo-course-v1",
+  title: "图形与几何",
+  theme: "geometry",
+  curriculum: [
+    { id: "L1", title: "认识图形（1上·六）", practice: 5, quiz: 5 },
+    { id: "L2", title: "有趣的图形（1下·四）", practice: 4, quiz: 5 },
+    { id: "L3", title: "测量（2上·六 / 2下·四）", practice: 4, quiz: 5 },
+    { id: "L4", title: "认识图形（2下·六）", practice: 4, quiz: 5 },
+    { id: "L5", title: "周长（3上·五）", practice: 5, quiz: 5 },
+    { id: "L6", title: "面积（3下·五）", practice: 4, quiz: 5 },
+    { id: "L7", title: "多边形的面积（5上·四）", practice: 4, quiz: 5 },
+    { id: "L8", title: "长方体（5下·二、四）", practice: 4, quiz: 5 },
+    { id: "L9", title: "圆（6上·一）", practice: 7, quiz: 7 },
+    { id: "L10", title: "闯关：整条线走一遍", practice: 6, quiz: 6 }
   ],
-  [
-   "把长度单位当面积单位",
-   "面积单位 = 长度单位前加「平方」：厘米 → 平方厘米。"
+  errors: [
+    ["把「正方体」叫成「正方形」、把「球」叫成「圆」", "课本 1上·70 一上来就说「这样的是「体」」。从第一课起就把「体 / 形」两个字分开念：体有厚度、能捧起来，形是平的、只能画在纸上。"],
+    ["以为球也能描出一个圆", "课本 1下·36 的「做一做」只让用「平平的面」去印。球和平面的纸只碰在一个点，谁也描不出来；能描出圆的是圆柱上下那两个平平的面。"],
+    ["量长度不从刻度 0 起，直接读终点", "课本 2上·51 写得很清楚：量物体的长度时，要把一端对准尺子的 0。没对准 0 就要用「结束 − 开始」，别把终点刻度当成长度。"],
+    ["把米到千米也当成 ×10", "课本 2下·36：1 千米 = 1000 米。相邻单位之间才是 ×10，米到千米中间隔着三级，是 ×1000。"],
+    ["看边画得多长来判断角的大小", "课本 2下·64 用「活动角」反复演示：把角变大变小，动的只是张口。2下·66 还让孩子用小棒摆直角、锐角、钝角 —— 摆的时候能看见边很长，张口却没变。"],
+    ["判断直角靠眼睛猜", "课本 2下·65 的原话是「我用三角板比比」。把三角尺上的直角对准要量的角，两边完全重合才是直角，比直角大的是钝角。"],
+    ["周长和面积弄反", "课本 3上·45 是「用彩笔描出边线」，3下·58 第 1 题是「用红色描出边线、用蓝色涂出面」。做题前先问一句：题目要的是线，还是面？"],
+    ["面积单位的进率记成 10", "课本 3下·56：用 1 平方厘米的小纸片铺 1 平方分米的大正方形，一行 10 个、10 行，一共 100 张。所以长度进率是 10，面积进率是 100。"],
+    ["底和高不对应，或者三角形、梯形忘 ÷2", "课本 5上·51—52 专门练「画出给定底边上的高」；5上·56、59 用「两个完全一样的图形拼一个」说明 ÷2 的来历 —— 那个 2 是记账，不是口诀。"],
+    ["面积单位和体积单位写混", "课本 5下·38 把长度单位、面积单位、体积单位并排认一遍：1 厘米、1 平方厘米、1 立方厘米。算完先回头看题目问的是面还是体。"],
+    ["把直径当半径用", "课本 6上·3 让画一个半径 1.5 cm 的圆，并用 O、r、d 标出圆心、半径和直径。题目给半径，要先 ×2 变成直径，再乘 3.14。"],
+    ["以为形状一变，周长和面积就一起变", "课本 5上·49 的「出入相补」：分割、移补，面积没有改变。但把长方形拉斜，周长不变、面积会变小 —— 两个方向都要想一遍。"]
   ],
-  [
-   "进率混用，全都记成 10",
-   "长度相邻 ×10，面积 ×100，体积 ×1000 —— 面有两条边、体有三条边同时放大。"
+  questions: [
+    { q: "课本为什么先让大家用铅笔、用手量教室，而不是直接给尺子？", a: "课本 2上·49 让小组「选择一种测量工具」量教室，各组量出 40 支铅笔、72 拃……完全不一样；翻到 2上·51 那句「测量之前要有统一的标准」，孩子自己就懂了。<b>先制造困境，再给尺子</b>。→ 动手部件 unit（2上·49—51）" },
+    { q: "同一张课桌，为什么一个量出「4 支铅笔长」，另一个量出「5 拃长」？", a: "课本 2上·51 的原题。一支铅笔大约 18 厘米，一拃只有 10 厘米左右 —— 两种工具不一样长。两个人都没量错，是标准不统一。→ 动手部件 unit（2上·51）" },
+    { q: "1 下为什么让孩子「印一印、描一描」，而不是直接认图形？", a: "课本 1下·36 的开头是「做一做，你能得到哪些图形？认一认」。让孩子拿 1上·六 那几个「体」往纸上印，他自己会发现「原来这个面是这个形」——这就是「<b>面在体上</b>」。→ 动手部件 print、spot（1下·36）" },
+    { q: "角的大小为什么和边画多长无关？", a: "课本 2下·64 用「活动角」演示：把角变大变小，动的只是张口。可以拿一张照片放大给孩子看 —— 放大的是整张图，开口的比例没变。→ 动手部件 angle（2下·62—66）" },
+    { q: "周长和面积怎么让孩子彻底分开？", a: "对讲两页：课本 3上·45「用彩笔描出树叶和数学书封面的边线」是周长；3下·58 第 1 题「用红色描出边线、用蓝色涂出面」把两者并排放在一起。孩子能说出「量的是线还是面」，题就不会错。→ 动手部件 wrap、pavs（3上·45、3下·58）" },
+    { q: "面积单位的进率为什么是 100，长度却是 10？", a: "课本 3下·56：拿 1 平方厘米的小纸片去铺 1 平方分米的大正方形，一行摆 10 个、摆 10 行，一共 100 张。边长只放大 10 倍，面积是两条边一起放大，所以是 10 × 10 = 100。→ 动手部件 ladder（3下·56）" },
+    { q: "三角形、梯形的面积为什么要除以 2？", a: "课本 5上·56、59 的办法都是「两个<b>完全一样</b>的图形拼一个平行四边形」。拼出来的平行四边形面积是「底 × 高」，一个就是它的一半 —— 那个 ÷2 是记账，不是口诀。→ 动手部件 cut（5上·49、53、56）" },
+    { q: "体积单位的进率为什么是 1000？", a: "课本 5下·44：棱长为 1 dm 的正方体盒子中，每排放 10 个、每层 10 排、一共 10 层 → 10 × 10 × 10 = 1000 个。长度 10、面积 100、体积 1000，每多一条边就多乘一个 10。→ 动手部件 ladder、volume（5下·41—44）" },
+    { q: "圆周率 3.14 是背下来的，还是一个固定的事实？", a: "课本 6上·9 让孩子「找 3 个大小不同的圆片，分别测量出周长和直径，做一做，填一填」。量完会发现：不管圆多大，周长 ÷ 直径 总是同一个数。应该量出来，而不是背。→ 动手部件 rollc（6上·9—10）" },
+    { q: "这么多册，陪读时按什么顺序走？", a: "照课本的单元顺序：1上·六 认识图形 → 1下·四 有趣的图形 → 2上·六 / 2下·四 测量 → 2下·六 认识图形（角）→ 3上·五 周长 → 3下·五 面积 → 5上·四 多边形的面积 → 5下·二、四 长方体 → 6上·一 圆。和「测量」主题重叠的 L3 可以当复习课。" }
   ],
-  [
-   "看边长判断角的大小",
-   "角的大小只看张口，与边画多长无关。"
-  ],
-  [
-   "底和高不对应",
-   "高必须垂直于所画的底；平行四边形有两组底和高。"
-  ],
-  [
-   "三角形、梯形面积忘 ÷2",
-   "÷2 是「两个拼一个」的记账，不是口诀。"
-  ],
-  [
-   "圆锥体积忘 ÷3",
-   "等底等高的圆锥，倒三次水才灌满圆柱。"
-  ],
-  [
-   "半圆周长漏了直径",
-   "半圆周长 = πr + 2r，不是 πr。"
-  ],
-  [
-   "以为拉一拉面积不变",
-   "长方形拉成平行四边形：周长不变，面积变小（高变小）。"
-  ],
-  [
-   "把正方体叫正方形",
-   "一年级起就把「体」和「形」分开念。"
-  ]
- ],
- "questions": [
-  {
-   "q": "用同样长的绳子围长方形，面积能一样吗？",
-   "a": "周长相同（例如 20 cm）时，1×9 的面积只有 9 cm²，5×5 却有 25 cm²。<b>周长一样，面积可以差很多</b>；正方形是其中最大的。→ 动手实验 ①"
-  },
-  {
-   "q": "两个正方形拼成一个长方形，周长变了吗？面积变了吗？",
-   "a": "面积不变（还是那两个正方形），<b>周长变小</b>：拼在一起的两条边被“藏”进去了，少了 2 条边长。"
-  },
-  {
-   "q": "把长方形框拉成平行四边形，周长和面积谁变？",
-   "a": "<b>周长不变，面积变小</b>。因为四条边的长度没变，但高变小了（高 = 斜边 × cosθ）。→ 动手实验 ⑤"
-  },
-  {
-   "q": "圆柱的体积公式和长方体有什么关系？",
-   "a": "都是<b>底面积 × 高</b>。长方体 V = abh（底面 a×b），圆柱 V = πr²h（底面 πr²）。所有直柱体都统一在这个式子里。→ 动手实验 ②"
-  },
-  {
-   "q": "面积单位为什么是 100 的进率，长度却是 10？",
-   "a": "边长从 1 cm 变成 1 dm 是 ×10；面积是两条边相乘，所以是 10×10 = <b>100</b>。体积再多一条边，就是 10×10×10 = <b>1000</b>。→ 动手实验 ④"
-  },
-  {
-   "q": "1 平方米等于多少平方厘米？",
-   "a": "100 × 100 = <b>10000</b> 平方厘米。"
-  },
-  {
-   "q": "三角形的面积为什么要除以 2？",
-   "a": "两个<b>完全一样</b>的三角形能拼成一个平行四边形，这个平行四边形的面积是「底 × 高」，一个三角形正好是它的一半。→ 动手实验 ⑤ 同款“拼一拼”思路"
-  },
-  {
-   "q": "圆周率 3.14 是背下来的，还是一个固定的事实？",
-   "a": "是固定的事实：<b>不管圆多大，周长 ÷ 直径总是同一个数</b>，约 3.14159…。应该让孩子用绳子量出来，而不是背。→ 动手实验 ③"
-  }
- ],
- "outlineHtml": "    <h2 class=\"sec\">一句话总纲</h2>\n    <p class=\"lede\">同一个图形，先认出来，再量出来，最后动起来。翻页顺序是螺旋，知识本体是三条直线。</p>\n\n    <div class=\"thesis\">\n      12 册里「图形」出现过十几次，其实只有三件事各走了三遍：<b>认识</b>（它是什么样）、\n      <b>度量</b>（它有多大）、<b>运动</b>（它怎么变）。\n      三条线的关系是：<span class=\"hl\">认识给对象，度量给数，运动给关系</span>。\n    </div>\n\n    <div class=\"strandgrid\">\n      <div class=\"strand\">\n        <h3><i class=\"dot rec\"></i>认识 · 它是什么样</h3>\n        <p>升级的是「特征越来越准、分类越来越严」，不是换新东西。</p>\n        <div class=\"chain\">实物（1上）→ 平面图形（1下）→ 角（2下）→ 三角形四边形（4下）→ 圆（6上）→ 圆柱圆锥（6下）</div>\n      </div>\n      <div class=\"strand\">\n        <h3><i class=\"dot mea\"></i>度量 · 它有多大</h3>\n        <p>升级的是「量什么 / 用什么单位 / 为什么是这个单位」。</p>\n        <div class=\"chain\">长度（2上·2下）→ 角（4上）→ 周长（3上）→ 面积（3下）→ 多边形面积（5上）→ 体积（5下）→ 圆的度量（6上）</div>\n      </div>\n      <div class=\"strand\">\n        <h3><i class=\"dot mot\"></i>运动 · 它怎么变</h3>\n        <p>升级的是「从看形状变了，到看什么没变」。</p>\n        <div class=\"chain\">图形的变化（2上）→ 图形的运动（3下）→ 轴对称和平移（5上）→ 旋转（6下）</div>\n      </div>\n    </div>\n\n    <div class=\"kpis\" style=\"margin-bottom:16px\">\n      <div class=\"kpi\"><b>12</b><span>册教材，1—6 年级</span></div>\n      <div class=\"kpi\"><b>10</b><span>属于本线的单元</span></div>\n      <div class=\"kpi\"><b>4</b><span>次「观察物体」</span></div>\n      <div class=\"kpi\"><b>3</b><span>次关键对比</span></div>\n      <div class=\"kpi\"><b>8</b><span>个检验问题</span></div>\n    </div>\n\n    <h2 class=\"sec\">三条螺旋升层表</h2>\n    <p class=\"lede\">同一个主题，隔一两册升一层，而不是“换一个世界”。</p>\n    <div class=\"tblwrap\">\n      <table>\n        <thead><tr><th style=\"width:92px\">主题</th><th>第一层（1—2 年级）</th><th>第二层（3—4 年级）</th><th>第三层（5—6 年级）</th></tr></thead>\n        <tbody>\n          <tr><td><i class=\"dot rec\"></i> 认识</td><td>立体 / 平面的命名<br><span class=\"pageinfo\">1上·六 · 1下·四</span></td><td>角、三角形四边形的特征与分类<br><span class=\"pageinfo\">2下·六 · 4下·二</span></td><td>圆的特征、圆柱圆锥<br><span class=\"pageinfo\">6上·一 · 6下·一</span></td></tr>\n          <tr><td><i class=\"dot mea\"></i> 度量</td><td>长度单位：厘米米 → 分米毫米千米<br><span class=\"pageinfo\">2上·六 · 2下·四</span></td><td>角、周长、面积<br><span class=\"pageinfo\">4上·二 · 3上·五 · 3下·五</span></td><td>多边形面积、体积、圆的度量<br><span class=\"pageinfo\">5上·四 · 5下·四 · 6上·一</span></td></tr>\n          <tr><td><i class=\"dot mot\"></i> 运动</td><td>图形的变化<br><span class=\"pageinfo\">2上·四</span></td><td>图形的运动、轴对称和平移<br><span class=\"pageinfo\">3下·二 · 5上·二</span></td><td>旋转<br><span class=\"pageinfo\">6下·三</span></td></tr>\n          <tr><td><span class=\"pageinfo\">贯穿</span></td><td>观察物体<br><span class=\"pageinfo\">1下·二</span></td><td>观察物体<br><span class=\"pageinfo\">3上·二 · 4下·四</span></td><td>观察物体<br><span class=\"pageinfo\">6上·三</span></td></tr>\n        </tbody>\n      </table>\n    </div>\n\n    <h2 class=\"sec\" style=\"margin-top:22px\">度量链：本线主轴</h2>\n    <p class=\"lede\">长度 → 面积 → 体积 是<b>同一个动作</b>重复三遍：用单位去铺，只是铺在线上、面上、体里。</p>\n    <div class=\"chainline\">长度 → 角 → 周长(一条线) → 面积(一片面) → 多边形面积(转化) → 体积(一个体) → 圆(量出来的 π) → 柱锥(底面积×高)</div>\n    <div class=\"card\" style=\"margin-top:14px\">\n      <div class=\"rows\">\n        <div class=\"row\"><span class=\"lbl\">第 1 句话</span><div>长度、面积、体积不是三件事，是同一个动作在一维、二维、三维各做一遍。</div></div>\n        <div class=\"row\"><span class=\"lbl\">第 2 句话</span><div>进率随维度变：长度相邻 <b>×10</b>，面积相邻 <b>×100</b>，体积相邻 <b>×1000</b> —— 因为面积有两条边同时放大 10 倍，体积有三条边。</div></div>\n        <div class=\"row\"><span class=\"lbl\">第 3 句话</span><div>公式不是背的，是“数单位个数”数出来的：面积和体积公式都能从长方形出发推出来。</div></div>\n      </div>\n    </div>\n\n    <h2 class=\"sec\" style=\"margin-top:22px\">★ 三次关键对比</h2>\n    <p class=\"lede\">全大纲最值得停下来的三个地方，每个都配了一个可动手的实验。</p>\n    <div class=\"strandgrid\">\n      <div class=\"strand\"><h3>① 线 vs 面</h3><p><b>3上·五 周长</b> ↔ <b>3下·五 面积</b>。同一张纸，「框」是一圈线，「铺满」是一片面。</p><p style=\"color:var(--accent)\">→ 动手实验 ①</p></div>\n      <div class=\"strand\"><h3>② 面 vs 体</h3><p><b>5下·二 表面积</b> ↔ <b>5下·四 体积</b>。同一个盒子，「展开」是面，「塞满」是体。</p><p style=\"color:var(--accent)\">→ 动手实验 ②</p></div>\n      <div class=\"strand\"><h3>③ 形变 vs 量变</h3><p><b>5上·四 首节「分割移补」</b> + 长方形拉成平行四边形：形状变了，<b>什么没变</b>？</p><p style=\"color:var(--accent)\">→ 动手实验 ⑤</p></div>\n    </div>\n  \n<h2 class=\"sec\" style=\"margin-top:26px\">逐册大纲</h2>\n<p class=\"lede\">只列属于「图形与几何」这条线的单元，按册排列。</p>\n<h3 class=\"bookhd\">一年级上册 · 一上 <span class=\"pageinfo\">共 109 页 PDF</span></h3><article class=\"unit\" data-s=\"rec\"><div class=\"uhead\"><h3>六 认识图形</h3><span class=\"chip rec\">认识</span><span class=\"chip ghost\">起点</span></div><p class=\"what\">只做一件事：摸与认。长方体、正方体、圆柱、球，全是「体」。</p><div class=\"rows\"><div class=\"row\"><span class=\"lbl\">怎么讲</span><div><ul><li>鞋盒、魔方、易拉罐、皮球各来一个，滚一滚、推一推、摞一摞，按「能不能滚、有几个平平的面」分类。</li><li>不要求说定义，只要求叫得出、分得开。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">易错</span><div><ul><li>把「正方体」叫成「正方形」、把「球」叫成「圆」。从这一课起就把「体 / 形」两个字分开念。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">前连后接</span><div>1下·四 有趣的图形（面在体上）</div></div></div><div class=\"anchor\">一句话锚点：「这样的是「体」。」</div></article><article class=\"unit\" data-s=\"rec\"><div class=\"uhead\"><h3>五 位置与顺序</h3><span class=\"chip rec\">认识</span><span class=\"chip ghost\">铺垫</span></div><p class=\"what\">上下、前后、左右。为 1下「观察物体」预备方位语感。</p><div class=\"rows\"><div class=\"row\"><span class=\"lbl\">怎么讲</span><div><ul><li>站在教室中间说清“谁在谁的前面”，不必当图形课讲。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">前连后接</span><div>1下·二 观察物体</div></div></div></article><h3 class=\"bookhd\">一年级下册 · 一下 <span class=\"pageinfo\">共 99 页 PDF</span></h3><article class=\"unit\" data-s=\"rec\"><div class=\"uhead\"><h3>二 观察物体</h3><span class=\"chip rec\">认识</span><span class=\"chip ghost\">第 1 遍</span></div><p class=\"what\">从不同方向看同一个物体，看到的样子不同。</p><div class=\"rows\"><div class=\"row\"><span class=\"lbl\">怎么讲</span><div><ul><li>同一组积木，四个年级反复用：这里只要求“看到的不一样”。</li><li>单元名 OCR 未清，按教材常规单元名。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">前连后接</span><div>3上·二 · 4下·四 · 6上·三</div></div></div><div class=\"anchor\">一句话锚点：「换个位置看，样子就变了。」</div></article><article class=\"unit\" data-s=\"rec\"><div class=\"uhead\"><h3>四 有趣的图形</h3><span class=\"chip rec\">认识</span></div><p class=\"what\">平面图形：长方形、正方形、三角形、圆。</p><div class=\"rows\"><div class=\"row\"><span class=\"lbl\">怎么讲</span><div><ul><li>由立体「印」出平面：印一印、描一描。第一句话就是「面在体上」。</li><li>把 1上·六 的积木拿来，用它的面印出图形，孩子自己发现“原来这个面是这个形”。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">易错</span><div><ul><li>仍要守住「形」与「体」的区别。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">前连后接</span><div>1上·六 认识图形（立体）→ 本单元（平面），一次课连讲</div></div></div><div class=\"anchor\">一句话锚点：「面在体上。」</div></article><h3 class=\"bookhd\">二年级上册 · 二上 <span class=\"pageinfo\">共 119 页 PDF</span></h3><article class=\"unit\" data-s=\"mea\"><div class=\"uhead\"><h3>六 测量</h3><span class=\"chip mea\">度量</span><span class=\"chip ghost\">度量线的起点</span></div><p class=\"what\">厘米、米。</p><div class=\"rows\"><div class=\"row\"><span class=\"lbl\">怎么讲</span><div><ul><li>先制造困境：用铅笔量、用手量，为什么会吵架？逼出“要有一根人人一样长的尺子”。</li><li>再给厘米尺，让孩子量自己的课桌、铅笔。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">易错</span><div><ul><li>不从刻度 0 起量。</li><li>断尺量法：从刻度 3 量到 8，是 5 厘米，不是 8 厘米。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">前连后接</span><div>2下·四 测量（分米、毫米、千米）</div></div></div><div class=\"anchor\">一句话锚点：「量长度，要先有「单位」。」</div></article><article class=\"unit\" data-s=\"mot\"><div class=\"uhead\"><h3>四 图形的变化</h3><span class=\"chip mot\">运动</span><span class=\"chip ghost\">内容待核</span></div><p class=\"what\">观察图形的变化（目录仅给出单元名，具体内容以教材为准）。</p><div class=\"rows\"><div class=\"row\"><span class=\"lbl\">怎么讲</span><div><ul><li>作为运动线的起点，只要求“看出来变了”。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">前连后接</span><div>3下·二 图形的运动</div></div></div><div class=\"anchor\">一句话锚点：「变了吗？哪里变了？」</div></article><h3 class=\"bookhd\">二年级下册 · 二下 <span class=\"pageinfo\">共 109 页 PDF</span></h3><article class=\"unit\" data-s=\"mea\"><div class=\"uhead\"><h3>四 测量</h3><span class=\"chip mea\">度量</span></div><p class=\"what\">分米、毫米、千米。长度单位家族成形。</p><div class=\"rows\"><div class=\"row\"><span class=\"lbl\">怎么讲</span><div><ul><li>毫米 < 厘米 < 分米 < 米 < 千米，相邻进率 10（米 → 千米为 1000）。</li><li>用“身体尺”（一拃、一步）估一估，再用尺核实。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">易错</span><div><ul><li>单位换算只记 10，忘了米与千米之间是 1000。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">前连后接</span><div>2上·六 → 本单元 → 3上·五 周长</div></div></div><div class=\"anchor\">一句话锚点：「长度单位相邻 ×10。」</div></article><article class=\"unit\" data-s=\"rec\"><div class=\"uhead\"><h3>六 认识图形</h3><span class=\"chip rec\">认识</span></div><p class=\"what\">认识角：直角、锐角、钝角。</p><div class=\"rows\"><div class=\"row\"><span class=\"lbl\">怎么讲</span><div><ul><li>做活动角：两根硬纸条钉在一起，张一张、合一合。</li><li>角的大小用张口比，不用边比。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">易错</span><div><ul><li>角的大小与边画的长短无关 —— 全小学最顽固的一个错，必须用活动角反复演示。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">前连后接</span><div>4上·二 线与角（角的度量）</div></div></div><div class=\"anchor\">一句话锚点：「角的大小只看张口。」</div></article><h3 class=\"bookhd\">三年级上册 · 三上 <span class=\"pageinfo\">共 111 页 PDF</span></h3><article class=\"unit\" data-s=\"rec\"><div class=\"uhead\"><h3>二 观察物体</h3><span class=\"chip rec\">认识</span><span class=\"chip ghost\">第 2 遍</span></div><p class=\"what\">从不同方向看物体，看到的形状不同（第二遍）。</p><div class=\"rows\"><div class=\"row\"><span class=\"lbl\">怎么讲</span><div><ul><li>同一组积木，这次要求“画出看到的形状”。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">前连后接</span><div>1下·二 · 4下·四</div></div></div></article><article class=\"unit\" data-s=\"mea\"><div class=\"uhead\"><h3>五 周长</h3><span class=\"chip mea\">度量</span><span class=\"chip ghost\">★关键对比一</span></div><p class=\"what\">一条线：封闭图形一周的长度。长方形 C = 2(a+b)，正方形 C = 4a。</p><div class=\"rows\"><div class=\"row\"><span class=\"lbl\">怎么讲</span><div><ul><li>用绳子沿边绕一圈，再拉直去量。</li><li>把“一圈线”这个词说够，别急着上公式。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">易错</span><div><ul><li>与面积混用。</li><li>拼合后周长会变：两个正方形拼成长方形，少了 2 条边。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">前连后接</span><div>3下·五 面积（★对讲） · 2上·六 / 2下·四 长度单位</div></div></div><div class=\"anchor\">一句话锚点：「周长是一条线。」</div></article><h3 class=\"bookhd\">三年级下册 · 三下 <span class=\"pageinfo\">共 113 页 PDF</span></h3><article class=\"unit\" data-s=\"mea\"><div class=\"uhead\"><h3>五 面积</h3><span class=\"chip mea\">度量</span><span class=\"chip ghost\">★关键对比一</span></div><p class=\"what\">一个面：物体表面或封闭图形的大小。面积单位 cm²、m²；长方形 S = ab，正方形 S = a²。</p><div class=\"rows\"><div class=\"row\"><span class=\"lbl\">怎么讲</span><div><ul><li>与周长对讲：同一张纸，“框”是周长，“铺满”是面积。</li><li>用 1 cm² 小方格铺满再数，公式是数出来的。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">易错</span><div><ul><li>面积相邻单位进率是 100，不是 10（与长度不同，必须专门强调）。</li><li>周长与面积的单位混用（cm 与 cm²）。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">前连后接</span><div>3上·五 周长（★对讲） · 5上·四 多边形的面积</div></div></div><div class=\"anchor\">一句话锚点：「周长是一条线，面积是一片面。」</div><div class=\"verified\"><b>已核对</b>：教材用 1 平方厘米小纸片铺 1 平方分米大正方形，得出 1 平方分米 = 100 平方厘米、1 平方米 = 100 平方分米（PDF 第 60 页）。</div></article><article class=\"unit\" data-s=\"mea\"><div class=\"uhead\"><h3>四 千克、克、吨</h3><span class=\"chip mea\">度量</span><span class=\"chip ghost\">旁置</span></div><p class=\"what\">结构上同属「度量」：我们量过线、量过面，现在量“重量”。</p><div class=\"rows\"><div class=\"row\"><span class=\"lbl\">怎么讲</span><div><ul><li>顺带讲清“量什么用什么单位”。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">易错</span><div><ul><li>把质量单位与长度、面积单位混着估。</li></ul></div></div></div><div class=\"anchor\">一句话锚点：「量什么，用什么单位。」</div></article><article class=\"unit\" data-s=\"mot\"><div class=\"uhead\"><h3>二 图形的运动</h3><span class=\"chip mot\">运动</span><span class=\"chip ghost\">第 2 遍</span></div><p class=\"what\">图形的运动（第二遍）。</p><div class=\"rows\"><div class=\"row\"><span class=\"lbl\">怎么讲</span><div><ul><li>与 5上·二 轴对称和平移对看。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">前连后接</span><div>5上·二 轴对称和平移</div></div></div></article><h3 class=\"bookhd\">四年级上册 · 四上 <span class=\"pageinfo\">共 115 页 PDF</span></h3><article class=\"unit\" data-s=\"mea\"><div class=\"uhead\"><h3>二 线与角</h3><span class=\"chip mea\">度量</span><span class=\"chip ghost\">度量 + 认识</span></div><p class=\"what\">直线 / 射线 / 线段；角的度量（度）与量角器；锐角、直角、钝角、平角、周角。</p><div class=\"rows\"><div class=\"row\"><span class=\"lbl\">怎么讲</span><div><ul><li>角还可以“量”：给它一个数，就从“认角”升到“量角”。</li><li>量角器对齐：中心对顶点、零线对一边。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">易错</span><div><ul><li>量角器有两圈刻度，读错极其常见。</li><li>再次强调角的大小与边长无关。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">前连后接</span><div>2下·六 认识角</div></div></div><div class=\"anchor\">一句话锚点：「角也有大小，可以用「度」说出来。」</div></article><h3 class=\"bookhd\">四年级下册 · 四下 <span class=\"pageinfo\">共 117 页 PDF</span></h3><article class=\"unit\" data-s=\"rec\"><div class=\"uhead\"><h3>二 认识三角形和四边形</h3><span class=\"chip rec\">认识</span></div><p class=\"what\">三角形按角 / 按边分类；内角和 180°；三边关系；平行四边形与梯形的特征与高。</p><div class=\"rows\"><div class=\"row\"><span class=\"lbl\">怎么讲</span><div><ul><li>把三个角撕下来拼成一个平角，验证内角和。</li><li>画高：从顶点向对边作垂线。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">易错</span><div><ul><li>底与高必须互相垂直。</li><li>平行四边形有两组底和高。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">前连后接</span><div>5上·四 多边形的面积（前置）</div></div></div><div class=\"anchor\">一句话锚点：「三角形内角和 180°。」</div></article><article class=\"unit\" data-s=\"rec\"><div class=\"uhead\"><h3>四 观察物体</h3><span class=\"chip rec\">认识</span><span class=\"chip ghost\">第 3 遍</span></div><p class=\"what\">观察物体（第三遍），开始涉及“看到的范围”。</p><div class=\"rows\"><div class=\"row\"><span class=\"lbl\">怎么讲</span><div><ul><li>同一组积木，这次问“挡住什么、看到多大范围”。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">前连后接</span><div>1下·二 · 3上·二 · 6上·三</div></div></div></article><h3 class=\"bookhd\">五年级上册 · 五上 <span class=\"pageinfo\">共 125 页 PDF</span></h3><article class=\"unit\" data-s=\"mea\"><div class=\"uhead\"><h3>四 多边形的面积</h3><span class=\"chip mea\">度量</span><span class=\"chip ghost\">转化核心</span></div><p class=\"what\">平行四边形、三角形、梯形面积公式，但真正要讲的是「转化」。</p><div class=\"rows\"><div class=\"row\"><span class=\"lbl\">怎么讲</span><div><ul><li>所有公式都从长方形推出来：平行四边形 → 剪拼成长方形；三角形 → 两个拼成平行四边形；梯形 → 两个拼成平行四边形。</li><li>抓住“转化”，三个公式不用背。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">易错</span><div><ul><li>底与高不对应。</li><li>三角形与梯形公式里的 ÷2 是“两个拼一个”的记账，别当口诀背。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">前连后接</span><div>3下·五 面积 → 本单元 → 5下·四 体积</div></div></div><div class=\"anchor\">一句话锚点：「形状变了，面积没变 —— 所以能转化。」</div><div class=\"verified\"><b>已核对</b>：单元首节就是「比较图形的面积」，用分割、移补说明“图形变了、面积没变”，这是全单元的钥匙（5上 印刷 49 → PDF 第 53 页）。</div></article><article class=\"unit\" data-s=\"mea\"><div class=\"uhead\"><h3>六 组合图形的面积</h3><span class=\"chip mea\">度量</span></div><p class=\"what\">分割法 / 添补法求组合图形面积。</p><div class=\"rows\"><div class=\"row\"><span class=\"lbl\">怎么讲</span><div><ul><li>对“转化”的第二次练习：把不会算的图形，切成会算的图形。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">易错</span><div><ul><li>切错导致重复计算或漏算。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">前连后接</span><div>5上·四 多边形的面积</div></div></div><div class=\"anchor\">一句话锚点：「切成会算的。」</div></article><article class=\"unit\" data-s=\"mot\"><div class=\"uhead\"><h3>二 轴对称和平移</h3><span class=\"chip mot\">运动</span></div><p class=\"what\">轴对称、平移，运动线的中段。</p><div class=\"rows\"><div class=\"row\"><span class=\"lbl\">怎么讲</span><div><ul><li>与 3下·二 连看：从“看出来”到“画出来”。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">易错</span><div><ul><li>轴对称图形与“画对称轴”混。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">前连后接</span><div>3下·二 · 6下·三 旋转</div></div></div><div class=\"anchor\">一句话锚点：「动的是位置，不是形状。」</div></article><h3 class=\"bookhd\">五年级下册 · 五下 <span class=\"pageinfo\">共 111 页 PDF</span></h3><article class=\"unit\" data-s=\"mea\"><div class=\"uhead\"><h3>二 长方体（一）</h3><span class=\"chip mea\">度量</span><span class=\"chip ghost\">★关键对比二</span></div><p class=\"what\">面 / 棱 / 顶点；展开图；表面积。</p><div class=\"rows\"><div class=\"row\"><span class=\"lbl\">怎么讲</span><div><ul><li>表面积 = 把立体“展开成一张纸”求面积。</li><li>拿真盒子剪开，孩子自己数出六个面。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">易错</span><div><ul><li>展开图找不准，六个面配对待错。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">前连后接</span><div>本册·四 长方体（二）体积（★对讲）</div></div></div><div class=\"anchor\">一句话锚点：「展开，就变成了一个面积问题。」</div><div class=\"verified\"><b>已核对</b>：首节「长方体的认识」，面 / 棱 / 顶点，并明确讨论「正方体是特殊的长方体吗」（PDF 第 15 页）。</div></article><article class=\"unit\" data-s=\"mea\"><div class=\"uhead\"><h3>四 长方体（二）</h3><span class=\"chip mea\">度量</span><span class=\"chip ghost\">★关键对比二</span></div><p class=\"what\">体积与容积：cm³ / dm³ / m³，长 × 宽 × 高，1 dm³ = 1 L。</p><div class=\"rows\"><div class=\"row\"><span class=\"lbl\">怎么讲</span><div><ul><li>体积 = 往里面塞 1 cm³ 小方块，数有多少个。</li><li>与表面积并排对比“面”与“体”。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">易错</span><div><ul><li>cm² 与 cm³ 混。</li><li>容积与体积的差别（容器壁厚）。</li><li>体积相邻进率 1000。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">前连后接</span><div>6上·一 圆 → 6下·一 圆柱体积（底面积×高）</div></div></div><div class=\"anchor\">一句话锚点：「塞满它，数方块。」</div></article><h3 class=\"bookhd\">六年级上册 · 六上 <span class=\"pageinfo\">共 117 页 PDF</span></h3><article class=\"unit\" data-s=\"mea\"><div class=\"uhead\"><h3>一 圆</h3><span class=\"chip mea\">度量</span><span class=\"chip ghost\">认识 + 度量</span></div><p class=\"what\">圆心、半径、直径；周长 C = πd = 2πr；面积 S = πr²（化圆为方，剪拼成近似长方形）。</p><div class=\"rows\"><div class=\"row\"><span class=\"lbl\">怎么讲</span><div><ul><li>让孩子自己用绳子量“周长 ÷ 直径”≈ 3.14 —— 把圆周率做成一次发现，而不是给一个公式。</li><li>面积用剪拼：把圆平均分成若干份，拼成近似长方形，长是半周长、宽是半径。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">易错</span><div><ul><li>周长与面积公式混（2πr 与 πr²）。</li><li>半圆周长还要加直径。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">前连后接</span><div>6下·一 圆柱与圆锥</div></div></div><div class=\"anchor\">一句话锚点：「圆大圆小，周长 ÷ 直径都是同一个数。」</div><div class=\"verified\"><b>已核对</b>：首节「圆的认识（一）」从「套圈游戏公不公平」引入，得到圆心、半径、直径与 d = 2r（PDF 第 6 页）。</div></article><article class=\"unit\" data-s=\"rec\"><div class=\"uhead\"><h3>三 观察物体</h3><span class=\"chip rec\">认识</span><span class=\"chip ghost\">第 4 遍</span></div><p class=\"what\">观察物体（第四遍），含根据平面图形还原立体。</p><div class=\"rows\"><div class=\"row\"><span class=\"lbl\">怎么讲</span><div><ul><li>同上，最高阶的一遍。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">前连后接</span><div>1下·二 · 3上·二 · 4下·四</div></div></div></article><h3 class=\"bookhd\">六年级下册 · 六下 <span class=\"pageinfo\">共 119 页 PDF</span></h3><article class=\"unit\" data-s=\"mea\"><div class=\"uhead\"><h3>一 圆柱与圆锥</h3><span class=\"chip mea\">度量</span><span class=\"chip ghost\">收官</span></div><p class=\"what\">圆柱表面积 = 两个底面圆 + 侧面展开成长方形；圆柱体积 = 底面积 × 高；圆锥体积 = 等底等高圆柱的 1/3。</p><div class=\"rows\"><div class=\"row\"><span class=\"lbl\">怎么讲</span><div><ul><li>圆柱体积就是 5下“底面积 × 高”的直接推广 —— 所有直柱体统一。</li><li>圆锥的 1/3 用等底等高倒水实验验证：倒三次才灌满圆柱。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">易错</span><div><ul><li>圆锥体积忘 ÷3。</li><li>侧面积与表面积混（题目要不要加两个底面）。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">前连后接</span><div>6上·一 圆 → 本单元，两册开头连讲最顺</div></div></div><div class=\"anchor\">一句话锚点：「底面积 × 高，管所有直柱体。」</div><div class=\"verified\"><b>已核对</b>：本章练习就是立体图形展开图求表面积、圆柱形钢柱、粮仓容积等实际问题（PDF 第 18 页）—— 6下开篇就在复用 6上的圆。</div></article><article class=\"unit\" data-s=\"mot\"><div class=\"uhead\"><h3>三 图形的运动</h3><span class=\"chip mot\">运动</span><span class=\"chip ghost\">第 3 遍</span></div><p class=\"what\">图形的运动（第三遍），加入旋转。</p><div class=\"rows\"><div class=\"row\"><span class=\"lbl\">怎么讲</span><div><ul><li>旋转三要素：中心、方向、角度。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">易错</span><div><ul><li>顺时针 / 逆时针说反。</li></ul></div></div><div class=\"row\"><span class=\"lbl\">前连后接</span><div>5上·二 轴对称和平移</div></div></div><div class=\"anchor\">一句话锚点：「转的是方向，不是形状。」</div></article>\n    <h2 class=\"sec\">跨册讲授路线</h2>\n    <p class=\"lede\">把螺旋重排成连续模块：同一个模块里的内容，本来就是一个整体，跨册连讲比按册讲顺得多。★ 是三次关键对比。</p>\n    <div class=\"mods\"><div class=\"mod \"><div class=\"no\">A</div><div><h3>体与形分家</h3><div class=\"compose\">1上·六 认识图形 + 1下·四 有趣的图形 + 1下·二 观察物体（+ 1上·五 位置与顺序 铺垫）</div><p>把「体」和「形」两个字分开，并且是「面在体上」地分开 —— 从立体的面上印出平面图形。</p></div></div><div class=\"mod \"><div class=\"no\">B</div><div><h3>给长度定规矩</h3><div class=\"compose\">2上·六 测量 + 2下·四 测量</div><p>单位是怎么来的（因为不统一就会吵架），以及长度相邻进率 10。</p></div></div><div class=\"mod \"><div class=\"no\">C</div><div><h3>线的长度与面的角</h3><div class=\"compose\">2下·六 认识图形 + 4上·二 线与角</div><p>角可以比张口，也可以量成度数；始终守住「角的大小与边长无关」。</p></div></div><div class=\"mod star\"><div class=\"no\">D</div><div><h3>★ 线 vs 面<span class=\"chip rec\">关键对比</span></h3><div class=\"compose\">3上·五 周长 + 3下·五 面积（+ 3下·四 千克克吨 顺带）</div><p>「框」与「铺满」的对讲；面积进率 100 与长度进率 10 的对比。本大纲第一次必须停下来的地方。</p></div></div><div class=\"mod \"><div class=\"no\">E</div><div><h3>转化</h3><div class=\"compose\">5上·四 多边形的面积 + 5上·六 组合图形的面积（前置 4下·二 三角形四边形）</div><p>三个面积公式都由长方形推出来；抓住转化，就不用背公式。</p></div></div><div class=\"mod star\"><div class=\"no\">F</div><div><h3>★ 面 vs 体<span class=\"chip rec\">关键对比</span></h3><div class=\"compose\">5下·二 长方体（一）+ 5下·四 长方体（二）</div><p>展开是面，塞满是体；进率 1000 与面积 100 的对比。同一册里天然并列，正好对比。</p></div></div><div class=\"mod star\"><div class=\"no\">G</div><div><h3>★ 圆与柱锥<span class=\"chip rec\">关键对比</span></h3><div class=\"compose\">6上·一 圆 + 6下·一 圆柱与圆锥</div><p>圆周率是量出来的；底面积 × 高统一所有直柱体。两册开头连讲最顺 —— 6下开篇练习就在用 6上的圆。</p></div></div></div>\n    <div class=\"card\" style=\"margin-top:16px\">\n      <h3 style=\"font-size:15.5px\">两条并行的贯穿线</h3>\n      <div class=\"rows\" style=\"margin-top:10px\">\n        <div class=\"row\"><span class=\"lbl\">运动线</span><div>2上·四 → 3下·二 → 5上·二 → 6下·三。每个年级都问同一句：<b>变的是形状，不变的是什么？</b></div></div>\n        <div class=\"row\"><span class=\"lbl\">观察物体</span><div>1下·二 → 3上·二 → 4下·四 → 6上·三。<b>用同一组积木</b>贯穿四个年级，只升级“看的角度”与“看到的范围”。</div></div>\n      </div>\n    </div>\n  "
+  outlineHtml: "<h2 class=\"sec\">这一主题怎么讲</h2>\n<p class=\"lede\">图形与几何这条线跨了 <b>9 册课本</b>。这 10 课的课名、顺序、引入活动<b>全部照课本走</b>，家长可以一页一页对着课本看。</p>\n\n<div class=\"card\">\n  <div class=\"rows\">\n    <div class=\"row\"><span class=\"lbl\">课本怎么开头</span><div>每一课都从课本那一页的活动开始：<b>1上·70</b> 先「分一分」（把物品按能不能滚分成几类）；<b>1下·36</b> 先「做一做」（拿积木往纸上印）；<b>2上·49</b> 先「怎么量教室的长度」；<b>2下·62</b> 先「画一画、认一认」角；<b>3上·45</b> 先「描出边线」；<b>3下·49</b> 先「比一比哪个面积大」；<b>5上·49</b> 先「剪下附页 2 拼一拼」；<b>5下·36</b> 先问「土豆和红薯哪一个占的空间大」；<b>6上·2</b> 先问「套圈游戏中哪种方式更公平」。</div></div>\n    <div class=\"row\"><span class=\"lbl\">三把钥匙</span><div>①<b>体与形分开</b>（1上·六、1下·四）：体有厚度，形是平的；②<b>度量就是拿单位去数</b>：线用厘米、面用平方厘米、体用立方厘米（2上·六、3上·五、3下·五、5下·四）；③<b>形状变了先看什么没变</b>（5上·49 的「出入相补」）。</div></div>\n    <div class=\"row\"><span class=\"lbl\">一条度量主线</span><div>长度 → 角 → 周长 → 面积 → 多边形面积 → 体积 → 圆，是同一个动作（拿单位去铺）在 1 维、2 维、3 维各做一遍，最后在圆上遇到一个量不出来的固定商 <b>3.14</b>。</div></div>\n    <div class=\"row\"><span class=\"lbl\">讲到哪</span><div>会认立体和平面图形、会量长度和角、会算周长 / 面积 / 体积和圆的周长。<b>不要提前讲</b>扇形面积、圆锥体积（那是 6 下）。</div></div>\n  </div>\n</div>\n\n<h2 class=\"sec\">与教材的对应（逐课标课本页）</h2>\n<p class=\"lede\">课名即课本小节名，括号里是册次·单元；「课本页」是印刷页，可以直接翻。</p>\n<div class=\"tblwrap\">\n  <table>\n    <thead><tr><th style=\"width:210px\">本课</th><th style=\"width:170px\">课本依据</th><th>课本的引入活动 / 这一课抓什么</th></tr></thead>\n    <tbody>\n      <tr><td>L1 认识图形（1上·六）</td><td>1上·70—73</td><td>「说一说，图中有哪些物品？你能把它们分成几类？」→「照样子分一分」→「玩一玩」（滚一滚）→「摸一摸，摆一摆」</td></tr>\n      <tr><td>L2 有趣的图形（1下·四）</td><td>1下·36—42</td><td>「做一做，你能得到哪些图形？认一认」（用立体图形的面印一印、描一描）→「分一分，连一连」→「说一说，你还在什么地方见过这些图形？」</td></tr>\n      <tr><td>L3 测量（2上·六 / 2下·四）</td><td>2上·49—57；2下·34—38</td><td>「怎么量教室的长度？小组合作选择一种测量工具」→「课桌有多长」（4 支铅笔长 / 5 拃长 → 统一的标准）→「铅笔有多长」（10 厘米就是 1 分米）→「1 千米有多长」</td></tr>\n      <tr><td>L4 认识图形（2下·六）</td><td>2下·62—67</td><td>「在生活中，我们经常看到各种角。画一画，认一认」→「淘气做的活动角」→「这个角比直角大，是钝角」</td></tr>\n      <tr><td>L5 周长（3上·五）</td><td>3上·45—51</td><td>「用彩笔描出树叶和数学书封面的边线」→「一条小路环绕着一个小公园」（240+410+200+190+560=1600 米）→ 长方形周长 5+3+5+3=16 / (5+3)×2=16 → 靠墙围菜园</td></tr>\n      <tr><td>L6 面积（3下·五）</td><td>3下·49—58</td><td>「比一比，哪个图形的面积大？剪下附页 2 拼一拼」→「为什么量的结果不一样？」（1 平方厘米）→「用 1 平方厘米的正方形摆一摆」→「铺 1 平方分米的大正方形」（100 张）</td></tr>\n      <tr><td>L7 多边形的面积（5上·四）</td><td>5上·49—62；2上·26—29</td><td>「比较图形的面积」（剪下附页 2 拼一拼 → 出入相补：分割、移补，面积没有改变）→「你能把平行四边形转化成长方形吗？」→ 三角形 = 底×高÷2；低年级入口是 2上·26「折一折，做一做」</td></tr>\n      <tr><td>L8 长方体（5下·二、四）</td><td>5下·11—18、36—46</td><td>「土豆和红薯哪一个占的空间大？」（体积与容积）→「棱长为 1 厘米的正方体，体积是 1 立方厘米」→「用相同的小正方体摆出 3 个不同的长方体」→「1 dm³ = 1000 cm³」</td></tr>\n      <tr><td>L9 圆（6上·一）</td><td>6上·2—12</td><td>「套圈游戏中哪种方式更公平？」（认圆心、半径、直径）→「轮子越大，滚一圈就越远」（圆片滚一周量周长，找 3 个大小不同的圆片填表）→「自行车车轮的直径是 70 cm，滚一圈有多远？」</td></tr>\n      <tr><td>L10 闯关：整条线走一遍</td><td>全主题综合</td><td>把 10 课的知识点串一遍：认图形、量长度、算周长、算面积、算体积、拉形状</td></tr>\n    </tbody>\n  </table>\n</div>\n\n<h2 class=\"sec\">讲授顺序建议（照课本的单元顺序）</h2>\n<div class=\"rows\">\n  <div class=\"row\"><span class=\"lbl\">第 1 条</span><div>先做 <b>1上·70</b> 的「分一分、滚一滚」，让孩子自己把物品分成「方方正正」和「能滚」两类，把「<b>体</b>」这个词立住。不要求说定义，只要求叫得出、分得开。</div></div>\n  <div class=\"row\"><span class=\"lbl\">第 2 条</span><div>再 <b>1下·36</b> 的「做一做」：拿积木往纸上印、往纸上描。孩子自己会发现「原来这个面是这个形」——「面在体上」这句话就有了。</div></div>\n  <div class=\"row\"><span class=\"lbl\">第 3 条</span><div><b>2上·49—57、2下·34—38</b> 与「测量」主题重叠，可以当复习课，或直接跳过、从 L4 角开始。</div></div>\n  <div class=\"row\"><span class=\"lbl\">第 4 条</span><div><b>3上·45</b> 和 <b>3下·49</b> 连着讲：同一张纸，「框」是周长、「铺满」是面积。务必让孩子自己说出「量的是线还是面」。</div></div>\n  <div class=\"row\"><span class=\"lbl\">第 5 条</span><div><b>5上·49</b> 一定要动手剪拼一次。「形状变了、面积没变」这个念头立住了，后面平行四边形、三角形、梯形的面积公式都不用背。</div></div>\n  <div class=\"row\"><span class=\"lbl\">第 6 条</span><div><b>5下·44</b> 用「每排 10 个、每层 10 排、10 层」把 1000 真的数一遍，别让孩子背进率。</div></div>\n  <div class=\"row\"><span class=\"lbl\">第 7 条</span><div><b>6上·9</b> 让孩子真的用绳子绕一圈、用轮子滚一圈，把 3.14 量出来，而不是背出来。</div></div>\n</div>\n\n<h2 class=\"sec\">和「测量」主题的关系</h2>\n<p class=\"lede\">测量是这条线的地基。测量主题（2上·六、2下·四）把「单位」这件事讲透了，图形与几何的 <b>L3 长度和单位、L5 周长、L6 面积、L8 体积</b> 做的都是同一件事 —— 拿一个单位去数，只是从线上换到面上、再换到体里。</p>\n<p class=\"lede\">两边都有 L3，内容重叠（都讲厘米和米）。建议：先做测量主题，再把图形与几何的 L3 当<b>复习课</b>用，或直接跳过它、从 L4 角开始。</p>\n"
 };

@@ -28,6 +28,7 @@
      est        估一估：比 1 米长还是短
      line       画一条 6 厘米的线段
      km         操场跑道：2 圈半 = 1 千米
+     circleArea 圆的面积：剪拼成近似长方形（πr²）
      classroom  教室有多长（选一种工具）
      desk       同一张课桌：4 支铅笔长 / 5 拃长
      handinhand 手拉手：10 米 / 100 米
@@ -417,8 +418,32 @@ PIC.km = () => S(
   '<ellipse cx="300" cy="140" rx="230" ry="86" fill="none" stroke="var(--soft)" stroke-width="15"/>' +
   '<circle cx="300" cy="54" r="13" fill="var(--accent)"/>' +
   T(300, 28, "跑道一圈 400 米", 15, "var(--accent)", "middle", "700") +
+
   T(300, 132, "400 + 400 + 200 = 1000 米", 18, "var(--text)", "middle", "700") +
   T(300, 166, "2 圈半 = 1 千米", 21, "var(--accent)", "middle", "700"), 660, 270);
+/* 圆的面积：剪拼成近似长方形 */
+PIC.circleArea = () => {
+  let sectors = "";
+  for (let i = 0; i < 16; i++){
+    const a = (i / 16) * Math.PI * 2;
+    sectors += '<line x1="150" y1="120" x2="' + (150 + Math.cos(a) * 70) + '" y2="' + (120 + Math.sin(a) * 70) + '" stroke="var(--accent)" stroke-width="1.6"/>';
+  }
+  let top = "", bot = "";
+  for (let i = 0; i < 8; i++){
+    const x = 340 + i * 32;
+    top += '<polygon points="' + x + ',96 ' + (x + 32) + ',96 ' + (x + 16) + ',132" fill="var(--soft)" stroke="var(--accent)" stroke-width="1.4"/>';
+    bot += '<polygon points="' + (x + 16) + ',170 ' + (x + 48) + ',170 ' + (x + 32) + ',134" fill="var(--warmbg)" stroke="var(--warm)" stroke-width="1.4"/>';
+  }
+  return S(
+    '<circle cx="150" cy="120" r="70" fill="var(--panel2)" stroke="var(--line)" stroke-width="2.4"/>' + sectors +
+    T(150, 216, "平均分成 16 份、32 份……", 14, "var(--muted)", "middle") +
+    T(248, 120, "→", 30, "var(--accent)", "middle", "700") +
+    top + bot +
+    '<rect x="340" y="96" width="256" height="74" fill="none" stroke="var(--line)" stroke-width="1.6" stroke-dasharray="5 4"/>' +
+    T(468, 76, "长 = 圆周长的一半 = πr", 15, "var(--accent)", "middle", "700") +
+    T(468, 198, "宽 = 半径 r", 15, "var(--warm)", "middle", "700") +
+    T(468, 228, "面积 = πr × r = πr²", 19, "var(--text)", "middle", "700"), 660, 258);
+};
 
 /* 教室有多长（选一种工具量） */
 PIC.classroom = () => S(

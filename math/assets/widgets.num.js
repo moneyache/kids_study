@@ -264,7 +264,7 @@ KIDS.W.vertical = function(host, step){
                            : [width - 1, width - 2, width - 3].filter(function(i){ return i >= 0; });
   const label = ["个位", "十位", "百位"];
   let digits = new Array(width).fill("");
-  let carry = 0, stepIdx = 0;
+  let carry = 0, stepIdx = 0, borrowed = new Array(width).fill(0);
   host.innerHTML = '<div class="viz" id="v-viz"></div>' +
     '<div class="wrow"><button class="wbtn" id="v-go">算下一位</button>' +
     '<button class="wbtn" id="v-rs" style="background:transparent;color:var(--muted);border-color:var(--line)">重来</button></div>' +
@@ -289,7 +289,7 @@ KIDS.W.vertical = function(host, step){
   host.querySelector("#v-go").onclick = function(){
     if (stepIdx >= width) return;
     const i = width - 1 - stepIdx;
-    const x = +da[i], y = +db[i];
+    const x = (op === "-" ? +da[i] - borrowed[i] : +da[i]), y = +db[i];
     if (op === "+"){
       let s = x + y + carry;
       const old = carry; carry = s >= 10 ? 1 : 0;
@@ -298,20 +298,23 @@ KIDS.W.vertical = function(host, step){
       host.querySelector("#v-out").innerHTML = label[stepIdx] + "相加：" + x + " + " + y + (old ? " + 进位 " + old : "") + " = <b>" + s + "</b>" +
         (carry ? "，满十了 —— 写 <b>" + (s % 10) + "</b>，向前<b>进 1</b>。" : "。");
     } else {
-      let x2 = x;
-      let note = label[stepIdx] + "：";
-      if (x2 < y){ x2 += 10; const prev = width - 2 - stepIdx, borrow = stepIdx + 1;
-        if (prev >= 0) da[prev] = String(+da[prev] - 1);
-        note += x + " 不够减 " + y + "，向" + (label[stepIdx + 1] || "前一位") + "借 1（借 1 当 10）→ " + x2 + " − " + y + " = " + (x2 - y);
+      let x2 = x, note = label[stepIdx] + "：";
+      if (x2 < y){
+        x2 += 10;
+        if (i - 1 >= 0) borrowed[i - 1] += 1;
+        note += (x < 0 ? "这一位是 0，已经被借走 1，" : "") + x + " 不够减 " + y + "，向" +
+          (label[stepIdx + 1] || "前一位") + "借 1（借 1 当 10）→ " + x2 + " − " + y + " = " + (x2 - y);
       } else note += x2 + " − " + y + " = " + (x2 - y);
-      digits[i] = String(x2 - y);
+      const dv = x2 - y;
+      digits[i] = (i === 0 && dv === 0) ? "" : String(dv);
       draw(note);
-      host.querySelector("#v-out").innerHTML = note + "，写 <b>" + digits[i] + "</b>。";
+      host.querySelector("#v-out").innerHTML = note +
+        (digits[i] === "" ? "，最高位是 0，不用写出来。" : "，写 <b>" + digits[i] + "</b>。");
     }
     stepIdx++;
     if (stepIdx >= width) host.querySelector("#v-out").innerHTML += "<br>答案是 <b>" + res + "</b>。";
   };
-  host.querySelector("#v-rs").onclick = function(){ digits = new Array(width).fill(""); carry = 0; stepIdx = 0; draw(""); host.querySelector("#v-out").innerHTML = ""; };
+  host.querySelector("#v-rs").onclick = function(){ digits = new Array(width).fill(""); borrowed = new Array(width).fill(0); carry = 0; stepIdx = 0; draw(""); host.querySelector("#v-out").innerHTML = ""; };
 };
 
 /* ⑧ 点子阵列 */
