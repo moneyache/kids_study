@@ -3,6 +3,7 @@
    逐页依据见同目录 TEXTBOOK-NOTES.md。 */
 window.TEACHER_DATA = {
   key: "calc-course-v1",
+  v: "textbook-1",
   title: "数与运算",
   curriculum: [
     { id: "C1", title: "有几支 · 还剩下多少", practice: 5, quiz: 5 },

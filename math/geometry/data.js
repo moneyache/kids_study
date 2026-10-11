@@ -3,7 +3,8 @@
    3上·五、3下·五、5上·四、5下·二/四、6上·一）；
    每课的引入活动、数字、题干写法都取自课本，逐页依据见同目录 TEXTBOOK-NOTES.md。 */
 window.COURSE_DATA = {
-  key: "geo-course-v1",
+  "key": "geo-course-v1",
+  "v": "textbook-1",
   title: "图形与几何",
   sub: "数学 · 图形与几何",
   desc: "跟课本走：认识图形、有趣的图形、测量、角、周长、面积、多边形的面积、体积、圆",

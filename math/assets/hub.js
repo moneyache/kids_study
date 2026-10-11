@@ -14,14 +14,23 @@ function setTheme(t){
   document.documentElement.dataset.theme = t;
   try { localStorage.setItem("kids-theme", t); } catch (e) {}
 }
-function readProg(key){
-  try { return JSON.parse(localStorage.getItem(key) || "{}") || {}; } catch (e) { return {}; }
+function readProg(key, v){
+  try {
+    const p = JSON.parse(localStorage.getItem(key) || "{}") || {};
+    return (p.__v === v) ? p : {};              /* 内容版本不符 → 旧进度作废 */
+  } catch (e) { return {}; }
+}
+function progStale(key, v){
+  try {
+    const p = JSON.parse(localStorage.getItem(key) || "{}") || {};
+    return Object.keys(p).length > 0 && p.__v !== v;
+  } catch (e) { return false; }
 }
 function dataOf(key){
   return (window.KIDS_DATA && window.KIDS_DATA[key]) || null;
 }
 function statsOf(t){
-  const data = dataOf(t.key), p = readProg(t.key);
+  const data = dataOf(t.key), p = readProg(t.key, data && data.v);
   const s = { lessons: 0, practice: 0, quiz: 0, ok: 0, done: 0, qScore: 0, qTotal: 0, has: !!data };
   if (data) data.lessons.forEach(function(L){
     s.lessons++;
@@ -62,7 +71,8 @@ function renderPanel(){
       '<p class="lede">' + (t.desc || "") + '</p><p style="color:var(--muted)">这个主题的课程正在制作中，先把位置留出来。</p></div>';
     return;
   }
-  const p = readProg(t.key);
+  const p = readProg(t.key, data && data.v);
+  const stale = progStale(t.key, data && data.v);
   const rows = data.lessons.map(function(L, i){
     const st = p[L.id] || {};
     const q = Object.keys(st.solved || {}).length;
@@ -113,7 +123,8 @@ function renderPanel(){
       '<a class="btn primary" href="' + t.dir + '/course.html">' + (s.ok === 0 ? "开始上课 →" : (s.ok >= s.practice ? "再走一遍全课 →" : "继续上课 →")) + '</a>' +
       '<button class="btn" data-reset="' + t.key + '">清除本主题进度</button>' +
     '</div>' +
-    '<p class="hint">' + (s.ok === 0 ? "还没有开始（或换了设备）。" : "进度只存在当前浏览器，换设备不同步。") + '</p>' +
+    '<p class="hint">' + (stale ? "这套内容刚按课本重写过，旧进度已自动作废 —— 点「开始上课」从第 1 课重新走一遍就好。"
+      : (s.ok === 0 ? "还没有开始（或换了设备）。" : "进度只存在当前浏览器，换设备不同步。")) + '</p>' +
   '</div>' +
   '<h2 class="sec">这个主题讲什么</h2>' +
   '<p class="sub">点开任一课都能随时跳回去重学；顺序是按教材螺旋排的。</p>' +

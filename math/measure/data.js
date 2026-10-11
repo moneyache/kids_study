@@ -3,6 +3,7 @@
    每课的引入活动、数字、题干写法都取自课本，依据见同目录 TEXTBOOK-NOTES.md。 */
 window.COURSE_DATA = {
   key: "meas-course-v1",
+  v: "textbook-1",
   title: "测量",
   sub: "数学 · 测量",
   desc: "跟课本走：教室有多长、课桌有多长、1 米有多长、铅笔有多长、1 千米有多长",

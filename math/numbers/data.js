@@ -10,6 +10,7 @@
    注意：文件头的 key 不能改（进度存在它下面），8 课的 id 与顺序也不能改。 */
 window.COURSE_DATA = {
   key: "num-course-v1",
+  v: "textbook-1",
   title: "数与数感",
   sub: "数学 · 数与数感",
   desc: "跟课本走：数一数、古人计数、数花生、一千有多大、一万和亿、比一比、温度与正负数",

@@ -5,6 +5,7 @@
    每课的引入活动、数字、题干写法都取自课本，依据见同目录 TEXTBOOK-NOTES.md。 */
 window.COURSE_DATA = {
   key: "calc-course-v1",
+  v: "textbook-1",
   title: "数与运算",
   sub: "数学 · 数与运算",
   desc: "跟课本走：有几支·还剩下多少、有几瓶牛奶、买铅笔、摘苹果、儿童乐园、乘法口诀、分一分与除法、运算律",

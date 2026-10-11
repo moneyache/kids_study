@@ -18,12 +18,21 @@ function setTheme(t){
   try { localStorage.setItem("kids-theme", t); } catch (e) {}
 }
 function readProg(){
-  try { return JSON.parse(localStorage.getItem(D.key) || "{}") || {}; } catch (e) { return {}; }
+  try {
+    const p = JSON.parse(localStorage.getItem(D.key) || "{}") || {};
+    return (p.__v === D.v) ? p : {};            /* 内容版本不符 → 旧进度作废 */
+  } catch (e) { return {}; }
+}
+function progStale(){
+  try {
+    const p = JSON.parse(localStorage.getItem(D.key) || "{}") || {};
+    return Object.keys(p).length > 0 && p.__v !== D.v;
+  } catch (e) { return false; }
 }
 function boot(cfg){
   const data = cfg.data;
   if (!data || !data.lessons){ console.error("KIDS_TOPIC.boot: 缺少 data.lessons"); return; }
-  D = { key: data.key, title: data.title, sub: data.sub, desc: data.desc, lessons: data.lessons,
+  D = { key: data.key, v: data.v, title: data.title, sub: data.sub, desc: data.desc, lessons: data.lessons,
         courseHref: cfg.courseHref || "course.html", teacherHref: cfg.teacherHref || "outline.html",
         backHref: cfg.backHref || "../index.html", backLabel: cfg.backLabel || "数学" };
   document.title = data.title + " — 学习馆 · 数学";
@@ -111,10 +120,12 @@ function boot(cfg){
     $("#m-quiz").textContent = avg;
     $("#m-bar").style.width = (TOTAL ? Math.round(ok / TOTAL * 100) : 0) + "%";
     $("#cta").textContent = ok === 0 ? "开始上课 →" : (ok >= TOTAL ? "再走一遍全课 →" : "继续上课 →");
-    $("#hint").textContent = ok === 0
+    $("#hint").textContent = progStale()
+      ? "这套内容刚按课本重写过，旧进度已自动作废 —— 点「开始上课」从第 1 课重新走一遍就好。"
+      : (ok === 0
       ? "还没有开始（或换了设备）。点「开始上课」从第 1 课走起。"
       : (ok >= TOTAL ? "练习全部答对过了。" + (qLessons ? "小考做了 " + qLessons + " 张，平均 " + avg + "。" : "建议把小考都做一遍，看看是不是真掌握了。")
-                     : "进度只存在当前浏览器，换设备不同步；点「清除本机进度」可以让孩子从头再走一遍。");
+                     : "进度只存在当前浏览器，换设备不同步；点「清除本机进度」可以让孩子从头再走一遍。"));
     $("#lessonList").innerHTML = C.map(function(c, i){
       const st = p[c.id] || {};
       const q = Object.keys(st.solved || {}).length;

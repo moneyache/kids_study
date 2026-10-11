@@ -3,6 +3,7 @@
    逐页依据见同目录 TEXTBOOK-NOTES.md。 */
 window.TEACHER_DATA = {
   key: "meas-course-v1",
+  v: "textbook-1",
   title: "测量",
   theme: "measure",
   curriculum: [

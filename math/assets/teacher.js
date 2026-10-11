@@ -20,7 +20,16 @@ function setTheme(t){
   try { localStorage.setItem("kids-theme", t); } catch (e) {}
 }
 function readProg(){
-  try { return JSON.parse(localStorage.getItem(D.key) || "{}") || {}; } catch (e) { return {}; }
+  try {
+    const p = JSON.parse(localStorage.getItem(D.key) || "{}") || {};
+    return (p.__v === D.v) ? p : {};            /* 内容版本不符 → 旧进度作废 */
+  } catch (e) { return {}; }
+}
+function progStale(){
+  try {
+    const p = JSON.parse(localStorage.getItem(D.key) || "{}") || {};
+    return Object.keys(p).length > 0 && p.__v !== D.v;
+  } catch (e) { return false; }
 }
 const VIEWS = { progress: ["view-progress"], qa: ["view-qa"], teach: ["view-teach"] };
 function showView(v){
@@ -68,9 +77,11 @@ function renderProgress(){
           '<br><span class="pageinfo">' + m.lesson + '</span></div></div>';
       }).join("") + '</div></div>'
     : '<div class="card" style="color:var(--muted)">暂时没有需要补的题。孩子做完练习和小考之后，答错的题会集中列在这里。</div>';
-  $("#pgHint").textContent = doneQ === 0
-    ? "还没有开始。让孩子先去互动课堂从第 1 课走起。"
-    : (miss.length ? "这些题就是下一步的复习清单。" : "到目前为止没有答错的题。");
+  $("#pgHint").textContent = progStale()
+    ? "这套内容刚按课本重写过，旧进度已自动作废 —— 让孩子从第 1 课重新走一遍就好。"
+    : (doneQ === 0
+      ? "还没有开始。让孩子先去互动课堂从第 1 课走起。"
+      : (miss.length ? "这些题就是下一步的复习清单。" : "到目前为止没有答错的题。"));
 }
 
 function boot(cfg){

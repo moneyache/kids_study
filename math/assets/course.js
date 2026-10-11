@@ -371,6 +371,8 @@ function boot(cfg){
   S = cfg;
   if (!S.art) S.art = window.KIDS.ART || null;
   try { prog = JSON.parse(localStorage.getItem(S.key) || "{}") || {}; } catch (e) { prog = {}; }
+  /* 内容版本：按课本重写过之后，旧进度是按「步骤序号」存的，会对不上 —— 直接作废重来 */
+  if (prog.__v !== S.v){ prog = { __v: S.v }; save(); }
   shell();
   renderStage();
   /* 供自动化测试与其它页面读取 */
