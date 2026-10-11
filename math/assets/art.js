@@ -28,6 +28,9 @@
      est        估一估：比 1 米长还是短
      line       画一条 6 厘米的线段
      km         操场跑道：2 圈半 = 1 千米
+     classroom  教室有多长（选一种工具）
+     desk       同一张课桌：4 支铅笔长 / 5 拃长
+     handinhand 手拉手：10 米 / 100 米
    ============================================================ */
 window.KIDS = window.KIDS || { W: {}, ART: {}, pic: {} };
 (function(){
@@ -417,5 +420,55 @@ PIC.km = () => S(
   T(300, 132, "400 + 400 + 200 = 1000 米", 18, "var(--text)", "middle", "700") +
   T(300, 166, "2 圈半 = 1 千米", 21, "var(--accent)", "middle", "700"), 660, 270);
 
+/* 教室有多长（选一种工具量） */
+PIC.classroom = () => S(
+  '<rect x="40" y="52" width="580" height="150" rx="10" fill="var(--panel2)" stroke="var(--line)" stroke-width="2.5"/>' +
+  '<rect x="120" y="70" width="200" height="54" rx="6" fill="var(--soft)" stroke="var(--line)" stroke-width="2"/>' +
+  T(220, 104, "黑板", 15, "var(--muted)", "middle", "600") +
+  '<rect x="470" y="70" width="120" height="46" rx="6" fill="var(--soft)" stroke="var(--line)" stroke-width="2"/>' +
+  T(530, 100, "讲台", 14, "var(--muted)", "middle", "600") +
+  [0, 1, 2].map(function(i){
+    return '<rect x="' + (90 + i * 150) + '" y="150" width="110" height="34" rx="6" fill="var(--warmbg)" stroke="var(--warm)" stroke-width="2"/>';
+  }).join("") +
+  '<line x1="60" y1="216" x2="600" y2="216" stroke="var(--accent)" stroke-width="4" stroke-dasharray="8 6"/>' +
+  T(56, 240, "教室的长", 15, "var(--accent)", "start", "700") +
+  T(330, 32, "教室有多长？", 20, "var(--text)", "middle", "700") +
+  T(640, 90, "可以用：", 14, "var(--muted)", "middle", "600") +
+  T(640, 120, "铅笔 · 手", 15, "var(--text)", "middle", "700") +
+  T(640, 148, "脚印 · 课本", 15, "var(--text)", "middle", "700") +
+  T(640, 180, "你选哪一种？", 14, "var(--warm)", "middle", "700"), 700, 258);
+
+/* 课桌有多长：4 支铅笔长 / 5 拃长 */
+PIC.desk = () => S(
+  '<rect x="70" y="150" width="320" height="18" rx="5" fill="var(--soft)" stroke="var(--line)" stroke-width="2.5"/>' +
+  '<rect x="86" y="168" width="12" height="58" fill="var(--line2)" stroke="var(--line)" stroke-width="2"/>' +
+  '<rect x="362" y="168" width="12" height="58" fill="var(--line2)" stroke="var(--line)" stroke-width="2"/>' +
+  T(230, 56, "同一张课桌，两个人量出来不一样", 17, "var(--text)", "middle", "600") +
+  '<line x1="70" y1="112" x2="150" y2="112" stroke="var(--accent)" stroke-width="6" stroke-linecap="round"/>' +
+  '<line x1="150" y1="112" x2="230" y2="112" stroke="var(--accent)" stroke-width="6" stroke-linecap="round"/>' +
+  '<line x1="230" y1="112" x2="310" y2="112" stroke="var(--accent)" stroke-width="6" stroke-linecap="round"/>' +
+  '<line x1="310" y1="112" x2="390" y2="112" stroke="var(--accent)" stroke-width="6" stroke-linecap="round" opacity=".35"/>' +
+  T(230, 98, "4 支铅笔长", 15, "var(--accent)", "middle", "700") +
+  '<rect x="70" y="126" width="320" height="14" rx="4" fill="var(--warmbg)" stroke="var(--warm)" stroke-width="1.5"/>' +
+  T(230, 137, "5 拃长", 13, "var(--warm)", "middle", "700") +
+  T(470, 112, "工具不一样", 17, "var(--text)", "middle", "700") +
+  T(470, 140, "数就不一样", 17, "var(--text)", "middle", "700") +
+  T(470, 176, "要先有统一的标准", 16, "var(--warm)", "middle", "700"), 660, 250);
+
+/* 手拉手：10 米 / 100 米 */
+PIC.handinhand = () => {
+  let kids = "";
+  for (let i = 0; i < 7; i++){
+    const x = 70 + i * 88;
+    kids += '<circle cx="' + x + '" cy="120" r="14" fill="' + ["#f0a63c", "#6fc7d4", "#9aa7f0", "#e19bc0"][i % 4] + '"/>' +
+      '<path d="M' + (x - 12) + ' 138 q12 -6 24 0 l4 40 q-16 6 -32 0 z" fill="' + ["#f0a63c", "#6fc7d4", "#9aa7f0", "#e19bc0"][i % 4] + '"/>' +
+      (i < 6 ? '<path d="M' + (x + 13) + ' 146 q' + 30 + ' -10 ' + 62 + ' 0" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round"/>' : "");
+  }
+  return S(
+    GROUND(196) + kids +
+    '<line x1="70" y1="60" x2="598" y2="60" stroke="var(--accent)" stroke-width="3" stroke-dasharray="7 5"/>' +
+    T(330, 46, "手拉手站成一排：10 米有多长？100 米呢？", 18, "var(--text)", "middle", "700") +
+    T(330, 226, "100 米大约要走 200 步；1000 米就是 10 个 100 米", 15, "var(--muted)", "middle"), 660, 250);
+};
 window.KIDS.pic = PIC;
 })();

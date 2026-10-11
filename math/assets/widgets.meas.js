@@ -1,15 +1,17 @@
 /* ============================================================
    共享部件 · 测量（量与计量）
    约定：KIDS.W.名字 = function(host, step){ ... }
-   可用部件：
+   本主题自己的 8 个部件：
      readlen   断尺子读数        step {max:20, a:0, b:7}
      pickunit  选合适的单位      step {items:[{n,v,right,why}]}
      convert   单位换算          step {unit:"米"}
      est1m     比 1 米长还是短   step {items:[{n,long,why}]}
-     taskline  按要求画线段      step {target:6, max:15}
+     taskline  按要求画线段      step {target:6, max:15, minTick:0, from:0}
      kmwalk    千米有多远        step {lap:400}
-   另外本主题还复用图形部件库里的 unit（拃 vs 尺子）、
-   ruler（尺子上量铅笔）、ladder（长度单位阶梯，step{dim:1}）。
+     roomtools 教室有多长        step {len:720, tools:[{n,v}]}
+     diaryfix  改一改淘气的日记   step {items:[{say,right,why}]}
+   另外复用图形部件库里的 unit（拃 vs 尺子）、ruler（尺子上量铅笔）、
+   ladder（长度单位阶梯，step {dim:1}）。
    ============================================================ */
 window.KIDS = window.KIDS || { W: {}, ART: {}, pic: {} };
 (function(){
@@ -235,37 +237,52 @@ KIDS.W.est1m = function(host, step){
    ⑤ 按要求画线段：拖到正确刻度，再检查
    ============================================================ */
 KIDS.W.taskline = function(host, step){
-  const maxCm = step.max || 15, target = step.target || 6;
-  const s = Math.max(34, Math.min(52, Math.floor(820 / maxCm)));
-  const pad = 40, W = maxCm * s + pad * 2, H = 170;
+  const maxCm = step.max || 15;
+  const minTick = step.minTick || 0;                     /* 断尺子：刻度不从 0 开始 */
+  const from = step.from !== undefined ? step.from : minTick;
+  const target = step.target || 6;
+  const want = from + target;
+  const span = maxCm - minTick;
+  const s = Math.max(34, Math.min(52, Math.floor(820 / span)));
+  const pad = 40, W = span * s + pad * 2, H = 170;
+  const X = i => pad + (i - minTick) * s;
+  const startVal = Math.min(maxCm, Math.max(minTick + 1, from + target + 2));
   host.innerHTML =
-    '<p class="whint">任务：画一条 <b>' + target + ' 厘米</b>的线段。把笔尖拖到正确的刻度上，再点「检查」。</p>' +
+    '<p class="whint">' + (minTick ? "尺子前面断掉了，只剩刻度 " + minTick + "—" + maxCm + "。<br>" : "") +
+      '任务：画一条 <b>' + target + " 厘米</b>的线段 —— 从刻度 <b>" + from +
+      '</b> 开始，把笔尖拖到正确的刻度上，再点「检查」。</p>' +
     '<div class="viz" id="tl-viz"></div>' +
-    '<div class="ctl"><label>笔尖对准刻度</label><input type="range" id="tl-n" min="1" max="' + maxCm + '" step="1" value="' + Math.min(maxCm, target + 3) + '"><output id="tl-nv">' + Math.min(maxCm, target + 3) + '</output></div>' +
+    '<div class="ctl"><label>笔尖对准刻度</label><input type="range" id="tl-n" min="' + (minTick + 1) + '" max="' + maxCm + '" step="1" value="' + startVal + '"><output id="tl-nv">' + startVal + '</output></div>' +
     '<div class="wrow"><button class="wbtn" id="tl-go">检查</button></div><div class="wsum" id="tl-out"></div>';
   function draw(result){
     const n = +host.querySelector("#tl-n").value;
     host.querySelector("#tl-nv").textContent = n;
-    const y = 92;
+    const y = 92, len = n - from;
     let ticks = "";
-    for (let i = 0; i <= maxCm; i++){
-      const x = pad + i * s, big = i % 5 === 0;
-      ticks += '<line x1="' + x + '" y1="' + (y + 22) + '" x2="' + x + '" y2="' + (y + 22 - (big ? 18 : 10)) +
-        '" stroke="var(--muted)" stroke-width="' + (big ? 2.3 : 1.5) + '"/>' + T(x, y + 42, String(i), 12.5, "var(--muted)", "middle", "600");
+    for (let i = minTick; i <= maxCm; i++){
+      const big = i % 5 === 0;
+      ticks += '<line x1="' + X(i) + '" y1="' + (y + 22) + '" x2="' + X(i) + '" y2="' + (y + 22 - (big ? 18 : 10)) +
+        '" stroke="var(--muted)" stroke-width="' + (big ? 2.3 : 1.5) + '"/>' +
+        T(X(i), y + 42, String(i), 12.5, "var(--muted)", "middle", "600");
     }
     const color = result === true ? GOOD : (result === false ? BAD : HL);
-    const line = '<line x1="' + pad + '" y1="' + (y - 26) + '" x2="' + (pad + n * s) + '" y2="' + (y - 26) +
-      '" stroke="' + color + '" stroke-width="7" stroke-linecap="round"/>' +
-      '<circle cx="' + (pad + n * s) + '" cy="' + (y - 26) + '" r="6" fill="' + color + '"/>' +
-      T(pad + n * s / 2, y - 40, n + " 厘米", 15, color, "middle", "700");
+    const line = (len > 0)
+      ? '<line x1="' + X(from) + '" y1="' + (y - 26) + '" x2="' + X(n) + '" y2="' + (y - 26) +
+        '" stroke="' + color + '" stroke-width="7" stroke-linecap="round"/>' +
+        '<circle cx="' + X(from) + '" cy="' + (y - 26) + '" r="6" fill="' + color + '"/>' +
+        '<circle cx="' + X(n) + '" cy="' + (y - 26) + '" r="6" fill="' + color + '"/>' +
+        T((X(from) + X(n)) / 2, y - 40, len + " 厘米", 15, color, "middle", "700")
+      : T(pad + span * s / 2, y - 26, "笔尖要拖到 " + from + " 的右边", 15, BAD, "middle", "700");
     host.querySelector("#tl-viz").innerHTML = B(W, H,
-      '<rect x="' + (pad - 6) + '" y="' + y + '" width="' + (maxCm * s + 12) + '" height="26" rx="5" fill="var(--panel2)" stroke="var(--line)" stroke-width="1.5"/>' +
+      '<rect x="' + (pad - 6) + '" y="' + y + '" width="' + (span * s + 12) + '" height="26" rx="5" fill="var(--panel2)" stroke="var(--line)" stroke-width="1.5"/>' +
       line + ticks, "尺子与线段");
-    if (result === true) host.querySelector("#tl-out").innerHTML = "<b>正好是 " + target + " 厘米！</b>从刻度 0 画到刻度 " + target + "，不多不少。";
-    else if (result === false) host.querySelector("#tl-out").innerHTML = "<b>现在是 " + n + " 厘米</b>，要画 " + target + " 厘米，再" + (n > target ? "往左收一点" : "往右拖一点") + "。";
+    if (result === true) host.querySelector("#tl-out").innerHTML =
+      "<b>正好 " + target + " 厘米！</b>从刻度 " + from + " 画到刻度 " + want + "，数一数中间正好 " + target + " 个小格。";
+    else if (result === false) host.querySelector("#tl-out").innerHTML =
+      "<b>现在是 " + len + " 厘米</b>，要画 " + target + " 厘米，笔尖再" + (len > target ? "往左收一点" : "往右拖一点") + "。";
   }
   host.querySelector("#tl-n").oninput = function(){ draw(null); };
-  host.querySelector("#tl-go").onclick = function(){ draw(+host.querySelector("#tl-n").value === target); };
+  host.querySelector("#tl-go").onclick = function(){ draw(+host.querySelector("#tl-n").value === want); };
   draw(null);
 };
 
@@ -303,6 +320,89 @@ KIDS.W.kmwalk = function(host, step){
   host.querySelector("#kw-half").onclick = function(){ m = Math.min(1600, m + lap / 2); draw(); };
   host.querySelector("#kw-rs").onclick = function(){ m = 0; draw(); };
   draw();
+};
+
+/* ============================================================
+   ⑦ 教室有多长：选一种工具量一量，看各要几个
+   （课本 2上·49「选择一种测量工具，量一量、填一填」）
+   ============================================================ */
+KIDS.W.roomtools = function(host, step){
+  const room = step.len || 720;                       /* 教室的长，厘米 */
+  const tools = step.tools || [
+    { n: "一支铅笔", v: 18 },
+    { n: "一拃（手）", v: 10 },
+    { n: "一个脚印", v: 24 },
+    { n: "一本数学书", v: 20 }
+  ];
+  const got = {};
+  host.innerHTML =
+    '<p class="whint">教室的长是 <b>' + room + " 厘米（也就是 " + (room / 100) + " 米）</b>。<br>点下面的按钮，看用不同的工具量，各要几个。</p>" +
+    '<div class="wrow">' + tools.map(function(t, i){
+      return '<button class="wbtn" data-rt="' + i + '">用' + t.n + '量</button>';
+    }).join("") + '</div>' +
+    '<div class="wsum" id="rt-out"></div>' +
+    '<div class="wsum" id="rt-sum" style="font-size:17px"></div>';
+  function refresh(){
+    const n = Object.keys(got).length;
+    const lines = tools.map(function(t, i){
+      return got[i] ? ("教室的长 = <b>" + (room / t.v) + "</b> " + t.n) : null;
+    }).filter(Boolean);
+    host.querySelector("#rt-out").innerHTML = lines.join("<br>");
+    host.querySelector("#rt-sum").innerHTML = (n === tools.length)
+      ? "四种工具量出来是 <b>" + tools.map(function(t){ return room / t.v; }).join("、") + "</b> —— 同一个教室，数却完全不一样！<br>" +
+        "所以量长度之前，<b>要先有一个人人都一样的标准</b>，这就是「单位」。"
+      : (n ? "已经量了 " + n + " 种，再换一种试试。" : "");
+  }
+  host.querySelectorAll("[data-rt]").forEach(function(b){
+    b.onclick = function(){ got[+b.dataset.rt] = 1; refresh(); };
+  });
+  refresh();
+};
+
+/* ============================================================
+   ⑧ 改一改淘气的日记：把单位改对
+   （课本 2下·35「读一读淘气的日记，把不合理的地方改正过来」）
+   ============================================================ */
+KIDS.W.diaryfix = function(host, step){
+  const items = step.items || [
+    { say: "我从 2 分米长的床上起来", right: "米", why: "2 分米只有 20 厘米，比枕头还短，躺不上去。" },
+    { say: "拿起 15 毫米长的牙刷刷牙", right: "厘米", why: "15 毫米只有 1 厘米半，比手指头还短。" },
+    { say: "用 70 米长的毛巾把脸擦干", right: "厘米", why: "70 米有半个操场那么长，那是毛巾吗？" },
+    { say: "学校离我家大约 900 毫米远", right: "米", why: "900 毫米还不到 1 米，一步就走到了。" },
+    { say: "拿出 7 厘米厚的语文书", right: "毫米", why: "7 厘米比一块橡皮还厚，那是书还是砖头？" },
+    { say: "我坐在 5 毫米高的椅子上", right: "分米", why: "5 毫米只有半厘米高，根本坐不下去。" }
+  ];
+  const units = ["毫米", "厘米", "分米", "米"];
+  host.innerHTML =
+    '<p class="whint">淘气写了一篇日记，单位全都用错了。读一读，把每一句的单位改成对的。</p>' +
+    items.map(function(it, i){
+      return '<div class="wcard" style="margin-bottom:10px">' +
+        '<div style="font-size:16.5px;margin-bottom:8px">✍️ 「' + it.say + '」</div>' +
+        '<div class="wrow">' + units.map(function(u){
+          return '<button class="wbtn" data-di="' + i + '" data-u="' + u + '">' + u + '</button>';
+        }).join("") + '<span class="wres" data-df="' + i + '" style="flex:1;min-width:200px;text-align:left"></span></div>' +
+        '</div>';
+    }).join("") + '<div class="wsum" id="di-out"></div>';
+  const ok = {};
+  const refresh = function(){
+    const n = Object.keys(ok).length;
+    host.querySelector("#di-out").innerHTML = (n === items.length)
+      ? "全部改对了！<b>写长度一定要带单位，还要想想这个单位合不合理</b> —— 写之前先在心里比一比。"
+      : "已经改对 <b>" + n + " / " + items.length + "</b> 句。";
+  };
+  refresh();
+  host.querySelectorAll("[data-di]").forEach(function(b){
+    b.onclick = function(){
+      const i = +b.dataset.di, it = items[i], fb = host.querySelector('[data-df="' + i + '"]');
+      if (b.dataset.u === it.right){
+        fb.innerHTML = '<b style="color:' + GOOD + '">改对了！</b>' + it.why;
+        ok[i] = 1;
+      } else {
+        fb.innerHTML = '<b style="color:' + BAD + '">再想想：</b>' + it.why;
+      }
+      refresh();
+    };
+  });
 };
 
 })();
